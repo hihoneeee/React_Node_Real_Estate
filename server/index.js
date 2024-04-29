@@ -3,7 +3,7 @@ require("dotenv").config();
 import cors from "cors";
 
 import initRouters from "./src/routers";
-import connectDB from "./config/connectDB";
+import connectDB from "./src/config/connectDB";
 const app = express();
 app.use(
   cors({
