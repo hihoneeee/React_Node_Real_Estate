@@ -8,6 +8,7 @@ import {
 import { FiPhone } from "react-icons/fi";
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { PiHouseLineLight } from "react-icons/pi";
+import { MdCancel } from "react-icons/md";
 
 const icons = {
   FaFacebookF,
@@ -18,6 +19,7 @@ const icons = {
   FiPhone,
   HiOutlineMailOpen,
   PiHouseLineLight,
+  MdCancel,
 };
 
 export default icons;

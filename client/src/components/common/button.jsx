@@ -1,18 +1,10 @@
 /* eslint-disable react/prop-types */
+import clsx from "clsx";
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
 
-const Button = ({
-  text,
-  textColor,
-  bgColor,
-  hoverBgColor,
-  IcAfter,
-  route,
-  onClick,
-  paddingX,
-  paddingY,
-}) => {
+const Button = ({ text, IcAfter, route, onClick, className }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -27,7 +19,12 @@ const Button = ({
     <div>
       <button
         type="button"
-        className={`${textColor} ${bgColor} flex flex-row-reverse items-center justify-center gap-1 rounded-sm ${paddingX} ${paddingY} hover:${hoverBgColor} lg:text-xs text-xxs transition-all hover:underline border`}
+        className={twMerge(
+          clsx(
+            "flex flex-row-reverse items-center justify-center gap-1 rounded-sm lg:text-xs text-xxs transition-all hover:underline border",
+            className
+          )
+        )}
         onClick={handleClick}
       >
         <span>{text}</span>

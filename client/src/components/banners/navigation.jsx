@@ -81,18 +81,13 @@ const Navigation = ({ location }) => {
           location.pathname === "/" ? (
             <Button
               text="Sign In"
-              textColor="text-white"
-              paddingX="px-4"
-              paddingY="py-2"
+              className="text-white bg-transparen px-4 py-2"
               onClick={() => setModal(true, <Login />)}
             />
           ) : (
             <Button
               text="Sign In"
-              textColor="text-white"
-              bgColor="bg-main-700"
-              paddingX="px-4"
-              paddingY="py-2"
+              className="text-white bg-main-700 px-4 py-2"
               onClick={() => setModal(true, <Login />)}
             />
           )
@@ -100,16 +95,13 @@ const Navigation = ({ location }) => {
           <Button
             text="Add Listing"
             textColor="text-white"
-            paddingX="px-4"
-            paddingY="py-2"
+            className="text-white bg-transparen px-4 py-2"
           />
         ) : (
           <Button
             text="Add Listing"
             textColor="text-white"
-            bgColor="bg-main-700"
-            paddingX="px-4"
-            paddingY="py-2"
+            className="text-white bg-main-700 px-4 py-2"
           />
         )}
       </div>
