@@ -1,9 +1,12 @@
 import clsx from "clsx";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Button, InputForm } from "src/components";
+import { toast } from "react-toastify";
+import { apiRegister } from "src/apis/auth";
+import { Button, InputForm, InputRadio } from "src/components";
 import { useAppStore } from "src/store/useAppStore";
 import icons from "src/utils/icons";
+import Swal from "sweetalert2";
 const { MdCancel } = icons;
 const Login = () => {
   const [variant, setvariant] = useState("login");
@@ -17,8 +20,21 @@ const Login = () => {
   useEffect(() => {
     reset();
   }, [variant]);
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    if (variant === "register") {
+      const response = await apiRegister(data);
+      if (response.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Congratulation!",
+          text: response.msg,
+          showConfirmButton: true,
+          confirmButtonText: "Go sign in",
+        }).then(({ isConfirmed }) => {
+          if (isConfirmed) setvariant("login");
+        });
+      } else toast.error(response.msg);
+    }
   };
   return (
     <div
@@ -65,7 +81,13 @@ const Login = () => {
           id="phone"
           label="Phone number"
           placeholder="Enter your phone..."
-          validate={{ required: "This field can't emty!" }}
+          validate={{
+            required: "This field can't emty!",
+            pattern: {
+              value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+              message: "Phone number is invalid",
+            },
+          }}
           errors={errors}
         />
         <InputForm
@@ -77,6 +99,19 @@ const Login = () => {
           validate={{ required: "This field can't emty!" }}
           errors={errors}
         />
+        {variant === "register" && (
+          <InputRadio
+            register={register}
+            errors={errors}
+            id="roleCode"
+            label="Type account"
+            validate={{ required: "This field can't emty!" }}
+            options={[
+              { label: "User", value: "SU4" },
+              { label: "Agent", value: "GA5" },
+            ]}
+          />
+        )}
         <Button
           onClick={handleSubmit(onSubmit)}
           className="bg-main-700 px-3 py-2 w-full text-white rounded-md"

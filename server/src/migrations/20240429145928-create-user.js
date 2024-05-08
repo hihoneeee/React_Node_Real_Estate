@@ -7,16 +7,18 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
+        defaultValue: Sequelize.literal("gen_random_uuid()"),
       },
       name: {
         type: Sequelize.STRING,
       },
       phone: {
         type: Sequelize.STRING,
+        unique: true,
       },
       email: {
         type: Sequelize.STRING,
+        unique: true,
       },
       address: {
         type: Sequelize.STRING,
@@ -25,10 +27,22 @@ module.exports = {
         type: Sequelize.STRING,
       },
       roleCode: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       avatar: {
         type: Sequelize.STRING,
+      },
+      refresh_token: {
+        type: Sequelize.STRING,
+      },
+      passwordChangeAt: {
+        type: Sequelize.STRING,
+      },
+      passwordResetToken: {
+        type: Sequelize.STRING,
+      },
+      passwordResetExpires: {
+        type: Sequelize.BIGINT,
       },
       createdAt: {
         allowNull: false,

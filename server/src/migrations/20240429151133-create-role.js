@@ -7,10 +7,11 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
+        defaultValue: Sequelize.literal("gen_random_uuid()"),
       },
       code: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
+        unique: true,
       },
       value: {
         type: Sequelize.STRING,

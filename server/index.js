@@ -1,13 +1,15 @@
 import express from "express";
 require("dotenv").config();
 import cors from "cors";
-
 import initRouters from "./src/routers";
 import connectDB from "./src/config/connectDB";
+import cookieParser from "cookie-parser";
+
 const app = express();
+app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: process.env.CLIENT_PORT,
     menthods: ["POST", "GET", "PUT", "DELETE"],
   })
 );

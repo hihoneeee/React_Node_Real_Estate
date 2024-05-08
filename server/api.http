@@ -1,0 +1,9 @@
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/x-www-form-urlencoded
+
+{
+    "phone": "012312312",
+    "name": "Huy ho",
+    "password": "1234567",
+    "roleCode": "222"
+}
