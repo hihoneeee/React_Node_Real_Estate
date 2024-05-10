@@ -2,15 +2,18 @@ import clsx from "clsx";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { apiRegister } from "src/apis/auth";
+import { apiRegister, apiLogin } from "src/apis/auth";
 import { Button, InputForm, InputRadio } from "src/components";
 import { useAppStore } from "src/store/useAppStore";
+import { useUserStore } from "src/store/useUserStore";
 import icons from "src/utils/icons";
 import Swal from "sweetalert2";
 const { MdCancel } = icons;
 const Login = () => {
   const [variant, setvariant] = useState("login");
+  const [isloading, setisloading] = useState(false);
   const { setModal } = useAppStore();
+  const { setToken } = useUserStore();
   const {
     register,
     formState: { errors },
@@ -22,7 +25,9 @@ const Login = () => {
   }, [variant]);
   const onSubmit = async (data) => {
     if (variant === "register") {
+      setisloading(true);
       const response = await apiRegister(data);
+      setisloading(false);
       if (response.success) {
         Swal.fire({
           icon: "success",
@@ -33,6 +38,17 @@ const Login = () => {
         }).then(({ isConfirmed }) => {
           if (isConfirmed) setvariant("login");
         });
+      } else toast.error(response.msg);
+    }
+    if (variant === "login") {
+      const { name, roleCode, ...payload } = data;
+      setisloading(true);
+      const response = await apiLogin(data);
+      setisloading(false);
+      if (response.success) {
+        toast.success(response.msg);
+        setModal(false, null);
+        setToken(response.access_token);
       } else toast.error(response.msg);
     }
   };
@@ -113,6 +129,7 @@ const Login = () => {
           />
         )}
         <Button
+          disabled={isloading}
           onClick={handleSubmit(onSubmit)}
           className="bg-main-700 px-3 py-2 w-full text-white rounded-md"
           text={variant === "login" ? "Sign in" : "Register"}

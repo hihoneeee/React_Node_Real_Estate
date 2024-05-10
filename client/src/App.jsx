@@ -1,11 +1,19 @@
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { path } from "./utils/path";
 import { Home, Layout, Properties, AboutUs, OurAgents } from "./pages/public";
 import { Modal } from "./components";
 import { useAppStore } from "./store/useAppStore";
+import { Flip, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useUserStore } from "./store/useUserStore";
 
 const App = () => {
   const { isShowModal } = useAppStore();
+  const { getCurrent, token } = useUserStore();
+  useEffect(() => {
+    getCurrent();
+  }, [token]);
   return (
     <>
       {isShowModal && <Modal />}
@@ -17,6 +25,19 @@ const App = () => {
           <Route path={path.OUR_AGENTS} element={<OurAgents />} />
         </Route>
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Flip}
+      />
     </>
   );
 };

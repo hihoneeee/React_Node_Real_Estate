@@ -1,22 +1,32 @@
-import { notificationAccAuth } from "./errorHandle";
+import { throwErrorWithStatus } from "./errorHandle";
 
 export const isAdmin = (req, res, next) => {
   const { roleCode } = req.user;
-  if (roleCode !== "DA5")
-    return notificationAccAuth("Required role Admin!", res);
+  // console.log(roleCode);
+  if (!roleCode || roleCode !== "DA5") {
+    return throwErrorWithStatus(401, "Required role Admin!", res, next);
+  }
   next();
 };
 
-export const isWriter = (req, res, next) => {
+export const isAgent = (req, res, next) => {
   const { roleCode } = req.user;
-  if (roleCode !== "writer")
-    return notificationAccAuth("Required role Writer!", res);
+  if (roleCode !== "GA5")
+    return throwErrorWithStatus(401, "Required role Agent!", res, next);
+
+  next();
+};
+
+export const isUser = (req, res, next) => {
+  const { roleCode } = req.user;
+  if (roleCode !== "SU4")
+    return throwErrorWithStatus(401, "Required role user!", res, next);
   next();
 };
 
 export const isAdminOrCreator = (req, res, next) => {
   const { roleCode } = req.user;
-  if (roleCode !== "admin" && roleCode !== "creator")
-    return notificationAccAuth("Required role Admin or Creator!", res);
+  if (roleCode !== "DA5" && roleCode !== "GA5")
+    return throwErrorWithStatus(401, "Required role role or Agent!", res, next);
   next();
 };

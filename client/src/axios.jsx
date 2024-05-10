@@ -8,6 +8,12 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Làm gì đó trước khi request dược gửi đi
+    let token = window.localStorage.getItem("Real Estate");
+    if (token) token = JSON.parse(token);
+    if (token.state?.token)
+      config.headers = {
+        Authorization: `Bearer ${token.state?.token}`,
+      };
     return config;
   },
   function (error) {
@@ -21,12 +27,12 @@ instance.interceptors.response.use(
   function (response) {
     // Bất kì mã trạng thái nào nằm trong tầm 2xx đều khiến hàm này được trigger
     // Làm gì đó với dữ liệu response
-    return response;
+    return response.data;
   },
   function (error) {
     // Bất kì mã trạng thái nào lọt ra ngoài tầm 2xx đều khiến hàm này được trigger\
     // Làm gì đó với lỗi response
-    return Promise.reject(error);
+    return error.response.data;
   }
 );
 

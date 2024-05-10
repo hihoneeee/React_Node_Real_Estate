@@ -11,9 +11,11 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       phone: {
         type: Sequelize.STRING,
+        allowNull: false,
         unique: true,
       },
       email: {
@@ -25,9 +27,15 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       roleCode: {
         type: Sequelize.STRING,
+        allowNull: false,
+        references: {
+          model: "Roles",
+          key: "code",
+        },
       },
       avatar: {
         type: Sequelize.STRING,

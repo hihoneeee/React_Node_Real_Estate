@@ -9,11 +9,19 @@ import { twMerge } from "tailwind-merge";
 import withRouter from "src/hocs/withRouter";
 import { useUserStore } from "src/store/useUserStore";
 import { useAppStore } from "src/store/useAppStore";
+import { toast } from "react-toastify";
 const { PiHouseLineLight } = icons;
 
 const Navigation = ({ location }) => {
-  const { token } = useUserStore();
+  const { token, setToken, getCurrent, clearCurrent } = useUserStore();
   const { setModal } = useAppStore();
+
+  const handleLogout = () => {
+    setToken(null);
+    getCurrent(null);
+    clearCurrent();
+    toast.success("Logout successfully!");
+  };
   return (
     <div
       className={twMerge(
@@ -92,11 +100,19 @@ const Navigation = ({ location }) => {
             />
           )
         ) : location.pathname === "/" ? (
-          <Button
-            text="Add Listing"
-            textColor="text-white"
-            className="text-white bg-transparen px-4 py-2"
-          />
+          <>
+            <Button
+              text="Add Listing"
+              textColor="text-white"
+              className="text-white bg-transparen px-4 py-2"
+            />
+
+            <Button
+              text="Logout"
+              className="text-white bg-transparen px-4 py-2"
+              onClick={() => handleLogout()}
+            />
+          </>
         ) : (
           <Button
             text="Add Listing"

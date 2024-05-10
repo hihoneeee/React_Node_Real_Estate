@@ -7,7 +7,8 @@ import { isAdmin } from "../middlewares/verifyRole";
 import { verifyAccessToken } from "../middlewares/verifyToken";
 
 const router = express.Router();
-
+router.use(verifyAccessToken);
+router.use(isAdmin);
 router.post(
   "/",
   validateDTOBody(

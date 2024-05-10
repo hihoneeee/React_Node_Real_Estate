@@ -4,6 +4,7 @@ import {
   FaInstagram,
   FaBehance,
   FaDribbble,
+  FaSpinner,
 } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 import { HiOutlineMailOpen } from "react-icons/hi";
@@ -20,6 +21,7 @@ const icons = {
   HiOutlineMailOpen,
   PiHouseLineLight,
   MdCancel,
+  FaSpinner,
 };
 
 export default icons;

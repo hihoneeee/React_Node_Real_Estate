@@ -37,9 +37,9 @@ export const login = asyncHandler(async (req, res, next) => {
   if (!checkPassword)
     return throwErrorWithStatus(401, "Password is wrong!", res, next);
   const accessToken = jwt.sign(
-    { id: response.id, role: response.roleCode },
+    { id: response.id, roleCode: response.roleCode },
     process.env.JWT_SECRET,
-    { expiresIn: "10s" }
+    { expiresIn: "1d" }
   );
   const refreshToken = jwt.sign(
     {

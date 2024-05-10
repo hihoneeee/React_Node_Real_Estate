@@ -18,13 +18,3 @@ export const NotFound = (req, res, next) => {
   res.status(404);
   next(error);
 };
-
-export const notificationAccAuth = (error, res, isExpired) => {
-  const formatMs = error.message.replaceAll(`\"`, "");
-  const statusCode = error.status || 401;
-  return res.status(statusCode).json({
-    success: false,
-    msg: formatMs,
-    err: isExpired ? 2 : 1,
-  });
-};

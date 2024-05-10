@@ -2,20 +2,28 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Roles", {
+    await queryInterface.createTable("Property_Features", {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.literal("gen_random_uuid()"),
       },
-      code: {
-        type: Sequelize.STRING,
-        unique: true,
+      propertyId: {
+        type: Sequelize.UUID,
         allowNull: false,
+        references: {
+          model: "Properties",
+          key: "id",
+        },
       },
-      value: {
-        type: Sequelize.STRING,
+      featureId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: "Features",
+          key: "id",
+        },
       },
       createdAt: {
         allowNull: false,
@@ -28,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Roles");
+    await queryInterface.dropTable("Property_Features");
   },
 };

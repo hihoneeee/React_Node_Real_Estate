@@ -10,13 +10,23 @@ export const getOneUser = asyncHandler(async (req, res, next) => {
   const response = await db.User.findOne({
     where: { id },
     attributes: {
-      exclude: ["password", "refresh_token", "roleCode"],
+      exclude: [
+        "id",
+        "password",
+        "refresh_token",
+        "roleCode",
+        "passwordChangeAt",
+        "passwordResetExpires",
+        "passwordResetToken",
+        "updatedAt",
+        "createdAt",
+      ],
     },
     include: [
       {
         model: db.Role,
         as: "roleData",
-        attributes: ["code", "value"],
+        attributes: ["code"],
       },
     ],
   });
@@ -83,5 +93,3 @@ export const restPassword = asyncHandler(async (req, res, next) => {
     msg: response ? "Change password successfully!" : "Cannt change password!",
   });
 });
-
-console.log(Date.now());
