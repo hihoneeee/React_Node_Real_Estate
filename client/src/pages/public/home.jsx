@@ -2,7 +2,7 @@ import banner from "src/assets/bg-home.png";
 const Home = () => {
   return (
     <div className="bg-white w-full">
-      <div className="w-full h-fit relative">
+      <div className="w-full h-fit fixed">
         <img src={banner} alt="banner" />
         <div className="absolute flex flex-col items-center justify-center inset-0 gap-5">
           <h1 className="lg:text-4xl text-2xl font-semibold text-white">

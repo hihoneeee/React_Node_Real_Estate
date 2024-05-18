@@ -11,7 +11,6 @@ export const getOneUser = asyncHandler(async (req, res, next) => {
     where: { id },
     attributes: {
       exclude: [
-        "id",
         "password",
         "refresh_token",
         "roleCode",

@@ -5,6 +5,7 @@ export const stringReq = joi.string().required();
 export const number = joi.number().allow(null, "");
 export const numberReq = joi.number().required();
 export const array = joi.array().allow(null, "");
+export const required = joi.required();
 export const emailReq = joi
   .string()
   .pattern(new RegExp("@gmail.com"))

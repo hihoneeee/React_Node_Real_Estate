@@ -16,8 +16,16 @@ html::-webkit-scrollbar-thumb {
   border-radius: 5rem;
 }
 
+/* html{
+  font-size: 14px;
+} */
+
 html,
 body {
   height: 100%;
   /* font-family: "Poppins", sans-serif; */
+}
+
+.otp-item {
+  width: 4rem !important;
 }

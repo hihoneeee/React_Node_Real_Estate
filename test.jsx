@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState, useRef, Fragment } from "react";
+import { Fragment, useRef, useState, useEffect } from "react";
 import clsx from "clsx";
 import withRouter from "src/hocs/withRouter";
 import { useUserStore } from "src/store/useUserStore";
@@ -22,30 +22,26 @@ const {
 
 const Header = ({ location }) => {
   const { setToken, getCurrent, clearCurrent, current } = useUserStore();
-  const [showUser, setShowUser] = useState(false);
-  const userMenuRef = useRef(null);
-
+  const [showBox, setShowBox] = useState(false);
+  const optionBox = useRef();
   const handleLogout = () => {
     setToken(null);
     getCurrent(null);
     clearCurrent();
-    setShowUser(false); // Reset showUser state on logout
     toast.success("Logout successfully!");
   };
 
-  const handleClickOutside = (event) => {
-    if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
-      setShowUser(false);
-    }
-  };
-
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    const handleCloseBox = (e) => {
+      if (optionBox.current.contains(e.target)) {
+        setShowBox(true);
+      } else setShowBox(false);
+    };
+    window.addEventListener("click", handleCloseBox);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("click", handleCloseBox);
     };
   }, []);
-
   return (
     <div
       className={twMerge(
@@ -85,7 +81,8 @@ const Header = ({ location }) => {
             <div className="relative z-20 flex items-center justify-center">
               <div
                 className="hover:cursor-pointer rounded-full hover:bg-overlay-30"
-                onClick={() => setShowUser(true)}
+                onClick={() => setShowBox(true)}
+                ref={optionBox}
               >
                 <img
                   className="h-8 w-8 object-cover "
@@ -94,40 +91,35 @@ const Header = ({ location }) => {
                 ></img>
               </div>
 
-              {showUser && (
-                <div
-                  className=" bg-white absolute text-black p-4 top-[3.5rem] h-[8.5rem] z-30 w-[8rem] rounded-md shadow-xl"
-                  ref={userMenuRef}
-                >
-                  <div className="relative flex flex-col items-center gap-3 w-full">
-                    <p className="lg:text-sm text-xs">
-                      Name:{" "}
-                      <span className="capitalize font-semibold">
-                        {current?.name}
-                      </span>
-                    </p>
-                    <p className="lg:text-sm text-xs">
-                      ID:{" "}
-                      <span className="uppercase font-semibold">
-                        #{current?.id.slice(0, 6)}
-                      </span>
-                    </p>
-                    <p className="lg:text-sm text-xs">
-                      Role:{" "}
-                      <span className="uppercase font-semibold">
-                        {showOptions.map((item) => (
-                          <Fragment key={item.code}>
-                            {current?.roleData?.code === item.code && (
-                              <Link>{item.name}</Link>
-                            )}
-                          </Fragment>
-                        ))}
-                      </span>
-                    </p>
-                  </div>
+              {showBox && (
+                <div className="flex flex-col items-center gap-3 bg-white absolute text-black p-4 top-[3.5rem] z-30 w-[8rem]">
+                  <p className="lg:text-sm text-xs">
+                    Name:{" "}
+                    <span className="capitalize font-semibold">
+                      {current?.name}
+                    </span>
+                  </p>
+                  <p className="lg:text-sm text-xs">
+                    ID:{" "}
+                    <span className="uppercase font-semibold">
+                      #{current?.id.slice(0, 6)}
+                    </span>
+                  </p>
+                  <p className="lg:text-sm text-xs">
+                    Role:{" "}
+                    <span className="uppercase font-semibold">
+                      {showOptions.map((item) => (
+                        <Fragment key={item.code}>
+                          {current?.roleData?.code === item.code && (
+                            <Link>{item.name}</Link>
+                          )}
+                        </Fragment>
+                      ))}
+                    </span>
+                  </p>
                   <Button
                     text="Logout"
-                    className="text-white bg-main-500 px-2 py-1 w-full absolute bottom-0 left-0 rounded-b-md hover:"
+                    className="text-white bg-main-500 px-4 py-2 w-full"
                     onClick={handleLogout}
                   />{" "}
                 </div>

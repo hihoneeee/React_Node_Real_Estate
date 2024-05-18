@@ -5,14 +5,16 @@ import joi from "joi";
 import { stringReq, string } from "../middlewares/jojiSchema";
 import { isAdmin } from "../middlewares/verifyRole";
 import { verifyAccessToken } from "../middlewares/verifyToken";
+import { rateLimter } from "../middlewares/rateLimiter";
 
 const router = express.Router();
 // public
+router.use(rateLimter);
 router.get("/", controller.getPropertyType);
 
 //private
-router.use(verifyAccessToken);
-router.use(isAdmin);
+// router.use(verifyAccessToken);
+// router.use(isAdmin);
 router.post(
   "/",
   validateDTOBody(

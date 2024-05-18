@@ -1,17 +1,22 @@
 import clsx from "clsx";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { apiRegister, apiLogin } from "src/apis/auth";
-import { Button, InputForm, InputRadio } from "src/components";
+import { Button, InputForm, InputRadio, VerifyOTP } from "src/components";
 import { useAppStore } from "src/store/useAppStore";
 import { useUserStore } from "src/store/useUserStore";
+import auth from "src/utils/fireBaseConfig";
 import icons from "src/utils/icons";
 import Swal from "sweetalert2";
+import { twMerge } from "tailwind-merge";
 const { MdCancel } = icons;
+
 const Login = () => {
-  const [variant, setvariant] = useState("login");
-  const [isloading, setisloading] = useState(false);
+  const [variant, setVariant] = useState("login");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isShowOTP, setIsShowOTP] = useState(false);
   const { setModal } = useAppStore();
   const { setToken } = useUserStore();
   const {
@@ -23,28 +28,48 @@ const Login = () => {
   useEffect(() => {
     reset();
   }, [variant]);
+
+  // xác thực và tạo captcha
+  const handleCaptchaVerify = () => {
+    if (!window.recaptchVerify) {
+      window.recaptchVerify = new RecaptchaVerifier(auth, "recaptch-verifier", {
+        size: "invisible",
+        callback: () => {},
+        "expired-callback": () => {},
+      });
+    }
+  };
+
+  // send captcha
+  const handleSendOTP = (phone) => {
+    setIsLoading(true);
+    handleCaptchaVerify();
+    const verifier = window.recaptchVerify;
+    const formatPhone = "+84" + phone.slice(1);
+    signInWithPhoneNumber(auth, formatPhone, verifier)
+      .then((result) => {
+        setIsLoading(false);
+        window.confirmationResult = result;
+        toast.success("Sent OTP to your phone successfully!");
+        setIsShowOTP(true);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+        window.isSentOTP = false;
+        toast.error("Phone already had exists!!");
+      });
+  };
+
   const onSubmit = async (data) => {
     if (variant === "register") {
-      setisloading(true);
-      const response = await apiRegister(data);
-      setisloading(false);
-      if (response.success) {
-        Swal.fire({
-          icon: "success",
-          title: "Congratulation!",
-          text: response.msg,
-          showConfirmButton: true,
-          confirmButtonText: "Go sign in",
-        }).then(({ isConfirmed }) => {
-          if (isConfirmed) setvariant("login");
-        });
-      } else toast.error(response.msg);
+      handleSendOTP(data.phone);
     }
     if (variant === "login") {
       const { name, roleCode, ...payload } = data;
-      setisloading(true);
-      const response = await apiLogin(data);
-      setisloading(false);
+      setIsLoading(true);
+      const response = await apiLogin({ name, roleCode, ...payload });
+      setIsLoading(false);
       if (response.success) {
         toast.success(response.msg);
         setModal(false, null);
@@ -52,17 +77,52 @@ const Login = () => {
       } else toast.error(response.msg);
     }
   };
+
+  const handleRegister = async (data) => {
+    setIsLoading(true);
+    const response = await apiRegister(data);
+    setIsLoading(false);
+    if (response.success) {
+      Swal.fire({
+        icon: "success",
+        title: "Congratulation!",
+        text: response.msg,
+        showConfirmButton: true,
+        confirmButtonText: "Go sign in",
+      }).then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          setVariant("login");
+          setIsShowOTP(false);
+        }
+      });
+    } else toast.error(response.msg);
+  };
   return (
     <div
-      className="p-6 bg-white rounded-md w-[30%] space-y-4 relative"
+      className={twMerge(
+        clsx(
+          "p-6 bg-white rounded-md w-[30%] space-y-4 relative",
+          isShowOTP && "w-[35%] "
+        )
+      )}
       onClick={(e) => e.stopPropagation()}
     >
+      <div id="recaptch-verifier"></div>
+      {isShowOTP && (
+        <div className="absolute inset-0 rounded-md bg-white h-fit">
+          <VerifyOTP
+            setIsShowOTP={setIsShowOTP}
+            cb={handleSubmit(handleRegister)}
+          />
+        </div>
+      )}
+
       <h1 className="font-bold lg:text-xl textbase text-main-500 text-center">
         Welcome to RealEstate
       </h1>
       <div className="flex items-center border-b lg:text-base text-sm gap-4">
         <span
-          onClick={() => setvariant("login")}
+          onClick={() => setVariant("login")}
           className={clsx(
             variant === "login" && "border-b-2 border-main-500 text-main-500",
             "py-4 hover:text-main-400 cursor-pointer"
@@ -71,7 +131,7 @@ const Login = () => {
           Sign in
         </span>
         <span
-          onClick={() => setvariant("register")}
+          onClick={() => setVariant("register")}
           className={clsx(
             variant === "register" &&
               "border-b-2 border-main-500 text-main-500",
@@ -81,7 +141,9 @@ const Login = () => {
           New account
         </span>
       </div>
-      <form className="flex flex-col gap-4">
+      <form
+        className={twMerge(clsx("flex flex-col gap-4", isShowOTP && "hidden"))}
+      >
         {variant === "register" && (
           <InputForm
             register={register}
@@ -97,13 +159,13 @@ const Login = () => {
           id="phone"
           label="Phone number"
           placeholder="Enter your phone..."
-          validate={{
-            required: "This field can't emty!",
-            pattern: {
-              value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
-              message: "Phone number is invalid",
-            },
-          }}
+          // validate={{
+          //   required: "This field can't emty!",
+          //   pattern: {
+          //     value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+          //     message: "Phone number is invalid",
+          //   },
+          // }}
           errors={errors}
         />
         <InputForm
@@ -125,28 +187,35 @@ const Login = () => {
             options={[
               { label: "User", value: "SU4" },
               { label: "Agent", value: "GA5" },
+              { label: "Owner", value: "WO5" },
             ]}
           />
         )}
         <Button
-          disabled={isloading}
+          disabled={isLoading}
           onClick={handleSubmit(onSubmit)}
           className="bg-main-700 px-3 py-2 w-full text-white rounded-md"
           text={variant === "login" ? "Sign in" : "Register"}
         />
       </form>
       {variant === "login" && (
-        <p className="text-xss lg:text-xs font-medium">
+        <p
+          className={twMerge(
+            clsx("text-xss lg:text-xs font-medium", isShowOTP && "hidden")
+          )}
+        >
           Forgot password? Dont worry you can get it back{" "}
           <span className="text-main-500 hover:text-red-500 hover:underline cursor-pointer font-bold">
             Here!
           </span>
         </p>
       )}
-      <MdCancel
-        className="absolute top-0 right-5 cursor-pointer lg:text-xl text-base hover:text-red-500 text-main-500"
-        onClick={() => setModal(false, null)}
-      />
+      {!isShowOTP && (
+        <MdCancel
+          className="absolute top-0 right-5 cursor-pointer lg:text-xl text-base hover:text-red-500 text-main-500"
+          onClick={() => setModal(false, null)}
+        />
+      )}
     </div>
   );
 };

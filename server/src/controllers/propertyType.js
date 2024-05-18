@@ -2,7 +2,8 @@ import db from "../models";
 const { Op, Sequelize, where } = require("sequelize");
 import asyncHandler from "express-async-handler";
 import { throwErrorWithStatus } from "../middlewares/errorHandle";
-
+import redis from "../config/redis.config";
+import { Json } from "sequelize/lib/utils";
 export const createPropertyType = asyncHandler(async (req, res, next) => {
   const { title, description, image } = req.body;
   const response = await db.PropertyType.findOrCreate({
@@ -58,10 +59,18 @@ export const getPropertyType = asyncHandler(async (req, res, next) => {
 
   // limit all thì sẽ lấy ra tất cả
   if (limit === "all") {
+    const alreadyGetAll = await redis.get("get-property-type");
+    if (alreadyGetAll)
+      return res.json({
+        success: true,
+        msg: "Got successfully!",
+        PropertyTypes: JSON.parse(alreadyGetAll),
+      });
     const response = await db.PropertyType.findAll({
       where: query,
       ...options,
     });
+    redis.set("get-property-type", JSON.stringify(response));
     return res.status(200).json({
       success: response.length > 0,
       msg: response ? "Got successfully!" : "Cant got!",

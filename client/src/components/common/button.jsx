@@ -37,7 +37,7 @@ const Button = ({ text, IcAfter, route, onClick, className, disabled }) => {
 
         <span>{text}</span>
         {IcAfter && (
-          <span className="text-sm">
+          <span className="text-xs">
             <IcAfter />
           </span>
         )}

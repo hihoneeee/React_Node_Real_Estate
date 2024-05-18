@@ -8,4 +8,12 @@ export const path = {
   GALLERY: "gallery",
   BLOG: "blog",
   CONTACT_US: "contact-us",
+
+  // ADMIN
+  ADMIN: "admin",
+  ADMIN_DASHBOARD: "dashborad",
+
+  // PROPERTY
+  PROPERTY_TYPE: "property-type",
+  CREATE_PROPERTY_TYPE: "create",
 };

@@ -4,7 +4,7 @@ import cors from "cors";
 import initRouters from "./src/routers";
 import connectDB from "./src/config/connectDB";
 import cookieParser from "cookie-parser";
-
+require("./src/config/redis.config");
 const app = express();
 app.use(cookieParser());
 app.use(
@@ -19,7 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 
 initRouters(app);
 connectDB();
-
 const port = process.env.PORT || 8888;
 const listener = app.listen(port, () => {
   console.log(`server is runing on the port ${listener.address().port}`);
