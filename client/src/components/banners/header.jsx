@@ -50,8 +50,9 @@ const Header = ({ location }) => {
     <div
       className={twMerge(
         clsx(
-          "px-20 py-6 flex items-center justify-between border-b-2 bg-transparen text-white fixed w-full z-10 top-[0px]",
-          location.pathname !== "/" && "bg-main-700"
+          "px-20 py-6 flex items-center justify-between border-b-2 bg-transparen text-white w-full z-10 top-[0px]",
+          location.pathname !== "/" && "bg-main-700",
+          location.pathname === "/" && "fixed"
         )
       )}
     >

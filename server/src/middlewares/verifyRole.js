@@ -24,9 +24,9 @@ export const isUser = (req, res, next) => {
   next();
 };
 
-export const isAdminOrCreator = (req, res, next) => {
+export const isAdminOrOwner = (req, res, next) => {
   const { roleCode } = req.user;
-  if (roleCode !== "DA5" && roleCode !== "GA5")
-    return throwErrorWithStatus(401, "Required role role or Agent!", res, next);
+  if (roleCode !== "DA5" && roleCode !== "WO5")
+    return throwErrorWithStatus(401, "Required role role or Owner!", res, next);
   next();
 };

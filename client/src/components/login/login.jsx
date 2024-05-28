@@ -57,7 +57,7 @@ const Login = () => {
         setIsLoading(false);
         console.log(error);
         window.isSentOTP = false;
-        toast.error("Phone already had exists!!");
+        toast.error("Something went wrong!");
       });
   };
 
@@ -159,13 +159,13 @@ const Login = () => {
           id="phone"
           label="Phone number"
           placeholder="Enter your phone..."
-          // validate={{
-          //   required: "This field can't emty!",
-          //   pattern: {
-          //     value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
-          //     message: "Phone number is invalid",
-          //   },
-          // }}
+          validate={{
+            required: "This field can't emty!",
+            pattern: {
+              value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+              message: "Phone number is invalid",
+            },
+          }}
           errors={errors}
         />
         <InputForm

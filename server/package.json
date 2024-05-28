@@ -5,8 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "seed:all": "npx sequelize-cli db:seed:all",
+    "seed:all:undo": "npx sequelize-cli db:seed:undo:all"
   },
+  "target": "esnext",
+  "module": "commonjs",
   "keywords": [],
   "author": "",
   "license": "ISC",

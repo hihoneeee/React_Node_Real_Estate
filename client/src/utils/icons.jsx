@@ -8,6 +8,7 @@ import {
   FaRegCircle,
   FaAngleDown,
   FaAngleLeft,
+  FaSearch,
 } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 import { HiOutlineMailOpen } from "react-icons/hi";
@@ -34,6 +35,7 @@ const icons = {
   FaRegCircle,
   FaAngleDown,
   TiDelete,
+  FaSearch,
 };
 
 export default icons;

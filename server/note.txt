@@ -1,1 +1,5 @@
 npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+npx sequelize-cli seed:generate --name user
+
+// chạy riêng một seeder
+npx sequelize-cli db:seed --seed 20240522104606-role.js
