@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { path } from "./utils/path";
-import { Home, Layout, Properties, AboutUs, OurAgents } from "./pages/public";
+import { path } from "src/utils/path";
+import { Home, Layout, Properties, AboutUs, OurAgents } from "src/pages/public";
 import {
   DashBoard,
   AdminLayout,
   ManagePropertyType,
   CreatePropertyType,
 } from "./pages/admin";
-import { Modal } from "./components";
-import { useAppStore } from "./store/useAppStore";
+import { Modal } from "src/components";
+import { useAppStore } from "src/store/useAppStore";
 import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useUserStore } from "./store/useUserStore";
+import { useUserStore } from "src/store/useUserStore";
 
 const App = () => {
   const { isShowModal } = useAppStore();

@@ -25,8 +25,6 @@ instance.interceptors.request.use(
 // Thêm một bộ đón chặn response
 instance.interceptors.response.use(
   function (response) {
-    // Bất kì mã trạng thái nào nằm trong tầm 2xx đều khiến hàm này được trigger
-    // Làm gì đó với dữ liệu response
     return response.data;
   },
   function (error) {

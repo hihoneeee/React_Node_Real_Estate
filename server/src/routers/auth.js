@@ -2,8 +2,7 @@ import express from "express";
 import * as controller from "../controllers/auth";
 import { validateDTOBody } from "../middlewares/validate";
 import joi from "joi";
-import { numberReq, stringReq, emailReq } from "../middlewares/jojiSchema";
-import { verifyAccessToken } from "../middlewares/verifyToken";
+import { numberReq, stringReq } from "../middlewares/jojiSchema";
 
 const router = express.Router();
 

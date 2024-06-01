@@ -17,6 +17,7 @@ export default {
         "overlay-30": "rgba(0,0,0,0.3)",
         "overlay-50": "rgba(0,0,0,0.5)",
         "overlay-70": "rgba(0,0,0,0.7)",
+        "overlay-main-50": "rgba(0,0,063053,0.7)",
       },
       colors: {
         "main-50": "#EDEFF6",

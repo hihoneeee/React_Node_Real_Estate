@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, FilterItem, InputForm } from "src/components";
+import { Button, FilterItem, InputForm, InputSelect } from "src/components";
 import icons from "src/utils/icons";
 import { twMerge } from "tailwind-merge";
 const { FaSearch } = icons;
@@ -10,7 +10,7 @@ const FilterHome = () => {
   const {
     register,
     formState: { errors },
-  } = useForm(); // Un-commented useForm hook
+  } = useForm();
   const [activeFilter, setActiveFilter] = useState(null);
 
   const handleFilterToggle = (filter) => {
@@ -68,10 +68,9 @@ const FilterHome = () => {
       )}
       {activeFilter === "propertyType" && (
         <div className="bg-white shadow-xl rounded-b-3xl p-4 space-y-4">
-          <InputForm
+          <InputSelect
             id="propertyType"
             label="Property Type"
-            type="text"
             placeholder="Enter property type"
             register={register}
             errors={errors}
@@ -81,10 +80,9 @@ const FilterHome = () => {
       )}
       {activeFilter === "rentRange" && (
         <div className="bg-white shadow-xl rounded-b-3xl p-4 space-y-4">
-          <InputForm
+          <InputSelect
             id="rentRange"
             label="Rent Range"
-            type="text"
             placeholder="Enter rent range"
             register={register}
             errors={errors}

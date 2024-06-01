@@ -9,7 +9,7 @@ const Layout = ({ location }) => {
     <div>
       <Header />
       <Navigation />
-      <div className={clsx(location.pathname === "/" ? "" : "mt-[2rem]")}>
+      <div className={clsx(location.pathname === "/" ? "" : "")}>
         <Outlet />
       </div>
     </div>

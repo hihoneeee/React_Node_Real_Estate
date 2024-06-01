@@ -39,7 +39,7 @@ export const login = asyncHandler(async (req, res, next) => {
   const accessToken = jwt.sign(
     { id: response.id, roleCode: response.roleCode },
     process.env.JWT_SECRET,
-    { expiresIn: "1d" }
+    { expiresIn: "10s" }
   );
   const refreshToken = jwt.sign(
     {
@@ -61,65 +61,37 @@ export const login = asyncHandler(async (req, res, next) => {
     success: true,
     msg: "Login successfully!",
     access_token: accessToken,
+    refresh_token: refreshToken,
   });
 });
 
-// export const refreshAccessToken = asyncHandler(async (req, res, next) => {
-//   const refreshToken = req.cookies.refresh_token;
-//   if (!refreshToken) {
-//     return throwErrorWithStatus(401, "No refresh token in cookies!", res, next);
-//   }
-//   const decodedToken = await jwt.verify(refreshToken, process.env.JWT_SECRET);
-//   const response = await db.User.findOne({
-//     where: { id: decodedToken.id, refresh_token: refreshToken },
-//   });
-
-//   if (!response) {
-//     return throwErrorWithStatus(401, "User not found!", res, next);
-//   }
-
-//   const accessToken = jwt.sign(
-//     {
-//       id: response.id,
-//       roleCode: response.roleCode,
-//     },
-//     process.env.JWT_SECRET,
-//     { expiresIn: "10s" }
-//   );
-
-//   return res.status(200).json({
-//     success: true,
-//     access_token: accessToken,
-//   });
-// });
-
 export const refreshAccessToken = asyncHandler(async (req, res, next) => {
-  const cookie = req.cookies;
-  if (!cookie && !cookie.refresh_token)
-    return throwErrorWithStatus(401, "No refresh token in cookies!", res, next);
-  jwt.verify(
-    cookie.refresh_token,
+  const refreshToken = req.body.refresh_token;
+  if (!refreshToken) {
+    return throwErrorWithStatus(401, "No refresh token in body!", res, next);
+  }
+  const decodedToken = await jwt.verify(refreshToken, process.env.JWT_SECRET);
+  const response = await db.User.findOne({
+    where: { id: decodedToken.id, refresh_token: refreshToken },
+  });
+
+  if (!response) {
+    return throwErrorWithStatus(401, "User not found!", res, next);
+  }
+
+  const accessToken = jwt.sign(
+    {
+      id: response.id,
+      roleCode: response.roleCode,
+    },
     process.env.JWT_SECRET,
-    async (err, decode) => {
-      if (err)
-        return throwErrorWithStatus(401, "Invalid refresh token!", res, next);
-      const response = await db.User.findOne({
-        where: { id: decode.id, refresh_token: cookie.refresh_token },
-      });
-      const accessToken = jwt.sign(
-        {
-          id: response.id,
-          roleCode: response.roleCode,
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: "10s" }
-      );
-      return res.status(200).json({
-        success: response ? true : false,
-        access_token: response ? accessToken : "",
-      });
-    }
+    { expiresIn: "300s" }
   );
+
+  return res.status(200).json({
+    success: true,
+    access_token: accessToken,
+  });
 });
 
 export const logout = asyncHandler(async (req, res, next) => {
