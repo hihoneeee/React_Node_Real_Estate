@@ -11,7 +11,7 @@ export const path = {
 
   // ADMIN
   ADMIN: "admin",
-  ADMIN_DASHBOARD: "dashborad",
+  ADMIN_DASHBOARD: "",
 
   // PROPERTY
   PROPERTY_TYPE: "property-type",

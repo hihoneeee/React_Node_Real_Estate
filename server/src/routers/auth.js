@@ -5,7 +5,15 @@ import joi from "joi";
 import { numberReq, stringReq } from "../middlewares/jojiSchema";
 
 const router = express.Router();
-
+router.post(
+  "/check-phone",
+  validateDTOBody(
+    joi.object({
+      phone: numberReq,
+    })
+  ),
+  controller.checkPhoneNumber
+);
 router.post(
   "/register",
   validateDTOBody(

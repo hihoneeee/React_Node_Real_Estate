@@ -3,7 +3,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { apiRegister, apiLogin } from "src/apis/auth";
+import { apiRegister, apiLogin, apiCheckPhoneNumber } from "src/apis/auth";
 import { Button, InputForm, InputRadio, VerifyOTP } from "src/components";
 import { useAppStore } from "src/store/useAppStore";
 import { useUserStore } from "src/store/useUserStore";
@@ -41,24 +41,32 @@ const Login = () => {
   };
 
   // send captcha
-  const handleSendOTP = (phone) => {
+  const handleSendOTP = async (phone) => {
+    console.log("debug data: ", phone);
     setIsLoading(true);
     handleCaptchaVerify();
     const verifier = window.recaptchVerify;
     const formatPhone = "+84" + phone.slice(1);
-    signInWithPhoneNumber(auth, formatPhone, verifier)
-      .then((result) => {
-        setIsLoading(false);
-        window.confirmationResult = result;
-        toast.success("Sent OTP to your phone successfully!");
-        setIsShowOTP(true);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.log(error);
-        window.isSentOTP = false;
-        toast.error("Something went wrong!");
-      });
+    const response = await apiCheckPhoneNumber({ phone: phone });
+    console.log(response);
+    if (response.success) {
+      signInWithPhoneNumber(auth, formatPhone, verifier)
+        .then((result) => {
+          setIsLoading(false);
+          window.confirmationResult = result;
+          toast.success("Sent OTP to your phone successfully!");
+          setIsShowOTP(true);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.log(error);
+          window.isSentOTP = false;
+          toast.error("Something went wrong!");
+        });
+    } else {
+      toast.error("Phone number already had exists!");
+      setModal(false, null);
+    }
   };
 
   const onSubmit = async (data) => {
@@ -69,6 +77,7 @@ const Login = () => {
       const { name, roleCode, ...payload } = data;
       setIsLoading(true);
       const response = await apiLogin({ name, roleCode, ...payload });
+      console.log(response);
       setIsLoading(false);
       if (response.success) {
         toast.success(response.msg);

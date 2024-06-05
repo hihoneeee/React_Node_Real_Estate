@@ -25,6 +25,15 @@ export const register = asyncHandler(async (req, res) => {
   });
 });
 
+export const checkPhoneNumber = asyncHandler(async (req, res) => {
+  const { phone } = req.body;
+  const response = await db.User.findOne({ where: { phone }, raw: true });
+  return res.status(200).json({
+    success: response ? false : true,
+    msg: response ? "Phone already had exists!" : "DB Dont have phone number!",
+  });
+});
+
 export const login = asyncHandler(async (req, res, next) => {
   const { phone, password } = req.body;
   const response = await db.User.findOne({

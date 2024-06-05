@@ -40,3 +40,13 @@ export const apiRefreshToken = (data) =>
     method: "POST",
     data,
   });
+
+export const apiCheckPhoneNumber = async (data) => {
+  return await axios({
+    url: "/auth/check-phone",
+    method: "POST",
+    data: {
+      ...data
+    },
+  });
+};

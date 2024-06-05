@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import {
-  Path,
   TextH1,
   InputForm,
   InputTextArea,
   InputFile,
+  BreadCreumbAdmin,
 } from "src/components";
 import { path } from "src/utils/path";
 import { useForm } from "react-hook-form";
@@ -42,11 +42,7 @@ const CreatePropertyType = ({ navigate }) => {
     <div className="space-y-4">
       <div className="flex items-center justify-between border-b-2 border-gray-300 pb-4 pt-0">
         <TextH1 title="Create Property Type" />
-        <Path
-          parent="Property type"
-          child="Create"
-          parentUrl={`/${path.ADMIN}/${path.PROPERTY_TYPE}`}
-        />
+        <BreadCreumbAdmin />
       </div>
       <div className="w-1/2 rounded-md shadow-md p-4 bg-white">
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>

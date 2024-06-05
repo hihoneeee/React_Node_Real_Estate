@@ -1,5 +1,5 @@
 "use strict";
-import { User } from "../utils/constants.js";
+import { User } from "../utils/constants.mjs";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
