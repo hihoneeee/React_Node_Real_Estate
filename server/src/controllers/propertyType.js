@@ -52,8 +52,6 @@ export const getPropertyType = asyncHandler(async (req, res, next) => {
       .map((el) =>
         el.startsWith("-") ? [el.replace("-", ""), "DESC"] : [el, "ASC"]
       );
-
-    console.log(order);
     options.order = order;
   }
 
@@ -80,7 +78,7 @@ export const getPropertyType = asyncHandler(async (req, res, next) => {
   }
   // cho phân trang
   const offset = !page || +page <= 1 ? 0 : +page - 1;
-  const flimit = +limit || +process.env.LIMIT_BOOK;
+  const flimit = +limit || +process.env.LIMIT;
   options.offset = offset * flimit;
   options.limit = +flimit;
   const response = await db.PropertyType.findAndCountAll({

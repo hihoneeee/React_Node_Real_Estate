@@ -9,8 +9,8 @@ import { verifyAccessToken } from "../middlewares/verifyToken";
 const router = express.Router();
 // public
 // router.use(rateLimter);
-
-//private                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+router.get("/", controller.getProperty);
+//private
 router.use(verifyAccessToken);
 router.use(isAdminOrOwner);
 router.post(

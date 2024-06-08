@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import icons from "src/utils/icons";
 import { path } from "src/utils/path";
@@ -14,11 +15,29 @@ const { PiHouseLineLight } = icons;
 const Navigation = ({ location }) => {
   const { current } = useUserStore();
   const { setModal } = useAppStore();
+  const [isScrolled, setIsScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      if (scrollTop > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <div
       className={twMerge(
         clsx(
           "px-20 py-6 flex items-center justify-between bg-transparent text-white w-full z-[5] top-[70px]",
+          isScrolled && "fixed top-0 left-0 right-0",
           location.pathname !== "/" && "bg-white text-main-500 shadow-xl",
           location.pathname === "/" && "fixed"
         )

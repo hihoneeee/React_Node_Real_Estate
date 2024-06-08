@@ -37,6 +37,12 @@ export default {
       fontSize: {
         xxs: ".5rem",
       },
+      screens: {
+        mobile: "640px", // Kích thước mobile
+        tablet: "768px", // Kích thước tablet
+        laptop: "1366px", // Kích thước laptop
+        desktop: "1920px", // Kích thước màn hình 23.8 inch
+      },
     },
     plugins: [
       require("@tailwindcss/forms")({

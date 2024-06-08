@@ -9,14 +9,16 @@ import {
   FaAngleDown,
   FaAngleLeft,
   FaSearch,
-  FaCar,
   FaRegHeart,
   FaPlus,
 } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { PiHouseLineLight } from "react-icons/pi";
-import { MdCancel, MdOutlineBathtub } from "react-icons/md";
+import {
+  MdCancel,
+  MdOutlineBathtub,
+} from "react-icons/md";
 import { RiDashboard2Line } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
 import { TiDelete } from "react-icons/ti";
@@ -24,6 +26,7 @@ import { RxDashboard } from "react-icons/rx";
 import { BsMenuButtonWideFill } from "react-icons/bs";
 import { FaCropSimple } from "react-icons/fa6";
 import { AiOutlineShareAlt } from "react-icons/ai";
+import { IoBedOutline } from "react-icons/io5";
 
 const icons = {
   FaFacebookF,
@@ -45,12 +48,12 @@ const icons = {
   FaSearch,
   RxDashboard,
   BsMenuButtonWideFill,
-  FaCar,
   MdOutlineBathtub,
   FaCropSimple,
   FaRegHeart,
   FaPlus,
   AiOutlineShareAlt,
+  IoBedOutline,
 };
 
 export default icons;

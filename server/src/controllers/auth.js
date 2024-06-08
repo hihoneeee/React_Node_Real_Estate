@@ -48,14 +48,14 @@ export const login = asyncHandler(async (req, res, next) => {
   const accessToken = jwt.sign(
     { id: response.id, roleCode: response.roleCode },
     process.env.JWT_SECRET,
-    { expiresIn: "10s" }
+    { expiresIn: "60s" }
   );
   const refreshToken = jwt.sign(
     {
       id: response.id,
     },
     process.env.JWT_SECRET,
-    { expiresIn: "1m" }
+    { expiresIn: "30d" }
   );
   await db.User.update(
     { refresh_token: refreshToken },

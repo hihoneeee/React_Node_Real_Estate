@@ -1,6 +1,19 @@
+import { useEffect, useState } from "react";
+import { apiGetProperties } from "src/apis/property";
 import Rectangle from "src/assets/Rectangle.png";
 import { BreadCreumbPublic, FilterHelper, PropertyCard } from "src/components";
+
 const Properties = () => {
+  const [properties, setProperties] = useState();
+  useEffect(() => {
+    const fetchProperties = async () => {
+      const response = await apiGetProperties({
+        limit: import.meta.env.VITE_LIMIT_PROPERTIES,
+      });
+      if (response.success) setProperties(response.properties);
+    };
+    fetchProperties();
+  }, []);
   return (
     <div className="bg-white w-full h-fit">
       <div className="w-full bg-white relative">
@@ -16,13 +29,10 @@ const Properties = () => {
       </div>
       <div className="px-60 py-16 space-y-8">
         <FilterHelper />
-        <div className="grid grid-cols-3 gap-6">
-          <PropertyCard />
-          <PropertyCard />
-          <PropertyCard />
-          <PropertyCard />
-          <PropertyCard />
-          <PropertyCard />
+        <div className="grid desktop:grid-cols-4 laptop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-y-10 justify-items-center">
+          {properties?.rows?.map((el) => (
+            <PropertyCard key={el.id} properties={el} />
+          ))}
         </div>
       </div>
     </div>

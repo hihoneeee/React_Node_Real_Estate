@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import iconUser from "src/assets/icon_user.svg";
 import { showOptions } from "src/utils/constant";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 const {
   FaFacebookF,
   FaLinkedinIn,
@@ -29,6 +30,7 @@ const Header = ({ location }) => {
     setToken(null);
     getCurrent(null);
     clearCurrent();
+    Cookies.remove("refresh_token", { path: "/" });
     setShowUser(false); // Reset showUser state on logout
     toast.success("Logout successfully!");
   };

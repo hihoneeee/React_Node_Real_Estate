@@ -8,13 +8,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Property.belongsTo(models.User, {
+        foreignKey: "userId",
+        targetKey: "id",
+        as: "userData",
+      });
     }
   }
   Property.init(
     {
       title: DataTypes.STRING,
       description: DataTypes.TEXT,
+      address: DataTypes.STRING,
       price: DataTypes.FLOAT,
       listingType: {
         type: DataTypes.ENUM,

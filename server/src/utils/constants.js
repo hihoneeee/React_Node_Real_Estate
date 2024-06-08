@@ -90,6 +90,7 @@ const PropertyTypes = [
 const Property = Array.from([...Array(60).keys()]).map(() => ({
   id: faker.string.uuid(),
   title: faker.commerce.productName(),
+  address: faker.helpers.arrayElement(User).address,
   userId: faker.helpers.arrayElement(User).id,
   owner: faker.helpers.arrayElement(User).id,
   listingType: faker.helpers.arrayElement(["sale", "rental"]),

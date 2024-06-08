@@ -13,11 +13,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      address: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       description: {
         type: Sequelize.TEXT,
       },
       price: {
         type: Sequelize.FLOAT,
+        allowNull: false,
       },
       listingType: {
         type: Sequelize.ENUM(["sale", "rental"]),

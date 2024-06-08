@@ -19,6 +19,28 @@ const Login = () => {
   const [isShowOTP, setIsShowOTP] = useState(false);
   const { setModal } = useAppStore();
   const { setToken } = useUserStore();
+
+  const [isScrolled, setIsScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      if (scrollTop > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  if (isScrolled) {
+    setModal(false);
+  }
   const {
     register,
     formState: { errors },
