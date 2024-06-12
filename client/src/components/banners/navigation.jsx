@@ -37,7 +37,9 @@ const Navigation = ({ location }) => {
       className={twMerge(
         clsx(
           "px-20 py-6 flex items-center justify-between bg-transparent text-white w-full z-[5] top-[70px]",
-          isScrolled && "fixed top-0 left-0 right-0",
+          isScrolled &&
+            location.pathname !== "/" &&
+            "fixed top-0 left-0 right-0 transition-all",
           location.pathname !== "/" && "bg-white text-main-500 shadow-xl",
           location.pathname === "/" && "fixed"
         )

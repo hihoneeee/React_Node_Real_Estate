@@ -96,3 +96,8 @@ export const formatMoney = (number) => {
   if (!+number) return 0;
   return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 };
+
+export const renderRangeNumber = (start, end) => {
+  const length = end - start + 1;
+  return Array.from({ length }, (_, idx) => start + idx);
+};
