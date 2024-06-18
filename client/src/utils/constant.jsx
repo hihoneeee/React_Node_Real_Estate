@@ -25,17 +25,17 @@ export const nav = [
   {
     id: 5,
     title: "GALLERY",
-    path: path.PROPERTIES,
+    path: path.GALLERY,
   },
   {
     id: 6,
     title: "BLOG",
-    path: path.PROPERTIES,
+    path: path.BLOG,
   },
   {
     id: 7,
     title: "CONTACT US",
-    path: path.PROPERTIES,
+    path: path.CONTACT_US,
   },
 ];
 

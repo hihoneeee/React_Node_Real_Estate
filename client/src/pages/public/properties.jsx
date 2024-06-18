@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react";
-import { apiGetProperties } from "src/apis/property";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import Rectangle from "src/assets/Rectangle.png";
-import { BreadCreumbPublic, FilterHelper, PropertyCard } from "src/components";
+import {
+  BreadCreumbPublic,
+  FilterHelper,
+  Pagination,
+  PropertyCard,
+} from "src/components";
+import { usePropertyStore } from "src/store/usePropertyStore";
 
 const Properties = () => {
-  const [properties, setProperties] = useState();
+  const [searchParams] = useSearchParams();
+  const { properties, getProperties } = usePropertyStore();
+
   useEffect(() => {
-    const fetchProperties = async () => {
-      const response = await apiGetProperties({
-        limit: import.meta.env.VITE_LIMIT_PROPERTIES,
-      });
-      if (response.success) setProperties(response.properties);
-    };
-    fetchProperties();
-  }, []);
+    const params = Object.fromEntries([...searchParams]);
+    getProperties({
+      limit: import.meta.env.VITE_LIMIT_PROPERTIES,
+      ...params,
+    });
+  }, [searchParams, getProperties]);
+
   return (
     <div className="bg-white w-full h-fit">
       <div className="w-full bg-white relative">
@@ -21,7 +28,7 @@ const Properties = () => {
           <img src={Rectangle} className="h-60" alt="banner" />
           <div className="absolute flex flex-col items-center justify-center inset-0 gap-5">
             <h1 className="lg:text-4xl text-2xl font-semibold text-white">
-              Propertice
+              Properties
             </h1>
             <BreadCreumbPublic />
           </div>
@@ -34,6 +41,11 @@ const Properties = () => {
             <PropertyCard key={el.id} properties={el} />
           ))}
         </div>
+        <Pagination
+          total={properties?.count}
+          limit={properties?.limit}
+          page={properties?.page}
+        />
       </div>
     </div>
   );

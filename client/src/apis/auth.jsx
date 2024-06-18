@@ -46,7 +46,7 @@ export const apiCheckPhoneNumber = async (data) => {
     url: "/auth/check-phone",
     method: "POST",
     data: {
-      ...data
+      ...data,
     },
   });
 };

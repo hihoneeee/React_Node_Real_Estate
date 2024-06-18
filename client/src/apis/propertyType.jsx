@@ -13,10 +13,11 @@ export const apiUpdatePropertyType = (data) =>
     data,
   });
 
-export const apiGetPropertyType = () =>
+export const apiGetPropertyType = (params) =>
   axios({
     url: "/property-type/",
     method: "GET",
+    params,
   });
 
 export const apiDeletePropertyType = (data) =>

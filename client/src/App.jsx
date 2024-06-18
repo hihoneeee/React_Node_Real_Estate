@@ -13,12 +13,15 @@ import { useAppStore } from "src/store/useAppStore";
 import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUserStore } from "src/store/useUserStore";
+import { usePropertyTypeStore } from "./store/usePropertyTypeStore";
 
 const App = () => {
   const { isShowModal } = useAppStore();
   const { getCurrent, token } = useUserStore();
+  const { getPropertyType } = usePropertyTypeStore();
   useEffect(() => {
     getCurrent();
+    getPropertyType();
   }, [token]);
   return (
     <>

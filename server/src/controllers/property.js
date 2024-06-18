@@ -1,6 +1,6 @@
 import db from "../models";
 import asyncHandler from "express-async-handler";
-import { throwErrorWithStatus } from "../middlewares/errorHandle";
+import redis from "../config/redis.config";
 
 export const createProperty = asyncHandler(async (req, res, next) => {
   const {
@@ -35,7 +35,6 @@ export const getProperty = asyncHandler(async (req, res, next) => {
   const { limit, page, sort, fields, title, ...query } = req.query;
   const options = {};
 
-  // fields trường muốn lấy vd id, name
   if (fields) {
     const attributes = fields.split(",");
     const isExclude = attributes.some((el) => el.startsWith("-"));
@@ -105,6 +104,8 @@ export const getProperty = asyncHandler(async (req, res, next) => {
   return res.status(200).json({
     success: response ? true : false,
     msg: response ? "Got successfully!" : "Cant got!",
-    properties: response,
+    properties: response
+      ? { ...response, limit: +limit, page: +page ? +page : 1 }
+      : null,
   });
 });

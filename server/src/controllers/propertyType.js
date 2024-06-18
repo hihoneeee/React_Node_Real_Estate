@@ -86,7 +86,7 @@ export const getPropertyType = asyncHandler(async (req, res, next) => {
     ...options,
   });
   return res.status(200).json({
-    success: response.length > 0,
+    success: response ? true : false,
     msg: response ? "Got successfully!" : "Cant got!",
     PropertyTypes: response,
   });
