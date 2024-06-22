@@ -8,14 +8,14 @@ import { verifyAccessToken } from "../middlewares/verifyToken";
 import { rateLimter } from "../middlewares/rateLimiter";
 
 const router = express.Router();
-router.use(verifyAccessToken);
-router.use(isAdmin);
+
 // public
-router.use(rateLimter); 
+router.use(rateLimter);
 router.get("/", controller.getPropertyType);
 
 //private
-
+router.use(verifyAccessToken);
+router.use(isAdmin);
 router.post(
   "/",
   validateDTOBody(

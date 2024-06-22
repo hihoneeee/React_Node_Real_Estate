@@ -21,7 +21,7 @@ const App = () => {
   const { getPropertyType } = usePropertyTypeStore();
   useEffect(() => {
     getCurrent();
-    getPropertyType();
+    getPropertyType({ fields: "updatedAt,title,image" });
   }, [token]);
   return (
     <>
