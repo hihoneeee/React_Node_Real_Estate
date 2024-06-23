@@ -39,12 +39,13 @@ export const getPropertyType = asyncHandler(async (req, res, next) => {
   }
 
   // tìm kiếm
-  if (title)
+  if (title) {
     query.title = Sequelize.where(
       Sequelize.fn("LOWER", Sequelize.col("title")),
       "LIKE",
       `%${title.toLowerCase()}%`
     );
+  }
 
   // sắp xếp
   if (sort) {
@@ -61,18 +62,41 @@ export const getPropertyType = asyncHandler(async (req, res, next) => {
     where: query,
     ...options,
   };
-  if (!limit || title || sort || fields || page) {
-    const keys = generateKeyRedis(filter, sort, fields, page, limit);
-    const alreadyGetAll = await redis.get(keys);
-    if (alreadyGetAll)
-      return res.json({
-        success: true,
-        msg: "Got successfully!",
-        PropertyTypes: JSON.parse(alreadyGetAll),
-      });
+
+  if (limit || page) {
+    const offset =
+      !page || +page <= 1 ? 0 : (+page - 1) * (+limit || +process.env.LIMIT);
+    options.offset = offset;
+    options.limit = +limit || +process.env.LIMIT;
+  }
+
+  const keys = generateKeyRedis(filter, sort, fields, page, limit);
+  const alreadyGetAll = await redis.get(keys);
+  if (alreadyGetAll) {
+    return res.json({
+      success: true,
+      msg: "Got successfully!",
+      PropertyTypes: JSON.parse(alreadyGetAll),
+    });
+  }
+
+  if (limit || page) {
+    const response = await db.PropertyType.findAndCountAll({
+      where: query,
+      ...options,
+    });
+    redis.set(keys, JSON.stringify(response));
+    redis.expireAt(keys, parseInt(+new Date() / 1000) + 86400);
+    return res.status(200).json({
+      success: response ? true : false,
+      msg: response ? "Got successfully!" : "Cant got!",
+      count: response.rows.length,
+      PropertyTypes: response.rows,
+    });
+  } else {
     const response = await db.PropertyType.findAll({ ...filter });
     redis.set(keys, JSON.stringify(response));
-    redis.expireAt(keys, parseInt(+new Date() / 1000) + 20);
+    redis.expireAt(keys, parseInt(+new Date() / 1000) + 86400);
     return res.status(200).json({
       success: response.length > 0,
       msg: response ? "Got successfully!" : "Cant got!",
@@ -80,21 +104,6 @@ export const getPropertyType = asyncHandler(async (req, res, next) => {
       PropertyTypes: response,
     });
   }
-  // cho phân trang
-  const offset = !page || +page <= 1 ? 0 : +page - 1;
-  const flimit = +limit || +process.env.LIMIT;
-  options.offset = offset * flimit;
-  options.limit = +flimit;
-  const response = await db.PropertyType.findAndCountAll({
-    where: query,
-    ...options,
-  });
-  return res.status(200).json({
-    success: response ? true : false,
-    msg: response ? "Got successfully!" : "Cant got!",
-    count: response.length,
-    PropertyTypes: response,
-  });
 });
 
 // export const getPropertyType = asyncHandler(async (req, res, next) => {

@@ -13,7 +13,7 @@ const FilterItem = ({ title, span, className, onClick }) => {
           className
         )
       )}
-      onClick={onClick} // Corrected to onClick
+      onClick={onClick}
     >
       <p className="group-hover:text-main-400">{title}</p>
       <div className="flex items-center gap-1 text-gray-400">

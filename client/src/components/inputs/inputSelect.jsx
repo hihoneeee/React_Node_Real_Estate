@@ -21,13 +21,15 @@ const InputSelect = ({
       )}
       <select
         id={id}
-        className={twMerge(clsx("px-3 py-2 border rounded-md cursor-pointer", selectClassName))}
+        className={twMerge(
+          clsx("px-3 py-2 border rounded-md cursor-pointer", selectClassName)
+        )}
         {...register(id, validate)}
       >
         <option value="">{placeholder}</option>
         {options.map((el) => (
-          <option key={el.code} value={el.code}>
-            {el.label}
+          <option key={el.id} value={el.id}>
+            {el.title}
           </option>
         ))}
       </select>

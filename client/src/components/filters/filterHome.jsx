@@ -1,7 +1,14 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, FilterItem, InputForm, InputSelect } from "src/components";
+import {
+  Button,
+  FilterItem,
+  InputForm,
+  InputSelect,
+  LibSelect,
+} from "src/components";
+import { usePropertyTypeStore } from "src/store/usePropertyTypeStore";
 import icons from "src/utils/icons";
 import { twMerge } from "tailwind-merge";
 const { FaSearch } = icons;
@@ -10,15 +17,19 @@ const FilterHome = () => {
   const {
     register,
     formState: { errors },
+    handleSubmit,
+    watch,
+    setValue,
   } = useForm();
   const [activeFilter, setActiveFilter] = useState(null);
-
+  const { propertyTypes } = usePropertyTypeStore();
+  const type = watch("propertyType");
   const handleFilterToggle = (filter) => {
     setActiveFilter((prevFilter) => (prevFilter === filter ? null : filter));
   };
 
   return (
-    <>
+    <form>
       <div
         className={twMerge(
           clsx(
@@ -49,7 +60,7 @@ const FilterHome = () => {
             className="px-4 py-3 bg-main-500 text-white rounded-md"
             text="Search"
             IcAfter={FaSearch}
-            onClick={() => setActiveFilter(null)}
+            onClick={handleSubmit((data) => console.log(data))}
           />
         </div>
       </div>
@@ -68,13 +79,15 @@ const FilterHome = () => {
       )}
       {activeFilter === "propertyType" && (
         <div className="bg-white shadow-xl rounded-b-3xl p-4 space-y-4">
-          <InputSelect
+          <LibSelect
             id="propertyType"
             label="Property Type"
             placeholder="Enter property type"
             register={register}
             errors={errors}
             validate={{ required: "Property type is required" }}
+            options={propertyTypes?.map((el) => ({ ...el, label: el.title }))}
+            onChange={(val) => setValue("propertyType", val)}
           />
         </div>
       )}
@@ -90,7 +103,7 @@ const FilterHome = () => {
           />
         </div>
       )}
-    </>
+    </form>
   );
 };
 

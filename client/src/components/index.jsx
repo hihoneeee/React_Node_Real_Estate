@@ -10,6 +10,7 @@ export { default as InputTinyMCE } from "./inputs/inputTinyMCE";
 export { default as InputTextArea } from "./inputs/inputTextArea";
 export { default as InputFile } from "./inputs/inputFile";
 export { default as InputSelect } from "./inputs/inputSelect";
+export { default as LibSelect } from "./inputs/libSelect";
 
 export { default as AdminSidebar } from "./sidebars/adminSidebar";
 export { default as CurrentUser } from "./user/currentUser";
