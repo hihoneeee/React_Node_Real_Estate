@@ -18,13 +18,21 @@ const getIpAddress = () => {
   return Object.values(results)[0];
 };
 
-export const generateKeyRedis = (filter, sort, fields, page, limit) => {
+export const generateKeyRedis = (
+  filter,
+  sort,
+  fields,
+  page,
+  limit,
+  address
+) => {
   const filterStringKey = JSON.stringify(filter)
     .replace(/\W/g, "")
     .split("")
     .sort((a, b) => a.localeCompare(b))
     .join("");
   const sortKey = sort ? sort.replace(/\W/g, "") : "";
+  const addressKey = address ? address.replace(/\W/g, "") : "";
   const fieldsKey = fields ? fields.replace(/\W/g, "") : "";
   const pageKey = page ? page.toString().replace(/\W/g, "") : "";
   const limitKey = limit ? limit.toString().replace(/\W/g, "") : "";

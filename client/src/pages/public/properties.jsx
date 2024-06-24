@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Rectangle from "src/assets/Rectangle.png";
@@ -8,19 +9,18 @@ import {
   PropertyCard,
 } from "src/components";
 import { usePropertyStore } from "src/store/usePropertyStore";
+import { useQueryString } from "src/utils/useQueryString";
 
 const Properties = () => {
   const [searchParams] = useSearchParams();
   const { properties, getProperties } = usePropertyStore();
-
+  const params = useQueryString();
   useEffect(() => {
-    const params = Object.fromEntries([...searchParams]);
     getProperties({
       limit: import.meta.env.VITE_LIMIT_PROPERTIES,
       ...params,
     });
   }, [searchParams, getProperties]);
-
   return (
     <div className="bg-white w-full h-fit">
       <div className="w-full bg-white relative">
@@ -28,7 +28,7 @@ const Properties = () => {
           <img src={Rectangle} className="h-60" alt="banner" />
           <div className="absolute flex flex-col items-center justify-center inset-0 gap-5">
             <h1 className="lg:text-4xl text-2xl font-semibold text-white">
-              Properties
+              {`${params.address || "Properties"}`}
             </h1>
             <BreadCreumbPublic />
           </div>

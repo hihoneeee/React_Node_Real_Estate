@@ -18,8 +18,11 @@ export const apiLogin = async (data) => {
     Cookies.remove("refresh_token", { path: "/" });
   }
   if (response && response.success) {
+    const expirationTime = new Date(
+      new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+    );
     Cookies.set("refresh_token", response.refresh_token, {
-      expires: 7,
+      expires: expirationTime,
       path: "/",
       secure: true,
       sameSite: "Strict",

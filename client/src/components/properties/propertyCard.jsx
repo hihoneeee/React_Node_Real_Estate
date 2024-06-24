@@ -20,7 +20,7 @@ const PropertyCard = ({ properties }) => {
       <div className="px-3 py-1 h-[12.5rem]">
         <div className="space-y-3 py-3 border-b-2 h-[8.5rem]">
           <p className="lg:text-base text-sm font-semibold hover:text-main-600 hover:underline cursor-pointer">
-            {properties.address}, {properties.title} - {properties.yearBuild}
+            {properties?.address}, {properties?.title} - {properties?.yearBuild}
           </p>
           <p className="text-main-600 font-semibold">
             $ {formatMoney(properties?.price)}
