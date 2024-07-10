@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
 import clsx from "clsx";
-import { createSearchParams } from "react-router-dom";
+import { createSearchParams, useSearchParams } from "react-router-dom";
 import withRouter from "src/hocs/withRouter";
 import { twMerge } from "tailwind-merge";
 
 const PaginationItem = ({ content, page, navigate, location }) => {
+  const [searchParams] = useSearchParams();
   const handleChangPage = () => {
+    const params = Object.fromEntries([...searchParams]);
+    params.page = content;
+    if (params.price) params.price = searchParams.getAll("price");
     navigate({
       pathname: location.pathname,
-      search: createSearchParams({ page: content }).toString(),
+      search: createSearchParams(params).toString(),
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

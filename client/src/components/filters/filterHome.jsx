@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { createSearchParams } from "react-router-dom";
 import { Button, FilterItem, InputForm, LibSelect } from "src/components";
 import withRouter from "src/hocs/withRouter";
+import { useAppStore } from "src/store/useAppStore";
 import { usePropertyTypeStore } from "src/store/usePropertyTypeStore";
 import icons from "src/utils/icons";
 import { path } from "src/utils/path";
@@ -18,6 +19,8 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
     handleSubmit,
     setValue,
   } = useForm();
+  const { setModal } = useAppStore();
+
   const [activeFilter, setActiveFilter] = useState(null);
   const { propertyTypes } = usePropertyTypeStore();
   const handleFilterToggle = (filter) => {
@@ -28,9 +31,10 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
     const params = new Object();
     if (address) params.address = data.address;
     if (propertyType) params.propertyTypeId = data.propertyType.id;
-    if (start && !end) params.price = [+start, Math.pow(10, 9)];
-    if (end && !start) params.price = [0, +end];
+    if (start && !end) params.price = ["gte", +start];
+    if (end && !start) params.price = ["lte", +end];
     if (start && end) params.price = [+start, +end];
+    if (direction === "vertical") setModal(false, null);
     navigate({
       pathname: `/${path.PROPERTIES}`,
       search: createSearchParams(params).toString(),
@@ -58,8 +62,6 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
             label="Property Type"
             placeholder="Enter property type"
             register={register}
-            errors={errors}
-            validate={{ required: "Property type is required" }}
             options={propertyTypes?.map((el) => ({
               ...el,
               label: el.title,
@@ -141,7 +143,6 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
                 type="text"
                 placeholder="Enter address"
                 register={register}
-                errors={errors}
                 isRequired={false}
               />
             </div>
@@ -153,8 +154,6 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
                 label="Property Type"
                 placeholder="Enter property type"
                 register={register}
-                errors={errors}
-                validate={{ required: "Property type is required" }}
                 options={propertyTypes?.map((el) => ({
                   ...el,
                   label: el.title,
@@ -172,7 +171,6 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
                 register={register}
                 type="number"
                 containerClassName="w-1/2"
-                errors={errors}
                 isRequired={false}
               />
               <InputForm
@@ -182,7 +180,6 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
                 register={register}
                 type="number"
                 containerClassName="w-1/2"
-                errors={errors}
                 isRequired={false}
               />
             </div>

@@ -18,10 +18,9 @@ const Properties = () => {
   const [sort, setSort] = useState("");
 
   useEffect(() => {
-    if (sort) {
-      params.sort = sort;
-    }
-
+    if (sort) params.sort = sort;
+    if (params.price) params.price = searchParams.getAll("price");
+    console.log(params);
     getProperties({
       limit: import.meta.env.VITE_LIMIT_PROPERTIES,
       ...params,
