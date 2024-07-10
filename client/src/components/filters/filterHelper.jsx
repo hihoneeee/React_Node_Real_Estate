@@ -1,28 +1,34 @@
+/* eslint-disable react/prop-types */
 import icons from "src/utils/icons";
-import { InputSelect } from "..";
+import { FilterHome, InputSelect } from "src/components";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
-import { useState } from "react";
-const { RxDashboard, BsMenuButtonWideFill } = icons;
-const FilterHelper = () => {
+import { useEffect, useState } from "react";
+import { useAppStore } from "src/store/useAppStore";
+const { RxDashboard } = icons;
+
+const FilterHelper = ({ setSort }) => {
   const [mode, setMode] = useState("all");
+  const { setModal } = useAppStore();
+
   const {
     register,
     formState: { errors },
     watch,
   } = useForm();
-  // const sort = watch("sort");
+
+  const sort = watch("sort");
+  useEffect(() => {
+    setSort(sort);
+  }, [sort, setSort]);
   return (
     <div className="flex items-center justify-between transition-all">
       <div className="flex items-center lg:text-xs text-xxs gap-2">
-        <BsMenuButtonWideFill
-          size={17}
-          className="lg:text-sm text-xs cursor-pointer hover:text-main-600 hover:font-semibold"
-        />
         <RxDashboard
           size={17}
           className="lg:text-sm text-xs cursor-pointer hover:text-main-600 hover:font-semibold"
+          onClick={() => setModal(true, <FilterHome direction="vertical" />)}
         />
         <p className="flex items-center gap-1">
           Sort By:
@@ -32,10 +38,10 @@ const FilterHelper = () => {
             errors={errors}
             placeholder="Default Order"
             options={[
-              { label: "Latest", value: "-createdAt" },
-              { label: "Oldest", value: "createdAt" },
-              { label: "A - Z", value: "name" },
-              { label: "Z - A", value: "-name" },
+              { title: "Latest", value: "-createdAt" },
+              { title: "Oldest", value: "createdAt" },
+              { title: "A - Z", value: "title" },
+              { title: "Z - A", value: "-title" },
             ]}
             selectClassName="text-gray-500 py-1 px-2"
           />
@@ -47,7 +53,7 @@ const FilterHelper = () => {
           className={twMerge(
             clsx(
               "hover:underline hover:text-main-400 cursor-pointer hover:font-semibold",
-              mode == "all" && "text-main-400 font-semibold underline"
+              mode === "all" && "text-main-400 font-semibold underline"
             )
           )}
         >
@@ -58,7 +64,7 @@ const FilterHelper = () => {
           className={twMerge(
             clsx(
               "hover:underline hover:text-main-400 cursor-pointer hover:font-semibold",
-              mode == "sale" && "text-main-400 font-semibold underline"
+              mode === "sale" && "text-main-400 font-semibold underline"
             )
           )}
         >
@@ -69,7 +75,7 @@ const FilterHelper = () => {
           className={twMerge(
             clsx(
               "hover:underline hover:text-main-400 cursor-pointer hover:font-semibold",
-              mode == "rent" && "text-main-400 font-semibold underline"
+              mode === "rent" && "text-main-400 font-semibold underline"
             )
           )}
         >

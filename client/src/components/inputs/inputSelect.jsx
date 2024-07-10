@@ -28,7 +28,7 @@ const InputSelect = ({
       >
         <option value="">{placeholder}</option>
         {options.map((el) => (
-          <option key={el.id} value={el.id}>
+          <option key={el.id} value={el.value}>
             {el.title}
           </option>
         ))}
