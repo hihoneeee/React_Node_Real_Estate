@@ -34,11 +34,13 @@ export const apiGetPropertyTypeId = async (id) => {
   });
 };
 
-export const getProfileUser = async (id) => {
-  const { data } = await axios({
-    url: `/property-type/get-one-type/${id}`,
-    method: "GET",
-  });
+// function normalizeUrl(url, params) {
+//   if (params) {
+//     return `${url}/?${params.fields ? `fields=${params.fields}` : ""}`;
+//   }
+//   return url;
+// }
 
-  return data;
-};
+// export const propertiesApiRequest = {
+//   get: (url, params) => http.get(normalizeUrl(url, params)),
+// };

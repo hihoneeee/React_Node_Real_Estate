@@ -64,13 +64,11 @@ const Login = () => {
 
   // send captcha
   const handleSendOTP = async (phone) => {
-    console.log("debug data: ", phone);
     setIsLoading(true);
     handleCaptchaVerify();
     const verifier = window.recaptchVerify;
     const formatPhone = "+84" + phone.slice(1);
     const response = await apiCheckPhoneNumber({ phone: phone });
-    console.log(response);
     if (response.success) {
       signInWithPhoneNumber(auth, formatPhone, verifier)
         .then((result) => {
@@ -99,7 +97,6 @@ const Login = () => {
       const { name, roleCode, ...payload } = data;
       setIsLoading(true);
       const response = await apiLogin({ name, roleCode, ...payload });
-      console.log(response);
       setIsLoading(false);
       if (response.success) {
         toast.success(response.msg);

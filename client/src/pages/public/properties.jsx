@@ -10,40 +10,35 @@ import {
 } from "src/components";
 import { usePropertyStore } from "src/store/usePropertyStore";
 import { useQueryString } from "src/hooks/useQueryString";
-// import { usePropertyTypeStore } from "src/store/usePropertyTypeStore";
-import { apiGetPropertyTypeId } from "src/apis/propertyType";
 const Properties = () => {
   const [searchParams] = useSearchParams();
   const { properties, getProperties } = usePropertyStore();
   const params = useQueryString();
   const [sort, setSort] = useState("");
-  // const { setPropertyType, propertyType } = usePropertyTypeStore();
-  const [title, setTitle] = useState("Properties");
-
+  const [title, setTitle] = useState("properties");
+  const { getPropertyTypeId, propertyType } = usePropertyStore();
   useEffect(() => {
-    if (sort) params.sort = sort;
-    if (params.price) params.price = searchParams.getAll("price");
+    if (sort) {
+      params.sort = sort;
+      setTitle(sort);
+    }
+    if (params.address) {
+      setTitle(params.address);
+    }
+    if (params.price) {
+      params.price = searchParams.getAll("price");
+      setTitle(searchParams.getAll("price"));
+    }
+    if (params.propertyTypeId) {
+      getPropertyTypeId(params.propertyTypeId);
+      setTitle(propertyType);
+    }
     getProperties({
       limit: import.meta.env.VITE_LIMIT_PROPERTIES,
       ...params,
     });
   }, [searchParams, getProperties, sort]);
 
-  useEffect(() => {
-    const fetchTitle = async () => {
-      const response = await apiGetPropertyTypeId(params.propertyTypeId);
-      console.log(response.data.title);
-      if (params) {
-        setTitle(
-          `search by: ${params.address || params.price || response.data.title}`
-        );
-      } else {
-        setTitle("Properties");
-      }
-    };
-
-    fetchTitle();
-  }, [params.propertyTypeId, params.address, params.price]);
   return (
     <div className="bg-white w-full h-fit">
       <div className="w-full bg-white relative">

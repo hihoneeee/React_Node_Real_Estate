@@ -20,7 +20,6 @@ const FilterHelper = ({ setSort }) => {
 
   const sort = watch("sort");
   useEffect(() => {
-    console.log("Running");
     setSort(sort);
   }, [sort, setSort]);
   return (
