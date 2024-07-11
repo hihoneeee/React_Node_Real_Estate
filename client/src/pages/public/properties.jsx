@@ -10,22 +10,40 @@ import {
 } from "src/components";
 import { usePropertyStore } from "src/store/usePropertyStore";
 import { useQueryString } from "src/hooks/useQueryString";
-
+// import { usePropertyTypeStore } from "src/store/usePropertyTypeStore";
+import { apiGetPropertyTypeId } from "src/apis/propertyType";
 const Properties = () => {
   const [searchParams] = useSearchParams();
   const { properties, getProperties } = usePropertyStore();
   const params = useQueryString();
   const [sort, setSort] = useState("");
+  // const { setPropertyType, propertyType } = usePropertyTypeStore();
+  const [title, setTitle] = useState("Properties");
 
   useEffect(() => {
     if (sort) params.sort = sort;
     if (params.price) params.price = searchParams.getAll("price");
-    console.log(params);
     getProperties({
       limit: import.meta.env.VITE_LIMIT_PROPERTIES,
       ...params,
     });
   }, [searchParams, getProperties, sort]);
+
+  useEffect(() => {
+    const fetchTitle = async () => {
+      const response = await apiGetPropertyTypeId(params.propertyTypeId);
+      console.log(response.data.title);
+      if (params) {
+        setTitle(
+          `search by: ${params.address || params.price || response.data.title}`
+        );
+      } else {
+        setTitle("Properties");
+      }
+    };
+
+    fetchTitle();
+  }, [params.propertyTypeId, params.address, params.price]);
   return (
     <div className="bg-white w-full h-fit">
       <div className="w-full bg-white relative">
@@ -33,7 +51,7 @@ const Properties = () => {
           <img src={Rectangle} className="h-60" alt="banner" />
           <div className="absolute flex flex-col items-center justify-center inset-0 gap-5">
             <h1 className="lg:text-4xl text-2xl font-semibold text-white">
-              {`${params.address || "Properties"}`}
+              {title}
             </h1>
             <BreadCreumbPublic />
           </div>

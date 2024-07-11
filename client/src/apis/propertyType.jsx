@@ -26,3 +26,19 @@ export const apiDeletePropertyType = (data) =>
     method: "DELETE",
     data,
   });
+
+export const apiGetPropertyTypeId = async (id) => {
+  return await axios({
+    url: `/property-type/get-one-type/${id}`,
+    method: "GET",
+  });
+};
+
+export const getProfileUser = async (id) => {
+  const { data } = await axios({
+    url: `/property-type/get-one-type/${id}`,
+    method: "GET",
+  });
+
+  return data;
+};

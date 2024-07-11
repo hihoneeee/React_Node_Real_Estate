@@ -83,7 +83,6 @@ export const getProperty = asyncHandler(async (req, res, next) => {
     where: query,
     ...options,
   };
-  console.log(query);
   const keys = generateKeyRedis(filter, sort, fields, page, limit, address);
   if (!limit) {
     const response = await db.Property.findAll({ ...filter });

@@ -73,7 +73,7 @@ export const getPropertyType = asyncHandler(async (req, res, next) => {
       success: response.length > 0,
       msg: response ? "Got successfully!" : "Cant got!",
       count: response.length,
-      PropertyTypes: response,
+      data: response,
     });
   } else {
     const offset =
@@ -90,7 +90,7 @@ export const getPropertyType = asyncHandler(async (req, res, next) => {
       success: response ? true : false,
       msg: response ? "Got successfully!" : "Cant got!",
       count: response.rows.length,
-      PropertyTypes: response
+      data: response
         ? { ...response, limit: +limit, page: +page ? +page : 1 }
         : null,
     });
@@ -128,5 +128,20 @@ export const deletePropertyType = asyncHandler(async (req, res, next) => {
   return res.status(200).json({
     success: response > 0,
     msg: response > 0 ? "Deleted successfully!" : "Property Type not found!",
+  });
+});
+
+export const getPropertyTypeById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const response = await db.PropertyType.findOne({
+    where: { id: id },
+    attributes: {
+      exclude: ["id", "updatedAt", "createdAt"],
+    },
+  });
+  return res.status(200).json({
+    success: response ? true : false,
+    msg: response ? "Got successfully!" : "Property Type not found!",
+    data: response,
   });
 });

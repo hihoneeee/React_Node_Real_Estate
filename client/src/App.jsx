@@ -14,14 +14,27 @@ import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUserStore } from "src/store/useUserStore";
 import { usePropertyTypeStore } from "./store/usePropertyTypeStore";
+import { apiGetPropertyType } from "./apis/propertyType";
 
 const App = () => {
   const { isShowModal } = useAppStore();
   const { getCurrent, token } = useUserStore();
-  const { getPropertyType } = usePropertyTypeStore();
+  const { setPropertyTypes } = usePropertyTypeStore();
   useEffect(() => {
     getCurrent();
-    getPropertyType({ sort: "title", fields: "id,title,image" });
+    const fetchPropertyTypes = async () => {
+      try {
+        const response = await apiGetPropertyType({
+          sort: "title",
+          fields: "id,title,image",
+        });
+        console.log(response.data);
+        setPropertyTypes(response.data);
+      } catch (error) {
+        console.error("Error fetching property types:", error);
+      }
+    };
+    fetchPropertyTypes();
   }, [token]);
   return (
     <>

@@ -4,7 +4,7 @@ import { FilterHome, InputSelect } from "src/components";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppStore } from "src/store/useAppStore";
 const { RxDashboard } = icons;
 
@@ -20,6 +20,7 @@ const FilterHelper = ({ setSort }) => {
 
   const sort = watch("sort");
   useEffect(() => {
+    console.log("Running");
     setSort(sort);
   }, [sort, setSort]);
   return (
@@ -86,4 +87,4 @@ const FilterHelper = ({ setSort }) => {
   );
 };
 
-export default FilterHelper;
+export default React.memo(FilterHelper);

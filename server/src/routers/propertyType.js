@@ -12,6 +12,7 @@ const router = express.Router();
 // public
 router.use(rateLimter);
 router.get("/", controller.getPropertyType);
+router.get("/get-one-type/:id", controller.getPropertyTypeById);
 
 //private
 router.use(verifyAccessToken);

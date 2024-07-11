@@ -10,6 +10,7 @@ import { twMerge } from "tailwind-merge";
 import withRouter from "src/hocs/withRouter";
 import { useUserStore } from "src/store/useUserStore";
 import { useAppStore } from "src/store/useAppStore";
+import { v4 as uuidV4 } from "uuid";
 const { PiHouseLineLight } = icons;
 
 const Navigation = ({ location }) => {
@@ -59,33 +60,31 @@ const Navigation = ({ location }) => {
       <div className="flex items-center gap-6">
         {nav?.map((el) => {
           return (
-            <>
-              <p
-                key={el.id}
-                className={twMerge(
+            <p
+              key={uuidV4()}
+              className={twMerge(
+                clsx(
+                  "py-2 lg:text-xs text-xxs text-gray-300 hover:text-white hover:border-b transition-all font-normal"
+                ),
+                location.pathname !== "/" &&
+                  "text-gray-400 hover:text-main-500 border-main-500 "
+              )}
+            >
+              <NavLink
+                className={({ isActive }) =>
                   clsx(
-                    "py-2 lg:text-xs text-xxs text-gray-300 hover:text-white hover:border-b transition-all font-normal"
-                  ),
-                  location.pathname !== "/" &&
-                    "text-gray-400 hover:text-main-500 border-main-500 "
-                )}
+                    location.pathname !== "/"
+                      ? isActive &&
+                          "py-2  text-main-500 border-b border-main-500 "
+                      : isActive && "py-2 text-white border-b "
+                  )
+                }
+                key={el.id}
+                to={el.path}
               >
-                <NavLink
-                  className={({ isActive }) =>
-                    clsx(
-                      location.pathname !== "/"
-                        ? isActive &&
-                            "py-2  text-main-500 border-b border-main-500 "
-                        : isActive && "py-2 text-white border-b "
-                    )
-                  }
-                  key={el.id}
-                  to={el.path}
-                >
-                  {el.title}
-                </NavLink>
-              </p>
-            </>
+                {el.title}
+              </NavLink>
+            </p>
           );
         })}
         <span

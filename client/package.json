@@ -28,6 +28,7 @@
     "sweetalert2": "^11.10.8",
     "tailwind-merge": "^2.3.0",
     "use-react-router-breadcrumbs": "^4.0.1",
+    "uuid": "^10.0.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
