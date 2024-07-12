@@ -72,23 +72,13 @@ export const adminSidebar = [
 export const showOptions = [
   {
     id: 1,
-    name: "Personal",
-    code: "SU4",
-  },
-  {
-    id: 2,
-    name: "Agent",
-    code: "GA5",
-  },
-  {
-    id: 4,
-    name: "Owner",
-    code: "WO5",
-  },
-  {
-    id: 4,
     name: "Admin",
-    code: "DA5",
+    code: "D22MD2",
+  },
+  {
+    id: 1,
+    name: "Admin",
+    code: "D22MD2",
   },
 ];
 

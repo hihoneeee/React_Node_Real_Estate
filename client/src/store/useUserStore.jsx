@@ -18,10 +18,10 @@ export const useUserStore = create(
           const refreshToken = Cookies.get("refresh_token");
           if (refreshToken) {
             const response = await apiRefreshToken({
-              refresh_token: refreshToken,
+              token: refreshToken,
             });
             if (response.success) {
-              set(() => ({ token: response.access_token }));
+              set(() => ({ token: response.accessToken }));
               const retryResponse = await apiGetCurrent();
               if (retryResponse.success) {
                 return set(() => ({ current: retryResponse.data }));

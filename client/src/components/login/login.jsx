@@ -3,7 +3,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { apiRegister, apiLogin, apiCheckPhoneNumber } from "src/apis/auth";
+import { apiRegister, apiLogin } from "src/apis/auth";
 import { Button, InputForm, InputRadio, VerifyOTP } from "src/components";
 import { useAppStore } from "src/store/useAppStore";
 import { useUserStore } from "src/store/useUserStore";
@@ -68,25 +68,19 @@ const Login = () => {
     handleCaptchaVerify();
     const verifier = window.recaptchVerify;
     const formatPhone = "+84" + phone.slice(1);
-    const response = await apiCheckPhoneNumber({ phone: phone });
-    if (response.success) {
-      signInWithPhoneNumber(auth, formatPhone, verifier)
-        .then((result) => {
-          setIsLoading(false);
-          window.confirmationResult = result;
-          toast.success("Sent OTP to your phone successfully!");
-          setIsShowOTP(true);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          console.log(error);
-          window.isSentOTP = false;
-          toast.error("Something went wrong!");
-        });
-    } else {
-      toast.error("Phone number already had exists!");
-      setModal(false, null);
-    }
+    signInWithPhoneNumber(auth, formatPhone, verifier)
+      .then((result) => {
+        setIsLoading(false);
+        window.confirmationResult = result;
+        toast.success("Sent OTP to your phone successfully!");
+        setIsShowOTP(true);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+        window.isSentOTP = false;
+        toast.error("Something went wrong!");
+      });
   };
 
   const onSubmit = async (data) => {
@@ -101,7 +95,7 @@ const Login = () => {
       if (response.success) {
         toast.success(response.msg);
         setModal(false, null);
-        setToken(response.access_token);
+        setToken(response.accessToken);
       } else toast.error(response.msg);
     }
   };
@@ -173,14 +167,24 @@ const Login = () => {
         className={twMerge(clsx("flex flex-col gap-4", isShowOTP && "hidden"))}
       >
         {variant === "register" && (
-          <InputForm
-            register={register}
-            id="name"
-            label="Full name"
-            placeholder="Enter your name..."
-            validate={{ required: "This field can't emty!" }}
-            errors={errors}
-          />
+          <div className="flex items-center gap-2">
+            <InputForm
+              register={register}
+              id="first_name"
+              label="First Name"
+              placeholder="Enter your first name..."
+              validate={{ required: "This field can't emty!" }}
+              errors={errors}
+            />
+            <InputForm
+              register={register}
+              id="last_name"
+              label="Last Name"
+              placeholder="Enter your last name..."
+              validate={{ required: "This field can't emty!" }}
+              errors={errors}
+            />
+          </div>
         )}
         <InputForm
           register={register}
@@ -213,9 +217,8 @@ const Login = () => {
             label="Type account"
             validate={{ required: "This field can't emty!" }}
             options={[
-              { label: "User", value: "SU4" },
-              { label: "Agent", value: "GA5" },
-              { label: "Owner", value: "WO5" },
+              { label: "Seller", value: "E7RLE7" },
+              { label: "Buyer", value: "U12YU1" },
             ]}
           />
         )}

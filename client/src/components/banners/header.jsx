@@ -106,13 +106,13 @@ const Header = ({ location }) => {
                     <p className="lg:text-sm text-xs">
                       Name:{" "}
                       <span className="capitalize font-semibold">
-                        {current?.name}
+                        {current?.first_name}
                       </span>
                     </p>
                     <p className="lg:text-sm text-xs">
                       ID:{" "}
                       <span className="uppercase font-semibold">
-                        #{current?.id.slice(0, 6)}
+                        #{current?.id}
                       </span>
                     </p>
                     <p className="lg:text-sm text-xs">

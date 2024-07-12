@@ -21,7 +21,7 @@ export const apiLogin = async (data) => {
     const expirationTime = new Date(
       new Date().getTime() + 7 * 24 * 60 * 60 * 1000
     );
-    Cookies.set("refresh_token", response.refresh_token, {
+    Cookies.set("refresh_token", response.refreshToken, {
       expires: expirationTime,
       path: "/",
       secure: true,
@@ -43,13 +43,3 @@ export const apiRefreshToken = (data) =>
     method: "POST",
     data,
   });
-
-export const apiCheckPhoneNumber = async (data) => {
-  return await axios({
-    url: "/auth/check-phone",
-    method: "POST",
-    data: {
-      ...data,
-    },
-  });
-};
