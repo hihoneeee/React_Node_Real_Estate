@@ -76,9 +76,14 @@ export const showOptions = [
     code: "D22MD2",
   },
   {
-    id: 1,
-    name: "Admin",
-    code: "D22MD2",
+    id: 2,
+    name: "Seller",
+    code: "E7RLE7",
+  },
+  {
+    id: 3,
+    name: "Buyer",
+    code: "U12YU1",
   },
 ];
 

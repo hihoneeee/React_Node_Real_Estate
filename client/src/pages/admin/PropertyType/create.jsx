@@ -9,7 +9,7 @@ import {
 import { path } from "src/utils/path";
 import { useForm } from "react-hook-form";
 import Button from "src/components/common/button";
-import { apiCreatePropertyType } from "src/apis/propertyType";
+import { apiGetCategory } from "src/apis/category";
 import { toast } from "react-toastify";
 import withRouter from "src/hocs/withRouter";
 
@@ -25,7 +25,7 @@ const CreatePropertyType = ({ navigate }) => {
 
   const onSubmit = async (data) => {
     const { image, ...payload } = data;
-    const response = await apiCreatePropertyType({
+    const response = await apiGetCategory({
       image: image[0],
       ...payload,
     });

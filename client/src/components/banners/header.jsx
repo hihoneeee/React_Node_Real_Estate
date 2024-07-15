@@ -99,7 +99,7 @@ const Header = ({ location }) => {
 
               {showUser && (
                 <div
-                  className=" bg-white absolute text-black p-4 top-[3.5rem] h-[8.5rem] z-30 w-[8rem] rounded-md shadow-xl"
+                  className=" bg-white absolute text-black p-4 top-[3.5rem] h-[6.5rem] z-30 w-[8rem] rounded-md shadow-xl"
                   ref={userMenuRef}
                 >
                   <div className="relative flex flex-col items-center gap-3 w-full">
@@ -109,18 +109,13 @@ const Header = ({ location }) => {
                         {current?.first_name}
                       </span>
                     </p>
-                    <p className="lg:text-sm text-xs">
-                      ID:{" "}
-                      <span className="uppercase font-semibold">
-                        #{current?.id}
-                      </span>
-                    </p>
+
                     <p className="lg:text-sm text-xs">
                       Role:{" "}
                       <span className="uppercase font-semibold">
                         {showOptions.map((item) => (
                           <Fragment key={item.code}>
-                            {current?.roleData?.code === item.code && (
+                            {current?.roleCode === item.code && (
                               <Link>{item.name}</Link>
                             )}
                           </Fragment>

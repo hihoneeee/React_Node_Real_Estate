@@ -10,35 +10,35 @@ import {
 } from "src/components";
 import { usePropertyStore } from "src/store/usePropertyStore";
 import { useQueryString } from "src/hooks/useQueryString";
+import { useCategoryStore } from "src/store/useCategoryStore";
 const Properties = () => {
   const [searchParams] = useSearchParams();
   const { properties, getProperties } = usePropertyStore();
+  const { category, getCategory } = useCategoryStore();
   const params = useQueryString();
   const [sort, setSort] = useState("");
   const [title, setTitle] = useState("properties");
-  const { getPropertyTypeId, propertyType } = usePropertyStore();
   useEffect(() => {
     if (sort) {
       params.sort = sort;
-      setTitle(sort);
+      setTitle("filter sort: " + sort);
     }
     if (params.address) {
-      setTitle(params.address);
+      setTitle("filter address: " + params.address);
     }
     if (params.price) {
       params.price = searchParams.getAll("price");
-      setTitle(searchParams.getAll("price"));
+      setTitle("filter price: " + searchParams.getAll("price"));
     }
-    if (params.propertyTypeId) {
-      getPropertyTypeId(params.propertyTypeId);
-      setTitle(propertyType);
+    if (params.categoryId) {
+      getCategory(params.categoryId);
+      setTitle("filter category: " + category.title);
     }
     getProperties({
       limit: import.meta.env.VITE_LIMIT_PROPERTIES,
       ...params,
     });
   }, [searchParams, getProperties, sort]);
-
   return (
     <div className="bg-white w-full h-fit">
       <div className="w-full bg-white relative">
@@ -55,12 +55,12 @@ const Properties = () => {
       <div className="px-60 py-16 space-y-8">
         <FilterHelper setSort={setSort} />
         <div className="grid desktop:grid-cols-4 laptop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-y-10 justify-items-center">
-          {properties?.rows?.map((el) => (
+          {properties?.data?.map((el) => (
             <PropertyCard key={el.id} properties={el} />
           ))}
         </div>
         <Pagination
-          total={properties?.count}
+          total={properties?.total}
           limit={properties?.limit}
           page={properties?.page}
         />

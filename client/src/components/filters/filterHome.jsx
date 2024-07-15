@@ -6,7 +6,7 @@ import { createSearchParams } from "react-router-dom";
 import { Button, FilterItem, InputForm, LibSelect } from "src/components";
 import withRouter from "src/hocs/withRouter";
 import { useAppStore } from "src/store/useAppStore";
-import { usePropertyTypeStore } from "src/store/usePropertyTypeStore";
+import { useCategoryStore } from "src/store/useCategoryStore";
 import icons from "src/utils/icons";
 import { path } from "src/utils/path";
 import { twMerge } from "tailwind-merge";
@@ -22,15 +22,15 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
   const { setModal } = useAppStore();
 
   const [activeFilter, setActiveFilter] = useState(null);
-  const { propertyTypes } = usePropertyTypeStore();
+  const { categories } = useCategoryStore();
   const handleFilterToggle = (filter) => {
     setActiveFilter((prevFilter) => (prevFilter === filter ? null : filter));
   };
   const handleSubmitFilter = (data) => {
-    const { address, start, end, propertyType } = data;
+    const { address, start, end, category } = data;
     const params = new Object();
     if (address) params.address = data.address;
-    if (propertyType) params.propertyTypeId = data.propertyType.id;
+    if (category) params.categoryId = data.category.id;
     if (start && !end) params.price = ["gte", +start];
     if (end && !start) params.price = ["lte", +end];
     if (start && end) params.price = [+start, +end];
@@ -58,15 +58,15 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
             isRequired={false}
           />
           <LibSelect
-            id="propertyType"
+            id="category"
             label="Property Type"
             placeholder="Enter property type"
             register={register}
-            options={propertyTypes?.map((el) => ({
+            options={categories?.map((el) => ({
               ...el,
               label: el.title,
             }))}
-            onChange={(val) => setValue("propertyType", val)}
+            onChange={(val) => setValue("category", val)}
           />
           <div className=" flex items-center gap-4">
             <InputForm
@@ -119,7 +119,7 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
             <FilterItem
               title="Property Type"
               span="property type"
-              onClick={() => handleFilterToggle("propertyType")}
+              onClick={() => handleFilterToggle("category")}
             />
             <FilterItem
               title="Rent Range"
@@ -147,18 +147,18 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
               />
             </div>
           )}
-          {activeFilter === "propertyType" && (
+          {activeFilter === "category" && (
             <div className="bg-white shadow-xl rounded-b-3xl p-4 space-y-4">
               <LibSelect
-                id="propertyType"
-                label="Property Type"
-                placeholder="Enter property type"
+                id="category"
+                label="Category"
+                placeholder="Enter category"
                 register={register}
-                options={propertyTypes?.map((el) => ({
+                options={categories?.map((el) => ({
                   ...el,
                   label: el.title,
                 }))}
-                onChange={(val) => setValue("propertyType", val)}
+                onChange={(val) => setValue("category", val)}
               />
             </div>
           )}

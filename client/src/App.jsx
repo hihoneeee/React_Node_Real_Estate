@@ -13,15 +13,15 @@ import { useAppStore } from "src/store/useAppStore";
 import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUserStore } from "src/store/useUserStore";
-import { usePropertyTypeStore } from "./store/usePropertyTypeStore";
+import { useCategoryStore } from "./store/useCategoryStore";
 
 const App = () => {
   const { isShowModal } = useAppStore();
   const { getCurrent, token } = useUserStore();
-  const { getPropertyType } = usePropertyTypeStore();
+  const { getCategories } = useCategoryStore();
   useEffect(() => {
     getCurrent();
-    getPropertyType({ sort: "title", fields: "id,title,image" });
+    getCategories();
   }, [token]);
 
   return (

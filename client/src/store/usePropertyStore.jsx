@@ -8,7 +8,7 @@ export const usePropertyStore = create((set) => ({
     try {
       const response = await apiGetProperties(params);
       if (response.success) {
-        set(() => ({ properties: response.properties }));
+        set(() => ({ properties: response }));
       } else {
         set(() => ({ properties: null }));
         toast.error(response.msg);
