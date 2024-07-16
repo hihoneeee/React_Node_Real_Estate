@@ -13,7 +13,7 @@ import { apiGetCategory } from "src/apis/category";
 import { toast } from "react-toastify";
 import withRouter from "src/hocs/withRouter";
 
-const CreatePropertyType = ({ navigate }) => {
+const CreateCategory = ({ navigate }) => {
   const {
     register,
     formState: { errors },
@@ -41,7 +41,7 @@ const CreatePropertyType = ({ navigate }) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between border-b-2 border-gray-300 pb-4 pt-0">
-        <TextH1 title="Create Property Type" />
+        <TextH1 title="Create Category" />
         <BreadCreumbAdmin />
       </div>
       <div className="w-1/2 rounded-md shadow-md p-4 bg-white">
@@ -83,4 +83,4 @@ const CreatePropertyType = ({ navigate }) => {
   );
 };
 
-export default withRouter(CreatePropertyType);
+export default withRouter(CreateCategory);

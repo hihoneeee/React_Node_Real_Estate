@@ -20,8 +20,8 @@ const PropertyCard = ({ properties }) => {
       <div className="px-3 py-1 h-[12.5rem]">
         <div className="space-y-3 py-3 border-b-2 h-[8.5rem]">
           <p className="lg:text-base text-sm font-semibold hover:text-main-600 hover:underline cursor-pointer">
-            {properties?.dataDetail?.address}, {properties?.title} -
-            {properties?.dataDetail?.yearBuild}
+            {properties?.dataDetail?.address},
+            {`${properties?.title?.slice(0, 5)}...`}
           </p>
           <p className="text-main-600 font-semibold">
             $ {formatMoney(properties?.price)}
@@ -44,12 +44,13 @@ const PropertyCard = ({ properties }) => {
         <div className="flex items-center justify-between py-3 h-[4rem]">
           <div className="flex items-center gap-2">
             <img
-              src={properties?.userData?.avatar}
+              src={properties?.dataDetail?.userData?.avatar}
               alt="avatar"
               className="rounded-full h-8 w-8 object-cover cursor-pointer"
             />
             <p className="lg:text-sm text-xs font-semibold hover:text-main-600 cursor-pointer">
-              {properties?.userData?.name}
+              {properties?.dataDetail?.userData?.first_name}
+              {properties?.dataDetail?.userData?.last_name}
             </p>
           </div>
           <div className="flex items-center gap-2">

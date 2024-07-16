@@ -13,6 +13,8 @@ export { default as InputSelect } from "./inputs/inputSelect";
 export { default as LibSelect } from "./inputs/libSelect";
 
 export { default as AdminSidebar } from "./sidebars/adminSidebar";
+export { default as PersonalSidebar } from "./sidebars/personalSidebar";
+
 export { default as CurrentUser } from "./user/currentUser";
 export { default as HeaderAdmin } from "./banners/headerAdmin";
 export { default as Path } from "./common/path";
@@ -31,3 +33,5 @@ export { default as PropertyCard } from "./properties/propertyCard";
 
 export { default as Pagination } from "./paginations/pagination";
 export { default as PaginationItem } from "./paginations/paginationItem";
+
+export { default as NotFoud404 } from "./common/notFoud404";

@@ -1,11 +1,11 @@
 import { BreadCreumbAdmin, TextH1 } from "src/components";
 import { path } from "src/utils/path";
 import { Table } from "src/components";
-const ManagePropertyType = () => {
+const ManageCategory = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <TextH1 title="Manage Property Type" />
+        <TextH1 title="Manage Category" />
         <BreadCreumbAdmin />
       </div>
       <div>
@@ -17,4 +17,4 @@ const ManagePropertyType = () => {
   );
 };
 
-export default ManagePropertyType;
+export default ManageCategory;

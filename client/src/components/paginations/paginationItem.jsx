@@ -24,7 +24,7 @@ const PaginationItem = ({ content, page, navigate, location }) => {
     );
   return (
     <button
-      type="button"
+      type=""
       onClick={handleChangPage}
       className={twMerge(
         clsx(

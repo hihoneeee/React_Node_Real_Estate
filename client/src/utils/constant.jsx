@@ -1,6 +1,7 @@
 import { path } from "./path";
 import icons from "./icons";
-const { RiDashboard2Line, BiCategory, FaRegCircle } = icons;
+const { RiDashboard2Line, BiCategory, FaRegCircle, FiUserCheck, FaRegHeart } =
+  icons;
 export const nav = [
   {
     id: 1,
@@ -49,23 +50,38 @@ export const adminSidebar = [
   },
   {
     id: 2,
-    name: "Properties Type",
+    name: "Category",
     icon: <BiCategory />,
     type: "parent",
     subs: [
       {
         id: 21,
-        path: `/${path.ADMIN}/${path.PROPERTY_TYPE}`,
-        name: "Manage Properties Type",
+        path: `/${path.ADMIN}/${path.CATEGORY}`,
+        name: "Manage Category",
         icon: <FaRegCircle />,
       },
       {
         id: 22,
-        path: `/${path.ADMIN}/${path.PROPERTY_TYPE}/${path.CREATE_PROPERTY_TYPE}`,
-        name: "Create Properties Type",
+        path: `/${path.ADMIN}/${path.CATEGORY}/${path.CREATE_CATEGORY}`,
+        name: "Create Category",
         icon: <FaRegCircle />,
       },
     ],
+  },
+];
+
+export const personalSidebar = [
+  {
+    id: 1,
+    title: "Your Profile",
+    icon: <FiUserCheck />,
+    path: `/${path.PERSONAL}/${path.PROFILE}`,
+  },
+  {
+    id: 2,
+    title: "Your wishlist",
+    icon: <FaRegHeart />,
+    path: `/${path.PERSONAL}/${path.WISHLIST}`,
   },
 ];
 

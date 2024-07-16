@@ -21,7 +21,18 @@ const Properties = () => {
   useEffect(() => {
     if (sort) {
       params.sort = sort;
-      setTitle("filter sort: " + sort);
+      if (sort === "-createdAt") {
+        setTitle("filter sort: Latest");
+      }
+      if (sort === "createdAt") {
+        setTitle("filter sort: Oldest");
+      }
+      if (sort === "title") {
+        setTitle("filter sort: A - Z");
+      }
+      if (sort === "-title") {
+        setTitle("filter sort: Z - A");
+      }
     }
     if (params.address) {
       setTitle("filter address: " + params.address);
@@ -32,6 +43,7 @@ const Properties = () => {
     }
     if (params.categoryId) {
       getCategory(params.categoryId);
+      category.title
       setTitle("filter category: " + category.title);
     }
     getProperties({
@@ -52,7 +64,7 @@ const Properties = () => {
           </div>
         </div>
       </div>
-      <div className="px-60 py-16 space-y-8">
+      <div className="px-52 py-16 space-y-8">
         <FilterHelper setSort={setSort} />
         <div className="grid desktop:grid-cols-4 laptop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-y-10 justify-items-center">
           {properties?.data?.map((el) => (

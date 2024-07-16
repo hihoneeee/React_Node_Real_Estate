@@ -59,8 +59,8 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
           />
           <LibSelect
             id="category"
-            label="Property Type"
-            placeholder="Enter property type"
+            label="Category"
+            placeholder="Enter category"
             register={register}
             options={categories?.map((el) => ({
               ...el,
@@ -117,8 +117,8 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
               onClick={() => handleFilterToggle("address")}
             />
             <FilterItem
-              title="Property Type"
-              span="property type"
+              title="Category"
+              span="category"
               onClick={() => handleFilterToggle("category")}
             />
             <FilterItem

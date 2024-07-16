@@ -11,6 +11,7 @@ import iconUser from "src/assets/icon_user.svg";
 import { showOptions } from "src/utils/constant";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { path } from "src/utils/path";
 const {
   FaFacebookF,
   FaLinkedinIn,
@@ -19,6 +20,8 @@ const {
   FaDribbble,
   HiOutlineMailOpen,
   FiPhone,
+  CiLogout,
+  RiFileUserLine,
 } = icons;
 
 const Header = ({ location }) => {
@@ -31,7 +34,7 @@ const Header = ({ location }) => {
     getCurrent(null);
     clearCurrent();
     Cookies.remove("refresh_token", { path: "/" });
-    setShowUser(false); // Reset showUser state on logout
+    setShowUser(false);
     toast.success("Logout successfully!");
   };
 
@@ -87,9 +90,29 @@ const Header = ({ location }) => {
             <span className="border-r-2 mr-2 ml-2 border-white"></span>
             <div className="relative z-20 flex items-center justify-center">
               <div
-                className="hover:cursor-pointer rounded-full hover:bg-overlay-30"
+                className="hover:cursor-pointer rounded-md hover:bg-overlay-30 flex items-center gap-2 px-2"
                 onClick={() => setShowUser(true)}
               >
+                <div className="space-y-1">
+                  <p className="lg:text-xs text-xxs">
+                    Name:{" "}
+                    <span className="capitalize font-semibold">
+                      {current?.first_name}
+                    </span>
+                  </p>
+                  <p className="lg:text-xs text-xxs">
+                    Role:{" "}
+                    <span className="uppercase font-semibold">
+                      {showOptions.map((item) => (
+                        <Fragment key={item.code}>
+                          {current?.roleCode === item.code && (
+                            <Link>{item.name}</Link>
+                          )}
+                        </Fragment>
+                      ))}
+                    </span>
+                  </p>
+                </div>
                 <img
                   className="h-8 w-8 object-cover "
                   src={iconUser}
@@ -99,35 +122,21 @@ const Header = ({ location }) => {
 
               {showUser && (
                 <div
-                  className=" bg-white absolute text-black p-4 top-[3.5rem] h-[6.5rem] z-30 w-[8rem] rounded-md shadow-xl"
+                  className="bg-white absolute text-black p-4 top-[3.7rem] z-30 w-[8rem] rounded-md shadow-2xl border-2"
                   ref={userMenuRef}
                 >
-                  <div className="relative flex flex-col items-center gap-3 w-full">
-                    <p className="lg:text-sm text-xs">
-                      Name:{" "}
-                      <span className="capitalize font-semibold">
-                        {current?.first_name}
-                      </span>
-                    </p>
-
-                    <p className="lg:text-sm text-xs">
-                      Role:{" "}
-                      <span className="uppercase font-semibold">
-                        {showOptions.map((item) => (
-                          <Fragment key={item.code}>
-                            {current?.roleCode === item.code && (
-                              <Link>{item.name}</Link>
-                            )}
-                          </Fragment>
-                        ))}
-                      </span>
-                    </p>
-                  </div>
+                  <Button
+                    text="Personal"
+                    className="text-black hover:text-white rounded-md hover:bg-main-500 px-2 py-1 w-full border-none"
+                    route={`${path.PERSONAL}`}
+                    IcAfter={RiFileUserLine}
+                  />
                   <Button
                     text="Logout"
-                    className="text-white bg-main-500 px-2 py-1 w-full absolute bottom-0 left-0 rounded-b-md hover:"
+                    className="text-black hover:text-white rounded-md hover:bg-main-500 px-2 py-1 w-full border-none"
                     onClick={handleLogout}
-                  />{" "}
+                    IcAfter={CiLogout}
+                  />
                 </div>
               )}
             </div>

@@ -13,7 +13,12 @@ export const path = {
   ADMIN: "admin",
   ADMIN_DASHBOARD: "",
 
+  // USER
+  PERSONAL: "personal",
+  PROFILE: "profile",
+  WISHLIST: "wishlist",
+
   // PROPERTY
-  PROPERTY_TYPE: "property-type",
-  CREATE_PROPERTY_TYPE: "create",
+  CATEGORY: "category",
+  CREATE_CATEGORY: "create",
 };
