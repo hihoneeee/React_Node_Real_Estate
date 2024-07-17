@@ -7,16 +7,18 @@ export const apiGetCurrent = (data) => {
   });
 };
 
-export const apiUpdateProfile = () => {
+export const apiUpdateProfile = (data) => {
   return axios({
     url: "/user/change-profile",
     method: "PUT",
+    data: data,
   });
 };
 
-export const apiUpdateAvatar = () => {
+export const apiUpdateAvatar = (data) => {
   return axios({
     url: "/user/change-avatar",
     method: "PUT",
+    data: data,
   });
 };

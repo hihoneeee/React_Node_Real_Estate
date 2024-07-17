@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { apiUpdateProfile } from "src/apis/user";
+import { apiUpdateProfile, apiUpdateAvatar } from "src/apis/user";
 import { InputFileV2, InputForm } from "src/components";
 import Button from "src/components/common/button";
 import withRouter from "src/hocs/withRouter";
 import { useUserContext } from "src/hooks/useContextApi";
 
-const Profile = ({ navigate }) => {
+const Profile = () => {
   const {
     register,
     formState: { errors },
@@ -43,18 +43,36 @@ const Profile = ({ navigate }) => {
   }, [avatar]);
 
   const onSubmit = async (data) => {
-    const { email, phone, ...payload } = data;
-    const response = await apiUpdateProfile(payload);
-    if (response.success) {
-      toast.success(response.message);
-      navigate("/");
-    } else {
-      toast.error(response.message);
+    try {
+      // Separate the avatar data from the rest
+      const { email, phone, avatar, ...profilePayload } = data;
+
+      // Call profile update API
+      const profileResponse = await apiUpdateProfile(profilePayload);
+
+      // Prepare and call avatar update API only if there is an avatar file
+      let avatarResponse = { success: true };
+      if (avatar && avatar.length > 0 && avatar[0] instanceof File) {
+        const avatarData = new FormData();
+        avatarData.append('avatar', avatar[0]);
+        avatarResponse = await apiUpdateAvatar(avatarData);
+      }
+
+      // Handle responses
+      if (profileResponse.success && avatarResponse.success) {
+        toast.success("Profile updated successfully!");
+        window.location.reload();
+      } else {
+        if (!profileResponse.success) toast.error(profileResponse.message);
+        if (!avatarResponse.success) toast.error(avatarResponse.message);
+      }
+    } catch (error) {
+      toast.error("An error occurred while updating your profile.");
     }
   };
 
   return (
-    <form className="p-4 flex items-center gap-2">
+    <div className="p-4 flex items-center gap-2">
       <div className="w-[20%] flex flex-col items-center gap-2">
         <img
           alt="avatar"
@@ -68,7 +86,7 @@ const Profile = ({ navigate }) => {
           register={register}
         />
       </div>
-      <div className="space-y-4 w-[80%]">
+      <form className="space-y-4 w-[80%]" onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-3">
           <h3 className="text-base font-semibold">
             <span className="border-l-8 border-main-500 mr-1"></span>
@@ -126,9 +144,9 @@ const Profile = ({ navigate }) => {
             onClick={handleSubmit(onSubmit)}
           />
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 
-export default withRouter(Profile);
+export default Profile;
