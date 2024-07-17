@@ -73,14 +73,14 @@ export const adminSidebar = [
 export const personalSidebar = [
   {
     id: 1,
-    title: "Your Profile",
-    icon: <FiUserCheck />,
+    title: "Profile",
+    icon: <FiUserCheck size={18} />,
     path: `/${path.PERSONAL}/${path.PROFILE}`,
   },
   {
     id: 2,
     title: "Your wishlist",
-    icon: <FaRegHeart />,
+    icon: <FaRegHeart size={18} />,
     path: `/${path.PERSONAL}/${path.WISHLIST}`,
   },
 ];

@@ -92,11 +92,12 @@ const Login = () => {
       setIsLoading(true);
       const response = await apiLogin({ name, roleCode, ...payload });
       setIsLoading(false);
+      console.log(response.message);
       if (response.success) {
-        toast.success(response.msg);
+        toast.success(response.message);
         setModal(false, null);
         setToken(response.accessToken);
-      } else toast.error(response.msg);
+      } else toast.error(response.message);
     }
   };
 
@@ -108,7 +109,7 @@ const Login = () => {
       Swal.fire({
         icon: "success",
         title: "Congratulation!",
-        text: response.msg,
+        text: response.message,
         showConfirmButton: true,
         confirmButtonText: "Go sign in",
       }).then(({ isConfirmed }) => {
@@ -117,7 +118,7 @@ const Login = () => {
           setIsShowOTP(false);
         }
       });
-    } else toast.error(response.msg);
+    } else toast.error(response.message);
   };
   return (
     <div

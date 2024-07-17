@@ -101,7 +101,7 @@ const Header = ({ location }) => {
                     </span>
                   </p>
                   <p className="lg:text-xs text-xxs">
-                    Role:{" "}
+                    Position:{" "}
                     <span className="uppercase font-semibold">
                       {showOptions.map((item) => (
                         <Fragment key={item.code}>

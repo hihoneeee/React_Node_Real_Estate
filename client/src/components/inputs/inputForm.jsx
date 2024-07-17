@@ -14,19 +14,31 @@ const InputForm = ({
   validate,
   placeholder,
   isRequired = true,
+  setReadonly,
 }) => {
   return (
-    <div className={twMerge(clsx("flex flex-col gap-3", containerClassName))}>
+    <div className={twMerge(clsx("flex flex-col gap-2", containerClassName))}>
       {label && (
-        <label className="lg:text-sm text-xs font-bold capitalize" htmlFor={id}>
+        <label
+          className="lg:text-sm text-xs font-semibold capitalize"
+          htmlFor={id}
+        >
           {label}
         </label>
       )}
       <input
         type={type}
         id={id}
+        readOnly={setReadonly}
         placeholder={placeholder}
-        className={twMerge(clsx(style, inputClassName))}
+        className={twMerge(
+          clsx(
+            style,
+            setReadonly &&
+              "outline-none px-2 py-1 w-full rounded-md border-2 bg-gray-300",
+            inputClassName
+          )
+        )}
         {...register(id, {
           ...validate,
           required: isRequired ? "This field is required" : false,

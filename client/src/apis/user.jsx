@@ -6,3 +6,17 @@ export const apiGetCurrent = (data) => {
     data,
   });
 };
+
+export const apiUpdateProfile = () => {
+  return axios({
+    url: "/user/change-profile",
+    method: "PUT",
+  });
+};
+
+export const apiUpdateAvatar = () => {
+  return axios({
+    url: "/user/change-avatar",
+    method: "PUT",
+  });
+};

@@ -9,6 +9,8 @@ export { default as InputRadio } from "./inputs/inputRadio";
 export { default as InputTinyMCE } from "./inputs/inputTinyMCE";
 export { default as InputTextArea } from "./inputs/inputTextArea";
 export { default as InputFile } from "./inputs/inputFile";
+export { default as InputFileV2 } from "./inputs/inputFileV2";
+
 export { default as InputSelect } from "./inputs/inputSelect";
 export { default as LibSelect } from "./inputs/libSelect";
 

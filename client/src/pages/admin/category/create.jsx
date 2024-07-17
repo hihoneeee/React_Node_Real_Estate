@@ -9,7 +9,7 @@ import {
 import { path } from "src/utils/path";
 import { useForm } from "react-hook-form";
 import Button from "src/components/common/button";
-import { apiGetCategory } from "src/apis/category";
+import { apiCreateCategory } from "src/apis/category";
 import { toast } from "react-toastify";
 import withRouter from "src/hocs/withRouter";
 
@@ -25,16 +25,16 @@ const CreateCategory = ({ navigate }) => {
 
   const onSubmit = async (data) => {
     const { image, ...payload } = data;
-    const response = await apiGetCategory({
+    const response = await apiCreateCategory({
       image: image[0],
       ...payload,
     });
     if (response.success) {
-      toast.success(response.msg);
+      toast.success(response.message);
       reset;
       navigate(`/${path.ADMIN}/${path.PROPERTY_TYPE}`);
     } else {
-      toast.error(response.msg);
+      toast.error(response.message);
     }
   };
 

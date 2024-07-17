@@ -11,7 +11,7 @@ export const usePropertyStore = create((set) => ({
         set(() => ({ properties: response }));
       } else {
         set(() => ({ properties: null }));
-        toast.error(response.msg);
+        toast.error(response.message);
       }
     } catch (error) {
       set(() => ({ properties: null }));
