@@ -5,3 +5,10 @@ export const apiGetProperties = (params) =>
     method: "GET",
     params,
   });
+
+  export const apiGetProperty = (params) => {
+    return axios({
+      url: `/property/${params}`,
+      method: "GET",
+    });
+  };

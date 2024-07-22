@@ -10,7 +10,7 @@ const ManageCategory = () => {
       </div>
       <div>
         <Table
-          route={`/${path.ADMIN}/${path.PROPERTY_TYPE}/${path.CREATE_PROPERTY_TYPE}`}
+          route={`/${path.ADMIN}/${path.CATEGORY}/${path.CREATE_CATEGORY}`}
         />
       </div>
     </div>

@@ -1,6 +1,13 @@
 import App from "src/App";
 import { path } from "./path";
-import { AboutUs, Home, Layout, OurAgents, Properties } from "src/pages/public";
+import {
+  AboutUs,
+  DetailProperty,
+  Home,
+  Layout,
+  OurAgents,
+  Properties,
+} from "src/pages/public";
 import {
   AdminLayout,
   CreateCategory,
@@ -8,7 +15,7 @@ import {
   ManageCategory,
 } from "src/pages/admin";
 import { Personal, Profile } from "src/pages/user";
-import { NotFoud404 } from "src/components";
+import { ConfirmChangeEmail, NotFoud404 } from "src/components";
 
 const routes = [
   {
@@ -32,6 +39,10 @@ const routes = [
             element: <Properties />,
           },
           {
+            path: path.DETAIL_PROPERTY,
+            element: <DetailProperty />,
+          },
+          {
             path: path.OUR_AGENTS,
             element: <OurAgents />,
           },
@@ -44,6 +55,10 @@ const routes = [
                 element: <Profile />,
               },
             ],
+          },
+          {
+            path: path.CONFIRM_CHANGE_EMAIL,
+            element: <ConfirmChangeEmail />,
           },
         ],
       },

@@ -5,6 +5,8 @@ export const path = {
   ABOUT_US: "about",
   OUR_AGENTS: "our-agents",
   PROPERTIES: "properties",
+  DETAIL_PROPERTY: "detail-property/:title/:id",
+
   GALLERY: "gallery",
   BLOG: "blog",
   CONTACT_US: "contact-us",
@@ -16,6 +18,7 @@ export const path = {
   // USER
   PERSONAL: "personal",
   PROFILE: "profile",
+  CONFIRM_CHANGE_EMAIL: "confirm-change-email/:token",
   WISHLIST: "wishlist",
 
   // PROPERTY

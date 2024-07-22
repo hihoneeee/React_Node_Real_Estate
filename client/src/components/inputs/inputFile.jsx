@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import uploadImage from "src/assets/upload-image.png";
 import { twMerge } from "tailwind-merge";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { apiUploadImages } from "src/apis/apiOutside";
 import { CgSpinner } from "react-icons/cg";
 import icons from "src/utils/icons";
@@ -141,4 +141,4 @@ const InputFile = ({
   );
 };
 
-export default InputFile;
+export default memo(InputFile);

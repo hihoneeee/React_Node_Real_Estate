@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
 import { formatMoney } from "src/utils/constant";
+import { formatVNToString } from "src/utils/formatCode";
 import icons from "src/utils/icons";
+import { path } from "src/utils/path";
 const {
   MdOutlineBathtub,
   FaCropSimple,
@@ -19,10 +22,16 @@ const PropertyCard = ({ properties }) => {
       />
       <div className="px-3 py-1 h-[12.5rem]">
         <div className="space-y-3 py-3 border-b-2 h-[8.5rem]">
-          <p className="lg:text-base text-sm font-semibold hover:text-main-600 hover:underline cursor-pointer">
-            {properties?.dataDetail?.address},
+          <Link
+            to={`/${path.DETAIL_PROPERTY.replace(
+              ":title",
+              formatVNToString(properties?.title)
+            ).replace(":id", properties.id)}`}
+            className="lg:text-base text-sm font-semibold hover:text-main-600 hover:underline cursor-pointer"
+          >
+            {properties?.dataDetail?.address},{" "}
             {`${properties?.title?.slice(0, 5)}...`}
-          </p>
+          </Link>
           <p className="text-main-600 font-semibold">
             $ {formatMoney(properties?.price)}
           </p>

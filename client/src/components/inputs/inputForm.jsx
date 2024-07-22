@@ -15,6 +15,7 @@ const InputForm = ({
   placeholder,
   isRequired = true,
   setReadonly,
+  button, // Add a prop for the button
 }) => {
   return (
     <div className={twMerge(clsx("flex flex-col gap-2", containerClassName))}>
@@ -26,24 +27,28 @@ const InputForm = ({
           {label}
         </label>
       )}
-      <input
-        type={type}
-        id={id}
-        readOnly={setReadonly}
-        placeholder={placeholder}
-        className={twMerge(
-          clsx(
-            style,
-            setReadonly &&
-              "outline-none px-2 py-1 w-full rounded-md border-2 bg-gray-300",
-            inputClassName
-          )
+      <div className="relative w-full">
+        {" "}
+        {/* Add a wrapper with relative position */}
+        <input
+          type={type}
+          id={id}
+          readOnly={setReadonly}
+          placeholder={placeholder}
+          className={twMerge(
+            clsx(style, setReadonly && "bg-gray-300", inputClassName)
+          )}
+          {...register(id, {
+            ...validate,
+            required: isRequired ? "This field is required" : false,
+          })}
+        />
+        {button && (
+          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 h-full">
+            {button}
+          </div>
         )}
-        {...register(id, {
-          ...validate,
-          required: isRequired ? "This field is required" : false,
-        })}
-      />
+      </div>
       {errors && errors[id] && (
         <small className="text-red-500 italic lg:text-xs text-xxs">
           {errors[id]?.message}

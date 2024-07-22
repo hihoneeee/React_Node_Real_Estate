@@ -22,3 +22,18 @@ export const apiUpdateAvatar = (data) => {
     data: data,
   });
 };
+
+export const apiChangeEmail = (data) => {
+  return axios({
+    url: "/user/change-email",
+    method: "POST",
+    data: data,
+  });
+};
+
+export const apiChangeEmailConfirm = (token) => {
+  return axios({
+    url: `/user/confirm-change-email/${token}`,
+    method: "POST",
+  });
+};

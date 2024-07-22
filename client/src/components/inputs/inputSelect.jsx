@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import clsx from "clsx";
+import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 
 const InputSelect = ({
@@ -42,4 +43,4 @@ const InputSelect = ({
   );
 };
 
-export default InputSelect;
+export default memo(InputSelect);
