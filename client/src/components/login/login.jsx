@@ -92,7 +92,6 @@ const Login = () => {
       setIsLoading(true);
       const response = await apiLogin({ name, roleCode, ...payload });
       setIsLoading(false);
-      console.log(response.message);
       if (response.success) {
         toast.success(response.message);
         setModal(false, null);

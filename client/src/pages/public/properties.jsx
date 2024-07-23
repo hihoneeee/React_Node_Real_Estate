@@ -43,7 +43,7 @@ const Properties = () => {
     }
     if (params.categoryId) {
       getCategory(params.categoryId);
-      category.title
+      category.title;
       setTitle("filter category: " + category.title);
     }
     getProperties({

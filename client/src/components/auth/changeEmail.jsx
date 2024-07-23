@@ -20,7 +20,6 @@ const ChangeEmail = () => {
   const onSubmit = async (data) => {
     showLoading();
     const { ...payload } = data;
-    console.log({ ...payload });
     const response = await apiChangeEmail(payload);
     if (response.success) {
       toast.success(response.message);
@@ -46,7 +45,7 @@ const ChangeEmail = () => {
               onClick={() => setModal(false, "")}
               size={18}
             />
-            <h2 className="desktop:text-xl text-base font-bold capitalize text-center">
+            <h2 className="laptop:text-xl text-base font-bold capitalize text-center">
               Change Email Personal
             </h2>
           </div>

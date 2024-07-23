@@ -17,6 +17,7 @@ export { default as LibSelect } from "./inputs/libSelect";
 
 export { default as AdminSidebar } from "./sidebars/adminSidebar";
 export { default as PersonalSidebar } from "./sidebars/personalSidebar";
+export { default as DetailSidebar } from "./sidebars/detailSidebar";
 
 export { default as CurrentUser } from "./user/currentUser";
 export { default as HeaderAdmin } from "./banners/headerAdmin";

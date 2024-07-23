@@ -23,9 +23,9 @@ import { BiCategory } from "react-icons/bi";
 import { TiDelete } from "react-icons/ti";
 import { RxDashboard } from "react-icons/rx";
 import { BsMenuButtonWideFill } from "react-icons/bs";
-import { FaCropSimple } from "react-icons/fa6";
+import { FaCropSimple, FaMapLocationDot } from "react-icons/fa6";
 import { AiOutlineShareAlt } from "react-icons/ai";
-import { IoBedOutline } from "react-icons/io5";
+import { IoBedOutline, IoPrintSharp } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
 
 const icons = {
@@ -59,6 +59,8 @@ const icons = {
   CiLogout,
   RiFileUserLine,
   FiUserCheck,
+  FaMapLocationDot,
+  IoPrintSharp,
 };
 
 export default icons;

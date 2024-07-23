@@ -18,16 +18,12 @@ const breadCrumbRoutes = [
 const BreadCreumbPublic = ({ style }) => {
   const breadcrumbs = useBreadcrumbs(breadCrumbRoutes);
   return (
-    <div
-      className={twMerge(
-        clsx("lg:text-sm text-xs text-gray-300 lg:w-[35%] text-center", style)
-      )}
-    >
+    <div className={twMerge(clsx("lg:text-sm text-xs text-gray-300", style))}>
       <React.Fragment>
         {breadcrumbs.map(({ match, breadcrumb }, index) => (
           <NavLink key={match.pathname} to={match.pathname}>
             <span className="hover:underline">{breadcrumb}</span>
-            {index < breadcrumbs.length - 1 && " / "}
+            {index < breadcrumbs.length - 1 && " > "}
           </NavLink>
         ))}
       </React.Fragment>

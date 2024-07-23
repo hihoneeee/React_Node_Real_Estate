@@ -125,7 +125,7 @@ const Profile = () => {
                     button={
                       <Button
                         text="Change"
-                        className="text-white bg-[#6c757d] px-3 py-3 rounded-e-md"
+                        className="text-white bg-[#6c757d] px-2 py-[.8rem] rounded-e-md border-none hover:bg-slate-400"
                         onClick={() => setModal(true, <ChangeEmail />)}
                       />
                     }
@@ -143,7 +143,7 @@ const Profile = () => {
                     button={
                       <Button
                         text="Change"
-                        className="text-white bg-[#6c757d] px-3 py-3 rounded-e-md"
+                        className="text-white bg-[#6c757d] px-2 py-[.8rem] rounded-e-md border-none hover:bg-slate-400"
                         onClick={() => setModal(true, <ChangeEmail />)}
                       />
                     }

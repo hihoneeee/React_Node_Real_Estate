@@ -21,7 +21,6 @@ const Personal = () => {
         cancelButtonText: "Go Homepage",
         confirmButtonText: "Go Login",
       }).then((response) => {
-        console.log(response);
         if (response.isConfirmed) {
           setModal(true, <Login />);
           if (!isShowModal) {

@@ -103,6 +103,17 @@ export const showOptions = [
   },
 ];
 
+export const showTypeProperty = [
+  {
+    value: 1,
+    title: "Sale",
+  },
+  {
+    value: 2,
+    title: "Rental",
+  },
+];
+
 export const formatMoney = (number) => {
   if (!+number) return 0;
   return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");

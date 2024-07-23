@@ -21,7 +21,7 @@ const Button = ({ text, IcAfter, route, onClick, className, disabled }) => {
         type="button"
         className={twMerge(
           clsx(
-            "flex flex-row-reverse items-center justify-center gap-1 rounded-sm lg:text-xs text-xxs transition-all hover:underline border",
+            "flex flex-row-reverse items-center justify-center gap-1 rounded-sm lg:text-xs text-xxs transition-all hover:shadow-[5px_5px_5px_rgba(0,0,0,0.24)]",
             className,
             disabled && "opacity-50"
           )
