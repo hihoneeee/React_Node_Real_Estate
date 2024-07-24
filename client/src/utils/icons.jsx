@@ -27,6 +27,7 @@ import { FaCropSimple, FaMapLocationDot } from "react-icons/fa6";
 import { AiOutlineShareAlt } from "react-icons/ai";
 import { IoBedOutline, IoPrintSharp } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
+import { IoMdNotificationsOutline } from "react-icons/io";
 
 const icons = {
   FaFacebookF,
@@ -61,6 +62,7 @@ const icons = {
   FiUserCheck,
   FaMapLocationDot,
   IoPrintSharp,
+  IoMdNotificationsOutline,
 };
 
 export default icons;

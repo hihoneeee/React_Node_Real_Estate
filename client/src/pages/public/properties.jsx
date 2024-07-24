@@ -43,8 +43,8 @@ const Properties = () => {
     }
     if (params.categoryId) {
       getCategory(params.categoryId);
-      category.title;
-      setTitle("filter category: " + category.title);
+      category?.title;
+      setTitle("filter category: " + category?.title);
     }
     getProperties({
       limit: import.meta.env.VITE_LIMIT_PROPERTIES,

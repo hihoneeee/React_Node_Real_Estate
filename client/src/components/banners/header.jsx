@@ -12,6 +12,7 @@ import { showOptions } from "src/utils/constant";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { path } from "src/utils/path";
+import { NotificationTable } from "..";
 const {
   FaFacebookF,
   FaLinkedinIn,
@@ -22,11 +23,13 @@ const {
   FiPhone,
   CiLogout,
   RiFileUserLine,
+  IoMdNotificationsOutline,
 } = icons;
 
 const Header = ({ location }) => {
   const { setToken, getCurrent, clearCurrent, current } = useUserStore();
   const [showUser, setShowUser] = useState(false);
+  const [notification, setNotification] = useState(false);
   const userMenuRef = useRef(null);
 
   const handleLogout = () => {
@@ -41,6 +44,7 @@ const Header = ({ location }) => {
   const handleClickOutside = (event) => {
     if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
       setShowUser(false);
+      setNotification(false);
     }
   };
 
@@ -90,8 +94,18 @@ const Header = ({ location }) => {
             <span className="border-r-2 mr-2 ml-2 border-white"></span>
             <div className="relative z-20 flex items-center justify-center">
               <div
-                className="hover:cursor-pointer rounded-md hover:bg-overlay-30 flex items-center gap-2 px-2"
-                onClick={() => setShowUser(true)}
+                className={twMerge(
+                  clsx(
+                    "hover:cursor-pointer rounded-md hover:bg-overlay-30 flex items-center gap-2 px-2",
+                    showUser && "bg-overlay-30 "
+                  )
+                )}
+                onClick={() => {
+                  setShowUser((prevUser) => {
+                    if (!prevUser) setNotification(false);
+                    return !prevUser;
+                  });
+                }}
               >
                 <div className="space-y-1">
                   <p className="lg:text-xs text-xxs">
@@ -120,7 +134,7 @@ const Header = ({ location }) => {
                 ></img>
               </div>
 
-              {showUser && (
+              {showUser ? (
                 <div
                   className="bg-white absolute text-black p-4 top-[3.7rem] z-30 w-[8rem] rounded-md shadow-2xl border-2"
                   ref={userMenuRef}
@@ -138,6 +152,36 @@ const Header = ({ location }) => {
                     IcAfter={CiLogout}
                   />
                 </div>
+              ) : (
+                <></>
+              )}
+            </div>
+            <span className="border-r-2 mr-2 ml-2 border-white"></span>
+            <div
+              onClick={() => {
+                setNotification((prevNotification) => {
+                  if (!prevNotification) setShowUser(false);
+                  return !prevNotification;
+                });
+              }}
+              className="relative z-20 flex items-center justify-center"
+            >
+              <div
+                className={twMerge(
+                  clsx(
+                    "hover:cursor-pointer rounded-full hover:bg-overlay-30 flex items-center p-2",
+                    notification && "bg-overlay-30"
+                  )
+                )}
+              >
+                <IoMdNotificationsOutline size={20} />
+              </div>
+              {notification ? (
+                <div ref={userMenuRef}>
+                  <NotificationTable />
+                </div>
+              ) : (
+                <></>
               )}
             </div>
           </>

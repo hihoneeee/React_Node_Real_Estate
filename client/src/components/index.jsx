@@ -38,5 +38,7 @@ export { default as PropertyCard } from "./properties/propertyCard";
 export { default as Pagination } from "./paginations/pagination";
 export { default as PaginationItem } from "./paginations/paginationItem";
 
+export { default as NotificationTable } from "./common/notificationTable";
+
 export { default as Loading } from "./common/loading";
 export { default as NotFoud404 } from "./common/notFoud404";

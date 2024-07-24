@@ -11,6 +11,7 @@ import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
+import { useAppointmentStore } from "src/store/useAppointmentStore";
 
 const { HiOutlineMailOpen, FiPhone } = icons;
 
@@ -20,6 +21,7 @@ const DetailSidebar = ({ userData, propertyId }) => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const { createAppointment } = useAppointmentStore();
   const [select, setSelect] = useState("message");
   const [appointmentDate, setAppointmentDate] = useState(dayjs());
   const [backupDate, setbackupDate] = useState(dayjs());
@@ -35,14 +37,14 @@ const DetailSidebar = ({ userData, propertyId }) => {
     console.log(payload);
   };
 
-  const onSubmitAppointment = async (data) => {
+  const onSubmitAppointment = async () => {
     const payload = {
       appointmentDate: appointmentDate.toISOString(),
       backupDate: backupDate.toISOString(),
       propertyId: propertyId,
       buyerId: userData.id,
     };
-    console.log(payload);
+    createAppointment(payload);
   };
 
   return (

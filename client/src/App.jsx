@@ -3,17 +3,28 @@ import { Modal } from "src/components";
 import { useAppStore } from "src/store/useAppStore";
 import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useUserStore } from "src/store/useUserStore";
-import { useCategoryStore } from "./store/useCategoryStore";
+import {
+  useUserStore,
+  useCategoryStore,
+  useNotificationStore,
+} from "src/store/";
 import { Outlet } from "react-router-dom";
+import { startSignalRConnection } from "src/signalR";
 
 const App = () => {
   const { isShowModal } = useAppStore();
   const { getCurrent, token } = useUserStore();
   const { getCategories } = useCategoryStore();
+  const { getNotification } = useNotificationStore();
+
   useEffect(() => {
     getCurrent();
     getCategories();
+    getNotification();
+  }, [token]);
+
+  useEffect(() => {
+    startSignalRConnection(token);
   }, [token]);
 
   return (

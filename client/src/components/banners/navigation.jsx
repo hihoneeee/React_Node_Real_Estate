@@ -37,7 +37,7 @@ const Navigation = ({ location }) => {
     <div
       className={twMerge(
         clsx(
-          "px-20 py-6 flex items-center justify-between bg-transparent text-white w-full z-[5] top-[70px]",
+          "px-20 py-6 flex items-center justify-between bg-transparent text-white w-full z-[5] top-[80px] transition-all",
           isScrolled &&
             location.pathname !== "/" &&
             "fixed top-0 left-0 right-0 transition-all",
@@ -102,7 +102,7 @@ const Navigation = ({ location }) => {
           location.pathname === "/" ? (
             <Button
               text="Sign In"
-              className="text-white bg-transparen px-4 py-2"
+              className="text-white bg-transparen px-4 py-2 border"
               onClick={() => setModal(true, <Login />)}
             />
           ) : (
@@ -117,7 +117,7 @@ const Navigation = ({ location }) => {
             <Button
               text="Add Listing"
               textColor="text-white"
-              className="text-white bg-transparen px-4 py-2"
+              className="text-white bg-transparen px-4 py-2 border"
             />
           </>
         ) : (

@@ -14,7 +14,7 @@ const {
 } = icons;
 const PropertyCard = ({ properties }) => {
   return (
-    <div className="w-[20rem] h-[25rem] rounded-xl bg-white shadow-xl transition-all ">
+    <div className="w-[20rem] h-[25rem] rounded-xl bg-white shadow-[0px_10px_10px_rgba(0,0,0,0.24)] transition-all ">
       <img
         src={properties?.avatar}
         alt="image"
@@ -29,8 +29,7 @@ const PropertyCard = ({ properties }) => {
             ).replace(":id", properties.id)}`}
             className="lg:text-base text-sm font-semibold hover:text-main-600 hover:underline cursor-pointer"
           >
-            {properties?.dataDetail?.address},{" "}
-            {`${properties?.title?.slice(0, 5)}...`}
+            {properties?.dataDetail?.address}, {properties?.title}
           </Link>
           <p className="text-main-600 font-semibold">
             $ {formatMoney(properties?.price)}
