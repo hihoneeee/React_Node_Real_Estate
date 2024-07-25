@@ -17,7 +17,7 @@ const Home = () => {
           </p>
         </div>
       </div>
-      <div className="relative z-20 h-[12rem] mt-[-8rem] flex flex-col items-center gap-2">
+      <div className="relative z-0 h-[12rem] mt-[-8rem] flex flex-col items-center gap-2">
         <div className="flex items-center justify-center gap-2">
           <Button
             className="p-3 bg-main-500 text-white rounded-md"

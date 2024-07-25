@@ -11,6 +11,7 @@ const InputTextArea = ({
   validate,
   style,
   placeholder,
+  rows,
 }) => {
   return (
     <div>
@@ -26,7 +27,7 @@ const InputTextArea = ({
         <textarea
           id={id}
           cols="30"
-          rows="10"
+          rows={rows}
           placeholder={placeholder}
           className={twMerge(
             clsx("outline-none p-2 w-full rounded-md border-2", style)

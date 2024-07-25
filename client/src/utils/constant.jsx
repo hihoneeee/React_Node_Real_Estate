@@ -114,6 +114,21 @@ export const showTypeProperty = [
   },
 ];
 
+export const showStatusProperty = [
+  {
+    value: 1,
+    title: "Available",
+  },
+  {
+    value: 2,
+    title: "Pending",
+  },
+  {
+    value: 3,
+    title: "Complete",
+  },
+];
+
 export const formatMoney = (number) => {
   if (!+number) return 0;
   return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");

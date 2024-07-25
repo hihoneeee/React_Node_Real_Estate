@@ -33,7 +33,10 @@ export { default as FilterHelper } from "./filters/filterHelper";
 export { default as BreadCreumbPublic } from "./common/breadCreumbPublic";
 export { default as BreadCreumbAdmin } from "./common/breadCreumbAdmin";
 
+//property
 export { default as PropertyCard } from "./properties/propertyCard";
+export { default as ImageDetail } from "./detailProperty/imageDetail";
+export { default as TitleDetail } from "./detailProperty/titleDetail";
 
 export { default as Pagination } from "./paginations/pagination";
 export { default as PaginationItem } from "./paginations/paginationItem";

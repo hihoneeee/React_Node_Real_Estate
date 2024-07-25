@@ -1,7 +1,7 @@
 import * as signalR from "@microsoft/signalr";
 import { toast } from "react-toastify";
-import { useNotificationStore } from "./store";
-
+import { useNotificationStore, useUserStore } from "./store";
+import notificationSound from "src/assets/notification.mp3";
 let connection = null;
 
 export const startSignalRConnection = (token) => {
@@ -13,8 +13,6 @@ export const startSignalRConnection = (token) => {
         withCredentials: true, // Ensure credentials are included
       })
       .build();
-    console.log(token);
-
     connection
       .start()
       .then(() => {
@@ -22,6 +20,21 @@ export const startSignalRConnection = (token) => {
         connection.invoke("GetConnectionId").then((connectionId) => {
           console.log("ConnectionId:", connectionId); // Log the connectionId
           window.connectionId = connectionId;
+          const { current } = useUserStore.getState();
+          if (current) {
+            connection
+              .invoke("OnConnectedAsync", current.id, connectionId)
+              .then(() =>
+                console.log(
+                  "OnConnectedAsync invoked with",
+                  current.id,
+                  connectionId
+                )
+              )
+              .catch((err) =>
+                console.error("Failed to invoke OnConnectedAsync:", err)
+              );
+          }
           resolve(connection); // Resolve the Promise with the connection object
         });
       })
@@ -31,9 +44,8 @@ export const startSignalRConnection = (token) => {
       });
 
     connection.on("ReceiveNotification", (notificationContent) => {
-      console.log("Received notification:", notificationContent); // Log the received notification
-
-      // Show toast notification
+      const audio = new Audio(notificationSound);
+      audio.play();
       toast.info(notificationContent.content);
 
       // Update Zustand store

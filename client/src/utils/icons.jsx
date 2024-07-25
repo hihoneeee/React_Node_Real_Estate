@@ -17,7 +17,7 @@ import {
 import { FiPhone, FiUserCheck } from "react-icons/fi";
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { PiHouseLineLight } from "react-icons/pi";
-import { MdCancel, MdOutlineBathtub } from "react-icons/md";
+import { MdCancel, MdOutlineBathtub, MdOutlineGarage } from "react-icons/md";
 import { RiDashboard2Line, RiFileUserLine } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
 import { TiDelete } from "react-icons/ti";
@@ -63,6 +63,7 @@ const icons = {
   FaMapLocationDot,
   IoPrintSharp,
   IoMdNotificationsOutline,
+  MdOutlineGarage,
 };
 
 export default icons;

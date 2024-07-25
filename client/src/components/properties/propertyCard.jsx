@@ -11,6 +11,7 @@ const {
   AiOutlineShareAlt,
   FaPlus,
   IoBedOutline,
+  MdOutlineGarage,
 } = icons;
 const PropertyCard = ({ properties }) => {
   return (
@@ -40,6 +41,9 @@ const PropertyCard = ({ properties }) => {
             </span>
             <span className="text-gray-500 flex items-center gap-1">
               <MdOutlineBathtub /> {properties?.dataDetail?.bathroom}
+            </span>
+            <span className="text-gray-500 flex items-center gap-1">
+              <MdOutlineGarage /> {properties?.dataDetail?.gara} Cars
             </span>
             <span className="text-gray-500 flex items-center gap-1">
               <FaCropSimple /> {properties?.dataDetail?.size}{" "}
