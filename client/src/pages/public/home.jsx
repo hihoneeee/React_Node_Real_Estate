@@ -3,14 +3,14 @@ import { FilterHome } from "src/components";
 import Button from "src/components/common/button";
 const Home = () => {
   return (
-    <div className="bg-white w-full">
+    <div className="bg-white w-full h-[100rem]">
       <div className="w-full h-fit">
         <img src={banner} alt="banner" />
         <div className="absolute flex flex-col items-center justify-center inset-0 gap-5">
-          <h1 className="lg:text-4xl text-2xl font-semibold text-white">
+          <h1 className="desktop:text-4xl laptop:text-3xl text-2xl font-semibold text-white">
             Find Your Dream Home
           </h1>
-          <p className="lg:text-sm text-xs text-gray-300 lg:w-[35%] text-center">
+          <p className="text-gray-400 desktop:w-1/3 laptop:w-[40%] text-center desktop:text-base laptop:text-sm text-xs">
             Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
             posuere cubilia curae; Proin sodales ultrices nulla blandit
             volutpat.

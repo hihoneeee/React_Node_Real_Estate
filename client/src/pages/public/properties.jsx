@@ -64,9 +64,9 @@ const Properties = () => {
           </div>
         </div>
       </div>
-      <div className="px-52 py-16 space-y-8">
+      <div className="px-[16rem] desktop:px-[22rem] py-16 space-y-8">
         <FilterHelper setSort={setSort} />
-        <div className="grid desktop:grid-cols-4 laptop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-y-10 justify-items-center">
+        <div className="grid desktop:grid-cols-3 laptop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-y-10 justify-items-center">
           {properties?.data?.map((el) => (
             <PropertyCard key={el.id} properties={el} />
           ))}

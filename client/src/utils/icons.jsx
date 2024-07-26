@@ -20,7 +20,7 @@ import { PiHouseLineLight } from "react-icons/pi";
 import { MdCancel, MdOutlineBathtub, MdOutlineGarage } from "react-icons/md";
 import { RiDashboard2Line, RiFileUserLine } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
-import { TiDelete } from "react-icons/ti";
+import { TiDelete, TiMessages } from "react-icons/ti";
 import { RxDashboard } from "react-icons/rx";
 import { BsMenuButtonWideFill } from "react-icons/bs";
 import { FaCropSimple, FaMapLocationDot } from "react-icons/fa6";
@@ -64,6 +64,7 @@ const icons = {
   IoPrintSharp,
   IoMdNotificationsOutline,
   MdOutlineGarage,
+  TiMessages,
 };
 
 export default icons;

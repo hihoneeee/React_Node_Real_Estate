@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
+import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { formatMoney } from "src/utils/constant";
 import { formatVNToString } from "src/utils/formatCode";
 import icons from "src/utils/icons";
 import { path } from "src/utils/path";
+import { twMerge } from "tailwind-merge";
 const {
   MdOutlineBathtub,
   FaCropSimple,
@@ -13,9 +15,16 @@ const {
   IoBedOutline,
   MdOutlineGarage,
 } = icons;
-const PropertyCard = ({ properties }) => {
+const PropertyCard = ({ properties, containerClassname }) => {
   return (
-    <div className="w-[20rem] h-[25rem] rounded-xl bg-white shadow-[0px_10px_10px_rgba(0,0,0,0.24)] transition-all ">
+    <div
+      className={twMerge(
+        clsx(
+          "w-[20rem] h-[25rem] rounded-xl bg-white shadow-[0px_10px_10px_rgba(0,0,0,0.24)] transition-all ",
+          containerClassname
+        )
+      )}
+    >
       <img
         src={properties?.avatar}
         alt="image"
@@ -27,7 +36,7 @@ const PropertyCard = ({ properties }) => {
             to={`/${path.DETAIL_PROPERTY.replace(
               ":title",
               formatVNToString(properties?.title)
-            ).replace(":id", properties.id)}`}
+            ).replace(":id", properties?.id)}`}
             className="lg:text-base text-sm font-semibold hover:text-main-600 hover:underline cursor-pointer"
           >
             {properties?.dataDetail?.address}, {properties?.title}

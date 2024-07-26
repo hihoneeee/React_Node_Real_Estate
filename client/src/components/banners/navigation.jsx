@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useMatch } from "react-router-dom";
 import icons from "src/utils/icons";
 import { path } from "src/utils/path";
 import { nav } from "src/utils/constant";
@@ -33,6 +33,7 @@ const Navigation = ({ location }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const matchPersonal = useMatch(`${path.PERSONAL}/*`);
   return (
     <div
       className={twMerge(
@@ -41,8 +42,13 @@ const Navigation = ({ location }) => {
           isScrolled &&
             location.pathname !== "/" &&
             "fixed top-0 left-0 right-0 transition-all",
-          location.pathname !== "/" && "bg-white text-main-500 shadow-xl",
-          location.pathname === "/" && "fixed"
+          isScrolled &&
+            location.pathname === "/" &&
+            "top-0 left-0 right-0 transition-all bg-white text-main-500 shadow-xl",
+          location.pathname !== "/" &&
+            "bg-white text-main-500 shadow-xl transition-al",
+          location.pathname === "/" && "fixed transition-al",
+          isScrolled && matchPersonal && "hidden transition-all"
         )
       )}
     >
@@ -64,10 +70,13 @@ const Navigation = ({ location }) => {
               key={uuidV4()}
               className={twMerge(
                 clsx(
-                  "py-2 lg:text-xs text-xxs text-gray-300 hover:text-white hover:border-b transition-all font-normal"
+                  "py-2 lg:text-xs text-xxs text-gray-300 hover:text-white hover:border-b transition-all font-medium"
                 ),
                 location.pathname !== "/" &&
-                  "text-gray-400 hover:text-main-500 border-main-500 "
+                  "text-gray-400 hover:text-main-500 border-main-500",
+                isScrolled &&
+                  location.pathname === "/" &&
+                  "text-gray-400 hover:text-main-500 border-main-500"
               )}
             >
               <NavLink
@@ -75,8 +84,9 @@ const Navigation = ({ location }) => {
                   clsx(
                     location.pathname !== "/"
                       ? isActive &&
-                          "py-2  text-main-500 border-b border-main-500 "
-                      : isActive && "py-2 text-white border-b "
+                          "py-2 text-main-500 border-b border-main-500"
+                      : isActive &&
+                          "py-2 text-main-500 border-b border-main-500"
                   )
                 }
                 key={el.id}
@@ -92,39 +102,43 @@ const Navigation = ({ location }) => {
             clsx(
               "py-2 lg:text-xs text-xxs text-gray-300 hover:text-white hover:border-b transition-all cursor-pointer",
               location.pathname !== "/" &&
-                "text-gray-400 hover:text-main-500 border-main-500 transition-all"
+                "text-gray-400 hover:text-main-500 border-main-500 transition-all",
+              isScrolled &&
+                location.pathname === "/" &&
+                "text-gray-400 hover:text-main-500 border-main-500"
             )
           )}
         >
           SEARCH
         </span>
         {!current ? (
-          location.pathname === "/" ? (
-            <Button
-              text="Sign In"
-              className="text-white bg-transparen px-4 py-2 border hover:bg-overlay-50"
-              onClick={() => setModal(true, <Login />)}
-            />
-          ) : (
-            <Button
-              text="Sign In"
-              className="text-white bg-main-700 px-4 py-2 hover:bg-overlay-50 rounded-md"
-              onClick={() => setModal(true, <Login />)}
-            />
-          )
-        ) : location.pathname === "/" ? (
-          <>
-            <Button
-              text="Add Listing"
-              textColor="text-white"
-              className="text-white bg-transparen px-4 py-2 border hover:bg-overlay-50"
-            />
-          </>
+          <Button
+            text="Sign In"
+            className={twMerge(
+              clsx(
+                location.pathname === "/"
+                  ? "text-white bg-transparen px-4 py-2 border hover:shadow-[5px_5px_5px_rgba(0,0,0,0.24)]"
+                  : "text-white bg-main-700 px-4 py-2 hover:bg-overlay-50",
+                isScrolled &&
+                  location.pathname === "/" &&
+                  "text-white bg-main-700 px-4 py-2 hover:bg-overlay-50"
+              )
+            )}
+            onClick={() => setModal(true, <Login />)}
+          />
         ) : (
           <Button
             text="Add Listing"
-            textColor="text-white"
-            className="text-white bg-main-700 px-4 py-2 hover:bg-overlay-50 rounded-md"
+            className={twMerge(
+              clsx(
+                location.pathname === "/"
+                  ? "text-white bg-transparen px-4 py-2 border hover:shadow-[5px_5px_5px_rgba(0,0,0,0.24)]"
+                  : "text-white bg-main-700 px-4 py-2 hover:bg-overlay-50",
+                isScrolled &&
+                  location.pathname === "/" &&
+                  "text-white bg-main-700 px-4 py-2 hover:bg-overlay-50"
+              )
+            )}
           />
         )}
       </div>

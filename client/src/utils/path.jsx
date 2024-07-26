@@ -20,6 +20,7 @@ export const path = {
   PROFILE: "profile",
   CONFIRM_CHANGE_EMAIL: "confirm-change-email/:token",
   WISHLIST: "wishlist",
+  MESSAGE: "message",
 
   // PROPERTY
   CATEGORY: "category",

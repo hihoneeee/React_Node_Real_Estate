@@ -14,6 +14,8 @@ export default {
         "main-700": "#2C3A61",
         "main-800": "#1E2640",
         "main-900": "#0F1320",
+        "overlay-10": "rgba(0,0,0,0.1)",
+        "overlay-20": "rgba(0,0,0,0.2)",
         "overlay-30": "rgba(0,0,0,0.3)",
         "overlay-50": "rgba(0,0,0,0.5)",
         "overlay-70": "rgba(0,0,0,0.7)",

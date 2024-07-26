@@ -5,6 +5,7 @@ import {
   Button,
   DetailSidebar,
   ImageDetail,
+  SimilarProperty,
   TitleDetail,
 } from "src/components";
 import Loading from "src/components/common/loading";
@@ -18,7 +19,6 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import SimilarProperty from "src/components/detailProperty/similarProperty";
 const { MdOutlineBathtub, IoBedOutline, FaCropSimple, MdOutlineGarage } = icons;
 const DetailProperty = () => {
   const { id } = useParams();
@@ -40,7 +40,7 @@ const DetailProperty = () => {
   const area = property?.price / property?.dataDetail?.size;
   const formattedArea = area?.toFixed(2);
   return (
-    <div className="px-52 py-6 space-y-6 h-[100rem]">
+    <div className="px-[16rem] desktop:px-[22rem] py-6 space-y-6 ">
       <div>
         <BreadCreumbPublic style="text-gray-500" />
       </div>
@@ -60,26 +60,26 @@ const DetailProperty = () => {
               Overview
             </h3>
             <div className="flex items-center justify-between">
-              <div className="laptop:text-base text-sm font-medium">
+              <div className="desktop:text-base laptop:text-sm text-xs font-medium">
                 <p>Updated On:</p>
                 <span>
                   {format(parseISO(property.updatedAt), "MMMM dd, yyyy")}
                 </span>
               </div>
-              <div className="laptop:text-base text-sm font-medium flex flex-col items-center justify-center">
-                <IoBedOutline size={26} />
+              <div className="desktop:text-base laptop:text-sm text-xs font-medium flex flex-col items-center justify-center">
+                <IoBedOutline size={22} />
                 <p>{property?.dataDetail?.bedroom} Bedrooms</p>
               </div>
-              <div className="laptop:text-base text-sm font-medium flex flex-col items-center justify-center">
-                <MdOutlineBathtub size={26} />
+              <div className="desktop:text-base laptop:text-sm text-xs font-medium flex flex-col items-center justify-center">
+                <MdOutlineBathtub size={22} />
                 <p>{property?.dataDetail?.bathroom} Bathrooms</p>
               </div>
-              <div className="laptop:text-base text-sm font-medium flex flex-col items-center justify-center">
-                <MdOutlineGarage size={26} />
+              <div className="desktop:text-base laptop:text-sm text-xs font-medium flex flex-col items-center justify-center">
+                <MdOutlineGarage size={22} />
                 <p>{property?.dataDetail?.gara} Garages</p>
               </div>
-              <div className="laptop:text-base text-sm font-medium flex flex-col items-center justify-center">
-                <FaCropSimple size={26} />
+              <div className="desktop:text-base laptop:text-sm text-xs font-medium flex flex-col items-center justify-center">
+                <FaCropSimple size={22} />
                 <p>{property?.dataDetail?.size} ft2</p>
               </div>
             </div>
@@ -89,7 +89,9 @@ const DetailProperty = () => {
               <span className="border-l-8 border-main-500 mr-2"></span>
               Description
             </h3>
-            <div className="text-gray-500">{property?.description}</div>
+            <div className="text-gray-500 desktop:text-base laptop:text-sm text-xs">
+              {property?.description}
+            </div>
           </div>
           <div className="bg-white w-full rounded-md shadow-[5px_5px_5px_rgba(0,0,0,0.24)] border p-4 space-y-4">
             <h3 className=" laptop:text-xl text-base font-semibold cursor-pointer">
@@ -97,31 +99,31 @@ const DetailProperty = () => {
               Location
             </h3>
             <div className="grid grid-cols-3 gap-2">
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Address:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   {property?.dataDetail?.address}
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Province:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   {property?.dataDetail?.province}
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 City:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   {property?.dataDetail?.city}
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Zipcode:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   524662
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Country:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   United States
@@ -139,13 +141,13 @@ const DetailProperty = () => {
               Details
             </h3>
             <div className="grid grid-cols-3 gap-2">
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Property code:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   #{property?.id}
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Category:
                 {categories?.map(
                   (el) =>
@@ -159,7 +161,7 @@ const DetailProperty = () => {
                     )
                 )}
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Property type:
                 {showTypeProperty?.map(
                   (el) =>
@@ -173,7 +175,7 @@ const DetailProperty = () => {
                     )
                 )}
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Property status:
                 {showStatusProperty?.map(
                   (el) =>
@@ -187,43 +189,43 @@ const DetailProperty = () => {
                     )
                 )}
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Price:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   $ {property?.price}
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Price infor:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   $ {formattedArea} / sq ft
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Bedrooms:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   {property?.dataDetail?.bedroom}
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Bathrooms:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   {property?.dataDetail?.bathroom}
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Garages size:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   {property?.dataDetail?.gara} cars
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Year Built:
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   {property?.dataDetail?.yearBuild}
                 </span>
               </p>
-              <p className="laptop:text-base text-sm font-medium">
+              <p className="desktop:text-base laptop:text-sm text-xs font-medium">
                 Available from :
                 <span className="ml-1 laptop:text-sm text-xs text-gray-400">
                   {moment(property?.dataDetail?.createdAt).format("YYYY-MM-DD")}

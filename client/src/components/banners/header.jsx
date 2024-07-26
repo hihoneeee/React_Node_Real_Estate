@@ -30,8 +30,25 @@ const Header = ({ location }) => {
   const { setToken, getCurrent, clearCurrent, current } = useUserStore();
   const [showUser, setShowUser] = useState(false);
   const [notification, setNotification] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const userMenuRef = useRef(null);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      if (scrollTop > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const handleLogout = () => {
     setToken(null);
     getCurrent(null);
@@ -59,9 +76,10 @@ const Header = ({ location }) => {
     <div
       className={twMerge(
         clsx(
-          "px-20 py-6 flex items-center justify-between border-b-2 bg-transparen text-white w-full z-10 top-[0px]",
-          location.pathname !== "/" && "bg-main-700",
-          location.pathname === "/" && "fixed"
+          "px-20 py-6 flex items-center justify-between border-b-2 bg-transparen text-white w-full z-10 top-[0px] transition-al",
+          location.pathname !== "/" && "bg-main-700 transition-al",
+          location.pathname === "/" && "fixed transition-al",
+          isScrolled && location.pathname === "/" && "static transition-all"
         )
       )}
     >

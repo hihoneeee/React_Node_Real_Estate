@@ -14,7 +14,7 @@ import {
   DashBoard,
   ManageCategory,
 } from "src/pages/admin";
-import { Personal, Profile } from "src/pages/user";
+import { Message, Personal, Profile } from "src/pages/user";
 import { ConfirmChangeEmail, NotFoud404 } from "src/components";
 
 const routes = [
@@ -53,6 +53,10 @@ const routes = [
               {
                 path: path.PROFILE,
                 element: <Profile />,
+              },
+              {
+                path: path.MESSAGE,
+                element: <Message />,
               },
             ],
           },

@@ -104,10 +104,10 @@ const FilterHome = ({ navigate, direction = "horizontal" }) => {
           <div
             className={twMerge(
               clsx(
-                "bg-white h-[7rem] grid grid-cols-4 items-center",
+                "bg-white h-[7rem] desktop:w-[64rem] w-[58rem] grid grid-cols-4 items-center",
                 activeFilter === null
-                  ? "w-[68rem] shadow-xl py-2 px-4 rounded-3xl"
-                  : "w-[68rem] py-2 px-4 rounded-t-3xl"
+                  ? "shadow-xl py-2 px-4 rounded-3xl"
+                  : "py-2 px-4 rounded-t-3xl"
               )
             )}
           >

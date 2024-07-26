@@ -1,7 +1,13 @@
 import { path } from "./path";
 import icons from "./icons";
-const { RiDashboard2Line, BiCategory, FaRegCircle, FiUserCheck, FaRegHeart } =
-  icons;
+const {
+  RiDashboard2Line,
+  BiCategory,
+  FaRegCircle,
+  FiUserCheck,
+  FaRegHeart,
+  TiMessages,
+} = icons;
 export const nav = [
   {
     id: 1,
@@ -79,7 +85,13 @@ export const personalSidebar = [
   },
   {
     id: 2,
-    title: "Your wishlist",
+    title: "Message",
+    icon: <TiMessages size={18} />,
+    path: `/${path.PERSONAL}/${path.MESSAGE}`,
+  },
+  {
+    id: 2,
+    title: "Wishlist",
     icon: <FaRegHeart size={18} />,
     path: `/${path.PERSONAL}/${path.WISHLIST}`,
   },

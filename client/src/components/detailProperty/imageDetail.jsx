@@ -25,7 +25,7 @@ const ImageDetail = ({ images }) => {
       >
         {images?.map((el, idx) => (
           <SwiperSlide key={idx}>
-            <Image className="rounded-md" src={el} alt="images" />
+            <Image className="rounded-md w-full important" src={el} alt="images" />
           </SwiperSlide>
         ))}
       </Swiper>

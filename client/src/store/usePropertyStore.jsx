@@ -5,7 +5,7 @@ import { create } from "zustand";
 export const usePropertyStore = create((set) => ({
   properties: null,
   property: null,
-  similarProperties: null,
+  similarProperties: [],
   getProperties: async (params) => {
     try {
       const response = await apiGetProperties(params);
@@ -17,7 +17,6 @@ export const usePropertyStore = create((set) => ({
       }
     } catch (error) {
       set(() => ({ properties: null }));
-      toast.error("An error occurred while fetching properties.");
     }
   },
   getProperty: async (params) => {
@@ -27,25 +26,22 @@ export const usePropertyStore = create((set) => ({
         set(() => ({ property: response.data }));
       } else {
         set(() => ({ property: null }));
-        toast.error(response.message);
       }
     } catch (error) {
       set(() => ({ property: null }));
-      console.log("An error occurred while fetching properties.");
     }
   },
   getSimilarProperties: async (params) => {
     try {
       const response = await apiGetProperties(params);
       if (response.success) {
-        set(() => ({ property: response.data }));
+        set(() => ({ similarProperties: response.data }));
       } else {
-        set(() => ({ property: null }));
-        toast.error(response.message);
+        set(() => ({ similarProperties: [] }));
       }
     } catch (error) {
-      set(() => ({ property: null }));
-      console.log("An error occurred while fetching properties.");
+      console.error("Error fetching similar properties:", error);
+      set(() => ({ similarProperties: [] }));
     }
   },
 }));
