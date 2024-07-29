@@ -1,38 +1,37 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InputForm from "../inputs/inputForm";
 import icons from "src/utils/icons";
+import { useConversationStore } from "src/store/useConversationStore";
+import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
+import { useUserStore } from "src/store";
+
 const { FaSearch } = icons;
-const MessgaeSidebar = () => {
+
+const MessageSidebar = () => {
+  const { conversations } = useConversationStore();
+  const { current } = useUserStore();
+  const [activeConversationId, setActiveConversationId] = useState(null);
+
   const {
     register,
     formState: { errors },
   } = useForm();
-  const mess = [
-    {
-      id: "1",
-    },
-    {
-      id: "2",
-    },
-    {
-      id: "3",
-    },
-    {
-      id: "4",
-    },
-    {
-      id: "5",
-    },
-    {
-      id: "6",
-    },
-    {
-      id: "7",
-    },
-  ];
+
+  const onSubmit = (userId2) => {
+    const payload = { userId1: current.id, userId2: userId2 };
+    // Handle the submission logic here
+    console.log(payload);
+  };
+
+  const handleConversationClick = (id, userId2) => {
+    setActiveConversationId(id);
+    onSubmit(userId2);
+  };
 
   return (
-    <div className="w-[30%] space-y-3 p-2 rounded-r-md border-r">
+    <div className="w-[30%] h-fit space-y-3 p-2 rounded-r-md border-r">
       <h3 className="desktop:text-2xl laptop:text-xl text-base font-semibold text-main-500">
         Message chat
       </h3>
@@ -49,38 +48,52 @@ const MessgaeSidebar = () => {
           <FaSearch size={12} />
         </div>
       </form>
-      {mess?.length > 0 &&
-        mess?.map((el) => (
-          <div
-            key={el.id}
-            className="flex items-center gap-2 p-2 group hover:bg-overlay-10 rounded-lg cursor-pointer transition-all"
-          >
-            <div className="relative bg-transparent rounded-full">
-              <img
-                src="https://res.cloudinary.com/da7u0cpve/image/upload/v1721925064/dd7j4fzhzbzciz5dtndo.jpg"
-                alt="avatar"
-                className="h-10 w-10 rounded-full object-cover "
-              />
-              <p className="h-3 w-3 bg-blue-500 rounded-full absolute right-0 bottom-0"></p>
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <p className="font-medium desktop:text-base laptop:text-sm text-xs transition-all">
-                  Hohi dayne
-                </p>
-                <span className="laptop:text-xs text-xxs text-gray-400 group-hover:text-gray-500">
-                  1 hours ago
+      <div
+        className={twMerge(
+          clsx(conversations?.length > 7 ? "overflow-auto h-[30rem]" : "h-fit")
+        )}
+      >
+        {conversations?.length > 0 &&
+          conversations.map((el) => (
+            <div
+              key={el.datUser.id}
+              className={twMerge(
+                clsx(
+                  "flex items-center gap-2 p-2 group rounded-lg cursor-pointer transition-all",
+                  {
+                    "bg-overlay-10": el.id === activeConversationId,
+                    "hover:bg-overlay-10": el.id !== activeConversationId,
+                  }
+                )
+              )}
+              onClick={() => handleConversationClick(el.id, el?.datUser?.id)}
+            >
+              <div className="relative bg-transparent rounded-full">
+                <img
+                  src={el?.datUser?.avatar}
+                  alt="avatar"
+                  className="h-10 w-10 rounded-full object-cover "
+                />
+                <p className="h-3 w-3 bg-blue-500 rounded-full absolute right-0 bottom-0"></p>
+              </div>
+              <div>
+                <div className="flex items-center justify-between">
+                  <p className="font-medium desktop:text-base laptop:text-sm text-xs transition-all">
+                    {el?.datUser?.first_name} {el?.datUser?.last_name}
+                  </p>
+                  <span className="laptop:text-xs text-xxs text-gray-400 group-hover:text-gray-500">
+                    1 hour ago
+                  </span>
+                </div>
+                <span className="text-gray-400 desktop:text-sm laptop:text-xs text-xxs group-hover:text-gray-500">
+                  Lorem Ipsum is simply textasd áda...
                 </span>
               </div>
-              <span className="text-gray-400 desktop:text-sm laptop:text-xs text-xxs group-hover:text-gray-500">
-                Lorem Ipsum is simply textasd...
-              </span>
             </div>
-            <span></span>
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 };
 
-export default MessgaeSidebar;
+export default MessageSidebar;

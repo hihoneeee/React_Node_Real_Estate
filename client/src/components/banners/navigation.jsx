@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation, useMatch } from "react-router-dom";
+import { Link, NavLink, useMatch } from "react-router-dom";
 import icons from "src/utils/icons";
 import { path } from "src/utils/path";
 import { nav } from "src/utils/constant";

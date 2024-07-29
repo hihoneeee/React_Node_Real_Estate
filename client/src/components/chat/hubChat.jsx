@@ -18,9 +18,9 @@ const HubChat = () => {
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== "") {
-      setMessages([
-        ...messages,
-        { id: messages.length + 1, text: newMessage, sender: "user" },
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { id: prevMessages.length + 1, text: newMessage, sender: "user" },
       ]);
       setNewMessage("");
     }
@@ -33,7 +33,7 @@ const HubChat = () => {
           <img
             src="https://res.cloudinary.com/da7u0cpve/image/upload/v1721925064/dd7j4fzhzbzciz5dtndo.jpg"
             alt="avatar"
-            className="h-10 w-10 rounded-full object-cover "
+            className="h-10 w-10 rounded-full object-cover"
           />
           <h4 className="desktop:text-2xl laptop:text-xl text-base font-semibold ml-2">
             Hohi Dayne
@@ -45,35 +45,38 @@ const HubChat = () => {
       </div>
       <div className="p-4 h-[30rem] overflow-auto flex flex-col-reverse">
         <div ref={messagesEndRef}></div>
-        {messages.map((msg, index) => {
-          const isSameSenderAsNext =
-            index > 0 && messages[index - 1].sender === msg.sender;
-          return (
-            <div
-              key={msg.id}
-              className={`flex items-end ${
-                msg.sender === "user" ? "justify-end" : "justify-start"
-              } mt-2`}
-            >
-              {!isSameSenderAsNext && (
-                <img
-                  src="https://res.cloudinary.com/da7u0cpve/image/upload/v1721925064/dd7j4fzhzbzciz5dtndo.jpg"
-                  alt="avatar"
-                  className="h-6 w-6 rounded-full object-cover mr-2"
-                />
-              )}
+        {messages
+          .slice()
+          .reverse()
+          .map((msg, index, arr) => {
+            const isSameSenderAsPrev =
+              index < arr.length - 1 && arr[index + 1].sender === msg.sender;
+            return (
               <div
-                className={`max-w-[70%] p-2 m-1 rounded-lg ${
-                  msg.sender === "user"
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-black"
-                }`}
+                key={msg.id}
+                className={`flex items-end ${
+                  msg.sender === "user" ? "justify-end" : "justify-start"
+                } mt-2`}
               >
-                <p>{msg.text}</p>
+                {!isSameSenderAsPrev && (
+                  <img
+                    src="https://res.cloudinary.com/da7u0cpve/image/upload/v1721925064/dd7j4fzhzbzciz5dtndo.jpg"
+                    alt="avatar"
+                    className="h-6 w-6 rounded-full object-cover mr-2"
+                  />
+                )}
+                <div
+                  className={`max-w-[70%] p-2 m-1 rounded-lg ${
+                    msg.sender === "user"
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-black"
+                  }`}
+                >
+                  <p>{msg.text}</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
       <div className="border-t p-2 flex">
         <input
