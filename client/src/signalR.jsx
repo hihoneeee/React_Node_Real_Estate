@@ -2,6 +2,8 @@ import * as signalR from "@microsoft/signalr";
 import { toast } from "react-toastify";
 import { useNotificationStore, useUserStore } from "./store";
 import notificationSound from "src/assets/notification.mp3";
+import messageSound from "src/assets/message.mp3";
+
 let connection = null;
 
 export const startSignalRConnection = (token) => {
@@ -51,6 +53,13 @@ export const startSignalRConnection = (token) => {
       // Update Zustand store
       const { addNotification } = useNotificationStore.getState();
       addNotification(notificationContent); // Add the notification to the store
+    });
+
+    connection.on("ReceiveNotificationMessage", (notificationContent) => {
+      const audio = new Audio(messageSound);
+      audio.play();
+      const content = `${notificationContent?.dataUser?.first_name} has sent you a new message!`;
+      toast.info(content);
     });
   });
 };

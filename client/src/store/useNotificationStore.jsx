@@ -18,8 +18,6 @@ export const useNotificationStore = create((set) => ({
   addNotification: (notification) => {
     set((state) => {
       const updatedNotifications = [notification, ...state.notifications];
-      console.log("Adding notification:", notification); // Log the new notification
-      console.log("Updated notifications list:", updatedNotifications); // Log the updated notifications list
       return { notifications: updatedNotifications };
     });
   },

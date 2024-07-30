@@ -1,4 +1,4 @@
-import { apiGetConversations } from "src/apis/conversation";
+import { apiGetConversations, apiGetConversation } from "src/apis/conversation";
 import { create } from "zustand";
 
 export const useConversationStore = create((set) => ({
@@ -16,5 +16,17 @@ export const useConversationStore = create((set) => ({
       set(() => ({ conversations: null }));
     }
   },
-  getConversation: async () => {},
+  getConversation: async (payload) => {
+    try {
+      const response = await apiGetConversation(payload);
+      console.log(response);
+      if (response.success) {
+        set(() => ({ conversation: response.data }));
+      } else {
+        set(() => ({ conversation: null }));
+      }
+    } catch (error) {
+      set(() => ({ conversation: null }));
+    }
+  },
 }));

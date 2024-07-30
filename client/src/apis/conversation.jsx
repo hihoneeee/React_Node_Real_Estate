@@ -5,3 +5,10 @@ export const apiGetConversations = () =>
     url: "/conversations/",
     method: "GET",
   });
+
+export const apiGetConversation = (data) =>
+  axios({
+    url: "/conversations/GetOrCreate",
+    method: "POST",
+    data,
+  });

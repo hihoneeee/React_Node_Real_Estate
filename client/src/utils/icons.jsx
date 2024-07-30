@@ -14,7 +14,7 @@ import {
   FaArrowRight,
   FaArrowLeft,
 } from "react-icons/fa";
-import { FiPhone, FiUserCheck } from "react-icons/fi";
+import { FiPhone, FiUserCheck, FiSend } from "react-icons/fi";
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { PiHouseLineLight } from "react-icons/pi";
 import { MdCancel, MdOutlineBathtub, MdOutlineGarage } from "react-icons/md";
@@ -65,6 +65,7 @@ const icons = {
   IoMdNotificationsOutline,
   MdOutlineGarage,
   TiMessages,
+  FiSend
 };
 
 export default icons;

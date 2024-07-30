@@ -1,5 +1,4 @@
 import { useState } from "react";
-import InputTextArea from "../inputs/inputTextArea";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
@@ -13,15 +12,15 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 import { useAppointmentStore } from "src/store/useAppointmentStore";
 import { useUserStore } from "src/store";
+import { apiGetConversation } from "src/apis/conversation";
+import { toast } from "react-toastify";
+import withRouter from "src/hocs/withRouter";
+import { path } from "src/utils/path";
 
-const { HiOutlineMailOpen, FiPhone } = icons;
+const { HiOutlineMailOpen, FiPhone, FiSend } = icons;
 
-const DetailSidebar = ({ userData, propertyId }) => {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
+const DetailSidebar = ({ userData, propertyId, navigate }) => {
+  const { handleSubmit } = useForm();
   const { createAppointment } = useAppointmentStore();
   const [select, setSelect] = useState("message");
   const { current } = useUserStore();
@@ -34,11 +33,6 @@ const DetailSidebar = ({ userData, propertyId }) => {
     setAppointmentDate(newValue);
   };
 
-  const onSubmitMessage = async (data) => {
-    const { ...payload } = data;
-    console.log(payload);
-  };
-
   const onSubmitAppointment = async () => {
     const payload = {
       appointmentDate: appointmentDate.toISOString(),
@@ -47,6 +41,16 @@ const DetailSidebar = ({ userData, propertyId }) => {
       buyerId: current?.id,
     };
     createAppointment(payload);
+  };
+
+  const onSubmitMessage = async () => {
+    const payload = { receiverId: userData?.id };
+    const response = await apiGetConversation(payload);
+    if (response.success) {
+      navigate(`/${path.PERSONAL}/${path.MESSAGE}`);
+    } else {
+      toast.error(response.message);
+    }
   };
 
   return (
@@ -106,20 +110,12 @@ const DetailSidebar = ({ userData, propertyId }) => {
         </div>
         {select === "message" && (
           <>
-            <InputTextArea
-              label="Message"
-              id="message"
-              placeholder="Enter messgae..."
-              validate={{ required: "This field can't be empty!" }}
-              errors={errors}
-              register={register}
-              rows={8}
-            />
             <Button
               className="bg-main-300 text-white hover:bg-main-500 w-full px-3 py-2 rounded-md"
               text="Send message"
-              onClick={handleSubmit(onSubmitMessage)}
-            />{" "}
+              IcAfter={() => <FiSend size={18} />}
+              onClick={() => onSubmitMessage()}
+            />
           </>
         )}
         {select === "schedule" && (
@@ -160,4 +156,4 @@ const DetailSidebar = ({ userData, propertyId }) => {
   );
 };
 
-export default DetailSidebar;
+export default withRouter(DetailSidebar);

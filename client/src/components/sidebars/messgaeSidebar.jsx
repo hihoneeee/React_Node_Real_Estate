@@ -5,29 +5,35 @@ import icons from "src/utils/icons";
 import { useConversationStore } from "src/store/useConversationStore";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
-import { useUserStore } from "src/store";
+import { getSignalRConnection } from "src/signalR";
 
 const { FaSearch } = icons;
 
 const MessageSidebar = () => {
   const { conversations } = useConversationStore();
-  const { current } = useUserStore();
   const [activeConversationId, setActiveConversationId] = useState(null);
-
   const {
     register,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (userId2) => {
-    const payload = { userId1: current.id, userId2: userId2 };
-    // Handle the submission logic here
-    console.log(payload);
-  };
-
-  const handleConversationClick = (id, userId2) => {
+  const handleConversationClick = (id, receiver) => {
     setActiveConversationId(id);
-    onSubmit(userId2);
+    const payload = { receiverId: receiver };
+    useConversationStore.getState().getConversation(payload);
+    const connection = getSignalRConnection();
+    const connectionId = window.connectionId;
+
+    if (connectionId && connection) {
+      connection
+        .invoke("OnConnectedAsync", id, connectionId)
+        .then(() =>
+          console.log("OnConnectedAsync invoked with", id, connectionId)
+        )
+        .catch((err) =>
+          console.error("Failed to invoke OnConnectedAsync:", err)
+        );
+    }
   };
 
   return (
@@ -56,7 +62,7 @@ const MessageSidebar = () => {
         {conversations?.length > 0 &&
           conversations.map((el) => (
             <div
-              key={el.datUser.id}
+              key={el.id}
               className={twMerge(
                 clsx(
                   "flex items-center gap-2 p-2 group rounded-lg cursor-pointer transition-all",
@@ -66,11 +72,11 @@ const MessageSidebar = () => {
                   }
                 )
               )}
-              onClick={() => handleConversationClick(el.id, el?.datUser?.id)}
+              onClick={() => handleConversationClick(el.id, el?.dataUser?.id)}
             >
               <div className="relative bg-transparent rounded-full">
                 <img
-                  src={el?.datUser?.avatar}
+                  src={el?.dataUser?.avatar}
                   alt="avatar"
                   className="h-10 w-10 rounded-full object-cover "
                 />
@@ -79,7 +85,7 @@ const MessageSidebar = () => {
               <div>
                 <div className="flex items-center justify-between">
                   <p className="font-medium desktop:text-base laptop:text-sm text-xs transition-all">
-                    {el?.datUser?.first_name} {el?.datUser?.last_name}
+                    {el?.dataUser?.first_name} {el?.dataUser?.last_name}
                   </p>
                   <span className="laptop:text-xs text-xxs text-gray-400 group-hover:text-gray-500">
                     1 hour ago
