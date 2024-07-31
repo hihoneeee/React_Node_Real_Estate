@@ -39,6 +39,7 @@ const Properties = () => {
     }
     if (params.price) {
       params.price = searchParams.getAll("price");
+      console.log(params.price);
       setTitle("filter price: " + searchParams.getAll("price"));
     }
     if (params.categoryId) {

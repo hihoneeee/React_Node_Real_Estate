@@ -23,9 +23,9 @@ const NotificationTable = () => {
       onClick={(e) => e.stopPropagation()}
       className={twMerge(
         clsx(
-          "bg-white absolute text-black top-[3.7rem] right-0 w-[20rem] rounded-b-lg shadow-[10px_10px_5px_rgba(0,0,0,0.24)] border-2 z-[1000]",
+          "bg-white absolute text-black top-[3.7rem] right-0 w-[20rem] rounded-b-lg shadow-[10px_10px_5px_rgba(0,0,0,0.24)] border-2 z-[1000] transition-all",
           showAll ? "overflow-auto" : "overflow-hidden",
-          notifications.length > 6 ? "desktop:h-[42rem] h-[37rem]" : "h-fit"
+          notifications.length > 6 ? "desktop:h-[40rem] h-[30rem]" : "h-fit"
         )
       )}
     >
@@ -51,7 +51,7 @@ const NotificationTable = () => {
                   <p className="text-gray-500 laptop:text-xs text-xxs">
                     <span className="text-black font-medium">
                       {el?.dataUser?.first_name} {el?.dataUser?.last_name}
-                    </span>
+                    </span>{" "}
                     {el?.content}
                   </p>
                   <p className="laptop:text-[.6rem] text-xxs text-blue-500">
@@ -60,7 +60,11 @@ const NotificationTable = () => {
                     })}
                   </p>
                 </div>
-                <div className="w-4 h-2 rounded-full bg-blue-500"></div>
+                {el?.isRead ? (
+                  ""
+                ) : (
+                  <div className="w-4 h-2 rounded-full bg-blue-500"></div>
+                )}
               </Link>
             </div>
           ))}

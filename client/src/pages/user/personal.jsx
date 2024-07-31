@@ -36,7 +36,7 @@ const Personal = () => {
   return (
     <UserProvider current={current}>
       {current && (
-        <div className="desktop:px-[20rem] px-[14rem] py-8 space-y-8">
+        <div className="desktop:px-[20rem] laptop:px-[14rem] tablet:px-[8rem] px-[2rem] py-8 space-y-8">
           <div className="border-2 shadow-xl flex rounded-lg">
             <div className="w-[8%]">
               <PersonalSidebar current={current} />

@@ -3,10 +3,11 @@ import { toast } from "react-toastify";
 import { useNotificationStore, useUserStore } from "./store";
 import notificationSound from "src/assets/notification.mp3";
 import messageSound from "src/assets/message.mp3";
+import { useConversationStore } from "./store/useConversationStore";
+import { path } from "./utils/path";
 
 let connection = null;
-
-export const startSignalRConnection = (token) => {
+export const startSignalRConnection = (token, navigate) => {
   return new Promise((resolve, reject) => {
     const hubUrl = `${import.meta.env.VITE_SERVER_SIGNALR_URL}/chathub`; // Use the environment variable for the URL
     connection = new signalR.HubConnectionBuilder()
@@ -56,14 +57,46 @@ export const startSignalRConnection = (token) => {
     });
 
     connection.on("ReceiveNotificationMessage", (notificationContent) => {
-      const audio = new Audio(messageSound);
-      audio.play();
-      const content = `${notificationContent?.dataUser?.first_name} has sent you a new message!`;
-      toast.info(content);
+      const { isConnectedHub } = useConversationStore.getState();
+      console.log(isConnectedHub);
+      if (!isConnectedHub) {
+        const audio = new Audio(messageSound);
+        audio.play();
+        const content = `${notificationContent?.dataUser?.first_name} has sent you a new message!`;
+        toast.info(content, {
+          onClick: () => {
+            navigate(`/${path.PERSONAL}/${path.MESSAGE}`);
+          },
+        });
+      }
     });
   });
 };
 
 export const getSignalRConnection = () => {
   return connection;
+};
+
+export const joinRoom = (roomId) => {
+  const connection = getSignalRConnection();
+  const connectionId = window.connectionId;
+
+  if (connectionId && connection) {
+    return connection
+      .invoke("JoinRoomAsync", roomId, connectionId)
+      .then(() => console.log("JoinRoomAsync invoked with", roomId, connectionId))
+      .catch((err) => console.error("Failed to invoke JoinRoomAsync:", err));
+  }
+};
+
+export const leaveRoom = (roomId) => {
+  const connection = getSignalRConnection();
+  const connectionId = window.connectionId;
+
+  if (connectionId && connection) {
+    return connection
+      .invoke("LeaveRoomAsync", roomId, connectionId)
+      .then(() => console.log("LeaveRoomAsync invoked with", roomId, connectionId))
+      .catch((err) => console.error("Failed to invoke LeaveRoomAsync:", err));
+  }
 };

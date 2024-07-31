@@ -9,10 +9,10 @@ import Button from "../common/button";
 import { toast } from "react-toastify";
 import iconUser from "src/assets/icon_user.svg";
 import { showOptions } from "src/utils/constant";
-import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { path } from "src/utils/path";
 import { NotificationTable } from "..";
+import { useNotificationStore } from "src/store";
 const {
   FaFacebookF,
   FaLinkedinIn,
@@ -32,12 +32,16 @@ const Header = ({ location }) => {
   const [notification, setNotification] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const userMenuRef = useRef(null);
+  const { notifications } = useNotificationStore();
+
+  const unreadCount = notifications.filter((el) => !el.isRead).length;
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
       if (scrollTop > 0) {
         setIsScrolled(true);
+        setNotification(false);
       } else {
         setIsScrolled(false);
       }
@@ -49,6 +53,7 @@ const Header = ({ location }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   const handleLogout = () => {
     setToken(null);
     getCurrent(null);
@@ -76,9 +81,9 @@ const Header = ({ location }) => {
     <div
       className={twMerge(
         clsx(
-          "px-20 py-6 flex items-center justify-between border-b-2 bg-transparen text-white w-full z-10 top-[0px] transition-al",
-          location.pathname !== "/" && "bg-main-700 transition-al",
-          location.pathname === "/" && "fixed transition-al",
+          "px-20 py-6 flex items-center justify-between border-b-2 bg-transparen text-white w-full z-10 top-[0px] transition-all",
+          location.pathname !== "/" && "bg-main-700 transition-all",
+          location.pathname === "/" && "fixed transition-all",
           isScrolled && location.pathname === "/" && "static transition-all"
         )
       )}
@@ -110,11 +115,11 @@ const Header = ({ location }) => {
         {current && (
           <>
             <span className="border-r-2 mr-2 ml-2 border-white"></span>
-            <div className="relative z-20 flex items-center justify-center">
+            <div className="relative z-20 flex items-center justify-center transition-all">
               <div
                 className={twMerge(
                   clsx(
-                    "hover:cursor-pointer rounded-md hover:bg-overlay-30 flex items-center gap-2 px-2",
+                    "hover:cursor-pointer rounded-md hover:bg-overlay-30 flex items-center gap-2 px-2 py-1",
                     showUser && "bg-overlay-30 "
                   )
                 )}
@@ -126,19 +131,19 @@ const Header = ({ location }) => {
                 }}
               >
                 <div className="space-y-1">
-                  <p className="lg:text-xs text-xxs">
+                  <p className=" text-[.6rem]">
                     Name:{" "}
                     <span className="capitalize font-semibold">
                       {current?.first_name}
                     </span>
                   </p>
-                  <p className="lg:text-xs text-xxs">
+                  <p className=" text-[.6rem] flex items-center gap-1">
                     Position:{" "}
                     <span className="uppercase font-semibold">
                       {showOptions.map((item) => (
                         <Fragment key={item.code}>
                           {current?.roleCode === item.code && (
-                            <Link>{item.name}</Link>
+                            <p className="">{item.name}</p>
                           )}
                         </Fragment>
                       ))}
@@ -154,7 +159,7 @@ const Header = ({ location }) => {
 
               {showUser ? (
                 <div
-                  className="bg-white absolute text-black p-4 top-[3.7rem] z-30 w-[8rem] rounded-md shadow-2xl border-2"
+                  className="bg-white absolute text-black p-4 top-[3.7rem] z-30 w-[8rem] rounded-md shadow-2xl border-2 transition-all"
                   ref={userMenuRef}
                 >
                   <Button
@@ -193,8 +198,11 @@ const Header = ({ location }) => {
                 )}
               >
                 <IoMdNotificationsOutline size={20} />
+                {unreadCount > 0 && (
+                  <span className="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
+                )}
               </div>
-              {notification ? (
+              {!isScrolled && notification ? (
                 <div ref={userMenuRef}>
                   <NotificationTable />
                 </div>
