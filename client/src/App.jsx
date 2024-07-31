@@ -10,8 +10,9 @@ import {
 } from "src/store/";
 import { Outlet } from "react-router-dom";
 import { startSignalRConnection } from "src/signalR";
+import withRouter from "./hocs/withRouter";
 
-const App = () => {
+const App = ({ navigate }) => {
   const { isShowModal } = useAppStore();
   const { getCurrent, token } = useUserStore();
   const { getCategories } = useCategoryStore();
@@ -24,7 +25,7 @@ const App = () => {
   }, [token]);
 
   useEffect(() => {
-    startSignalRConnection(token);
+    startSignalRConnection(token, navigate);
   }, [token]);
 
   return (
@@ -48,4 +49,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withRouter(App);

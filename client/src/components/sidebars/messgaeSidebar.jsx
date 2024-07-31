@@ -5,7 +5,7 @@ import icons from "src/utils/icons";
 import { useConversationStore } from "src/store/useConversationStore";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
-import { getSignalRConnection } from "src/signalR";
+import { joinRoom, leaveRoom } from "src/signalR";
 
 const { FaSearch } = icons;
 
@@ -18,22 +18,14 @@ const MessageSidebar = () => {
   } = useForm();
 
   const handleConversationClick = (id, receiver) => {
+    if (activeConversationId) {
+      leaveRoom(activeConversationId);
+    }
     setActiveConversationId(id);
     const payload = { receiverId: receiver };
     useConversationStore.getState().getConversation(payload);
-    const connection = getSignalRConnection();
-    const connectionId = window.connectionId;
 
-    if (connectionId && connection) {
-      connection
-        .invoke("OnConnectedAsync", id, connectionId)
-        .then(() =>
-          console.log("OnConnectedAsync invoked with", id, connectionId)
-        )
-        .catch((err) =>
-          console.error("Failed to invoke OnConnectedAsync:", err)
-        );
-    }
+    joinRoom(id);
   };
 
   return (

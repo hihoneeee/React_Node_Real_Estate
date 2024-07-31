@@ -46,8 +46,8 @@ const Navigation = ({ location }) => {
             location.pathname === "/" &&
             "top-0 left-0 right-0 transition-all bg-white text-main-500 shadow-xl",
           location.pathname !== "/" &&
-            "bg-white text-main-500 shadow-xl transition-al",
-          location.pathname === "/" && "fixed transition-al",
+            "bg-white text-main-500 shadow-xl transition-all",
+          location.pathname === "/" && "fixed transition-all",
           isScrolled && matchPersonal && "hidden transition-all"
         )
       )}
@@ -85,8 +85,7 @@ const Navigation = ({ location }) => {
                     location.pathname !== "/"
                       ? isActive &&
                           "py-2 text-main-500 border-b border-main-500"
-                      : isActive &&
-                          "py-2 text-main-500 border-b border-main-500"
+                      : isActive && "py-2 text-white border-b border-white"
                   )
                 }
                 key={el.id}

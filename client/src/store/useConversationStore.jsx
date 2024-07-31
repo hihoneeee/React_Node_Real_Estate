@@ -4,6 +4,7 @@ import { create } from "zustand";
 export const useConversationStore = create((set) => ({
   conversations: null,
   conversation: null,
+  isConnectedHub: false,
   getConversations: async () => {
     try {
       const response = await apiGetConversations();
@@ -19,7 +20,6 @@ export const useConversationStore = create((set) => ({
   getConversation: async (payload) => {
     try {
       const response = await apiGetConversation(payload);
-      console.log(response);
       if (response.success) {
         set(() => ({ conversation: response.data }));
       } else {
@@ -29,4 +29,6 @@ export const useConversationStore = create((set) => ({
       set(() => ({ conversation: null }));
     }
   },
+  setIsConnectedHub: (isConnected) =>
+    set(() => ({ isConnectedHub: isConnected })),
 }));

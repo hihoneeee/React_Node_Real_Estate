@@ -2,16 +2,19 @@ import { useState, useRef, useEffect } from "react";
 import { useConversationStore } from "src/store/useConversationStore";
 import { useUserStore } from "src/store";
 import icons from "src/utils/icons";
-import { getSignalRConnection } from "src/signalR";
+import { getSignalRConnection, joinRoom, leaveRoom } from "src/signalR";
+import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
 
 const { FaSearch } = icons;
 
 const HubChat = () => {
-  const { conversation } = useConversationStore();
+  const { conversation, setIsConnectedHub } = useConversationStore();
   const { current } = useUserStore();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
+  const hubChatRef = useRef(null);
 
   useEffect(() => {
     if (conversation) {
@@ -23,13 +26,14 @@ const HubChat = () => {
     const connection = getSignalRConnection();
     if (connection) {
       connection.on("ReceiveMessage", (message) => {
-        console.log("Received message:", message);
         setMessages((prevMessages) => [...prevMessages, message]);
+        setIsConnectedHub(true);
       });
     }
     return () => {
       if (connection) {
         connection.off("ReceiveMessage");
+        setIsConnectedHub(false);
       }
     };
   }, []);
@@ -56,10 +60,35 @@ const HubChat = () => {
     }
   };
 
+  const handleClickOutside = (event) => {
+    if (hubChatRef.current && !hubChatRef.current.contains(event.target)) {
+      if (conversation) {
+        console.log("Leaving room:", conversation.id); // Log leaving room
+        leaveRoom(conversation.id).then(() => {
+          setIsConnectedHub(false);
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (conversation) {
+      console.log("Joining room:", conversation.id); // Log joining room
+      joinRoom(conversation.id).then(() => {
+        setIsConnectedHub(true);
+      });
+    }
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [conversation, setIsConnectedHub]);
+
   return (
     <>
       {conversation && (
-        <div className="w-[70%]">
+        <div ref={hubChatRef} className="w-[70%]">
           <div className="flex items-center justify-between border-b p-2">
             <div className="flex items-center">
               <img
@@ -101,16 +130,21 @@ const HubChat = () => {
                       />
                     )}
                     <div
-                      className={`max-w-[70%] p-2 m-1 rounded-lg ${
+                      className={`max-w-[70%] p-2 m-1 rounded-lg group hover:cursor-pointer relative ${
                         isCurrentUser
                           ? "bg-blue-500 text-white"
-                          : "bg-gray-200 text-black"
+                          : "bg-gray-200 text-black "
                       }`}
                     >
-                      <p>{msg.content}</p>
-                      <small>
-                        {msg.dataUser.first_name}:{" "}
-                        {new Date(msg.createdAt).toLocaleTimeString()}
+                      <p className={twMerge(clsx(isCurrentUser ? "" : ""))}>
+                        {msg.content}
+                      </p>
+                      <small
+                        className={`absolute bottom-0 text-xs text-white bg-overlay-30 px-2 py-1 rounded-lg hidden group-hover:inline-block transition-opacity ${
+                          isCurrentUser ? "right-10" : "left-10"
+                        }`}
+                      >
+                        {new Date(msg.createdAt).toLocaleString()}
                       </small>
                     </div>
                   </div>
