@@ -60,28 +60,40 @@ const HubChat = () => {
     }
   };
 
-  const handleClickOutside = (event) => {
-    if (hubChatRef.current && !hubChatRef.current.contains(event.target)) {
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (hubChatRef.current && !hubChatRef.current.contains(event.target)) {
+        if (conversation) {
+          console.log("Leaving room:", conversation.id); // Log leaving room
+          leaveRoom(conversation.id).then(() => {
+            setIsConnectedHub(false);
+          });
+        }
+      }
+    };
+
+    const handleClickInside = (event) => {
+      if (hubChatRef.current && hubChatRef.current.contains(event.target)) {
+        if (conversation) {
+          console.log("Joining room:", conversation.id); // Log joining room
+          joinRoom(conversation.id).then(() => {
+            setIsConnectedHub(true);
+          });
+        }
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("click", handleClickInside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("click", handleClickInside);
       if (conversation) {
-        console.log("Leaving room:", conversation.id); // Log leaving room
         leaveRoom(conversation.id).then(() => {
           setIsConnectedHub(false);
         });
       }
-    }
-  };
-
-  useEffect(() => {
-    if (conversation) {
-      console.log("Joining room:", conversation.id); // Log joining room
-      joinRoom(conversation.id).then(() => {
-        setIsConnectedHub(true);
-      });
-    }
-
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
     };
   }, [conversation, setIsConnectedHub]);
 

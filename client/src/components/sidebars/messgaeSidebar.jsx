@@ -5,7 +5,6 @@ import icons from "src/utils/icons";
 import { useConversationStore } from "src/store/useConversationStore";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
-import { joinRoom, leaveRoom } from "src/signalR";
 
 const { FaSearch } = icons;
 
@@ -18,14 +17,9 @@ const MessageSidebar = () => {
   } = useForm();
 
   const handleConversationClick = (id, receiver) => {
-    if (activeConversationId) {
-      leaveRoom(activeConversationId);
-    }
     setActiveConversationId(id);
     const payload = { receiverId: receiver };
     useConversationStore.getState().getConversation(payload);
-
-    joinRoom(id);
   };
 
   return (
