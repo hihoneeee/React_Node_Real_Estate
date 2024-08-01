@@ -57,9 +57,12 @@ export const startSignalRConnection = (token, navigate) => {
     });
 
     connection.on("ReceiveNotificationMessage", (notificationContent) => {
-      const { isConnectedHub } = useConversationStore.getState();
+      const { isConnectedHub, conversation } = useConversationStore.getState();
       console.log(isConnectedHub);
-      if (!isConnectedHub) {
+      if (
+        !isConnectedHub ||
+        (conversation && conversation.id !== notificationContent.conversationId)
+      ) {
         const audio = new Audio(messageSound);
         audio.play();
         const content = `${notificationContent?.dataUser?.first_name} has sent you a new message!`;
@@ -84,7 +87,9 @@ export const joinRoom = (roomId) => {
   if (connectionId && connection) {
     return connection
       .invoke("JoinRoomAsync", roomId, connectionId)
-      .then(() => console.log("JoinRoomAsync invoked with", roomId, connectionId))
+      .then(() =>
+        console.log("JoinRoomAsync invoked with", roomId, connectionId)
+      )
       .catch((err) => console.error("Failed to invoke JoinRoomAsync:", err));
   }
 };
@@ -96,7 +101,9 @@ export const leaveRoom = (roomId) => {
   if (connectionId && connection) {
     return connection
       .invoke("LeaveRoomAsync", roomId, connectionId)
-      .then(() => console.log("LeaveRoomAsync invoked with", roomId, connectionId))
+      .then(() =>
+        console.log("LeaveRoomAsync invoked with", roomId, connectionId)
+      )
       .catch((err) => console.error("Failed to invoke LeaveRoomAsync:", err));
   }
 };
