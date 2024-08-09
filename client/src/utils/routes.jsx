@@ -2,6 +2,7 @@ import App from "src/App";
 import { path } from "./path";
 import {
   AboutUs,
+  AddProperty,
   DetailProperty,
   Home,
   Layout,
@@ -41,6 +42,10 @@ const routes = [
           {
             path: path.DETAIL_PROPERTY,
             element: <DetailProperty />,
+          },
+          {
+            path: path.ADD_PROPERTY,
+            element: <AddProperty />,
           },
           {
             path: path.OUR_AGENTS,

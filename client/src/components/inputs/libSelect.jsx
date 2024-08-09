@@ -29,11 +29,15 @@ const libSelect = ({
         onChange={(val) => onChange(val)}
         formatOptionLabel={(el) => (
           <div className="flex items-center gap-3 cursor-pointer">
-            <img
-              src={el.avatar}
-              alt="avatar"
-              className="w-8 h-8 rounded-md object-cover"
-            />
+            {el.avatar ? (
+              <img
+                src={el.avatar}
+                alt="avatar"
+                className="w-8 h-8 rounded-md object-cover"
+              />
+            ) : (
+              ""
+            )}
             <span>{el.label}</span>
           </div>
         )}

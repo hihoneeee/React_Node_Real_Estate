@@ -23,7 +23,10 @@ const InputSelect = ({
       <select
         id={id}
         className={twMerge(
-          clsx("px-3 py-2 border rounded-md cursor-pointer", selectClassName)
+          clsx(
+            "outline-none px-3 py-2 w-full rounded-md border-2 cursor-pointer",
+            selectClassName
+          )
         )}
         {...register(id, validate)}
       >

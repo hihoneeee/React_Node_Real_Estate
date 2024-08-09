@@ -6,6 +6,7 @@ export const path = {
   OUR_AGENTS: "our-agents",
   PROPERTIES: "properties",
   DETAIL_PROPERTY: "detail-property/:title/:id",
+  ADD_PROPERTY: "add-property",
 
   GALLERY: "gallery",
   BLOG: "blog",

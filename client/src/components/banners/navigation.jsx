@@ -11,7 +11,7 @@ import withRouter from "src/hocs/withRouter";
 import { useUserStore } from "src/store/useUserStore";
 import { useAppStore } from "src/store/useAppStore";
 import { v4 as uuidV4 } from "uuid";
-const { PiHouseLineLight } = icons;
+const { PiHouseLineLight, BsHouseAdd } = icons;
 
 const Navigation = ({ location }) => {
   const { current } = useUserStore();
@@ -128,6 +128,8 @@ const Navigation = ({ location }) => {
         ) : (
           <Button
             text="Add Listing"
+            IcAfter={() => <BsHouseAdd size={16} />}
+            route={path.ADD_PROPERTY}
             className={twMerge(
               clsx(
                 location.pathname === "/"
