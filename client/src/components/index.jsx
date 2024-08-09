@@ -23,6 +23,7 @@ export { default as InputTinyMCE } from "./inputs/inputTinyMCE";
 export { default as InputTextArea } from "./inputs/inputTextArea";
 export { default as InputFile } from "./inputs/inputFile";
 export { default as InputFileV2 } from "./inputs/inputFileV2";
+export { default as InputFileV3 } from "./inputs/inputFileV3";
 export { default as InputSelect } from "./inputs/inputSelect";
 export { default as LibSelect } from "./inputs/libSelect";
 
@@ -52,6 +53,7 @@ export { default as PropertyCard } from "./properties/propertyCard";
 export { default as ImageDetail } from "./detailProperty/imageDetail";
 export { default as TitleDetail } from "./detailProperty/titleDetail";
 export { default as SimilarProperty } from "./detailProperty/similarProperty";
+export { default as StepperAddProperty } from "./properties/stepperAddProperty";
 
 //pagination
 export { default as Pagination } from "./paginations/pagination";

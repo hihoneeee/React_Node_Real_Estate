@@ -23,7 +23,7 @@ const MessageSidebar = () => {
   };
 
   return (
-    <div className="w-[30%] h-fit space-y-3 p-2 rounded-r-md border-r">
+    <div className="w-[30%] h-fit space-y-3 p-2 rounded-r-md border-r ">
       <h3 className="desktop:text-2xl laptop:text-xl text-base font-semibold text-main-500">
         Message chat
       </h3>

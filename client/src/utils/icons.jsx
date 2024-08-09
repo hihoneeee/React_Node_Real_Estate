@@ -22,7 +22,7 @@ import { RiDashboard2Line, RiFileUserLine } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
 import { TiDelete, TiMessages } from "react-icons/ti";
 import { RxDashboard } from "react-icons/rx";
-import { BsMenuButtonWideFill } from "react-icons/bs";
+import { BsMenuButtonWideFill, BsHouseAdd } from "react-icons/bs";
 import { FaCropSimple, FaMapLocationDot } from "react-icons/fa6";
 import { AiOutlineShareAlt } from "react-icons/ai";
 import { IoBedOutline, IoPrintSharp } from "react-icons/io5";
@@ -65,7 +65,8 @@ const icons = {
   IoMdNotificationsOutline,
   MdOutlineGarage,
   TiMessages,
-  FiSend
+  FiSend,
+  BsHouseAdd,
 };
 
 export default icons;
